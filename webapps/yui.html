@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <title>Verilion </title>
+<link rel="stylesheet" type="text/css" href="/ydp/css/reset-fonts-grids.css">
+
+<!-- Dependencies -->
+<link rel="stylesheet" type="text/css" href="/ydp/js/assets/menu.css"> 
+<script type="text/javascript" src="/ydp/js/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/ydp/js/container_core-min.js"></script>
+
+<!-- Source File -->
+<script type="text/javascript" src="/ydp/js/animation-min.js"></script>
+<script type="text/javascript" src="/ydp/js/menu-min.js"></script>
+<style type="text/css">
+body {
+  background: url(/templateImages/bgcolor.png);
+}
+.headerPane {
+  background: url(/templateImages/header.png) no-repeat;
+  background-position: top left;
+  height: 104px;
+  width: 750px;
+}
+.leftNav {
+  padding-left: 19px;
+  min-height: 400px;
+  background: url(/templateImages/left_nav_bg.png) repeat-y;
+  color: white;
+}
+.leftNav a:link {
+  color: white;
+  text-decoration: none;
+}
+.leftNav a:visited {
+  color: white;
+  text-decoration: none;
+}
+.leftNav a:hover {
+  text-decoration: underline;
+}
+div.yuimenu {
+  border: none;
+  background: #bf0029;
+}
+div.yuimenu li.yuimenuitem {
+    font-size: 100%;
+    padding: 2px 18px;
+    margin-left: 0; 
+    padding-left: 7px;
+}
+</style>
+<script type="text/javascript">
+
+            YAHOO.example.onMenuReady = function(p_oEvent) {
+                
+                // "beforerender" event handler for the menu
+
+                function onMenuBeforeRender(p_sType, p_sArgs, p_oMenu) {
+
+                    var oSubmenuData = {
+                    
+                        "communication": [ 
+                        
+                            { text: "360", url: "http://360.yahoo.com" },
+                            { text: "Alerts", url: "http://alerts.yahoo.com" },
+                            { text: "Avatars", url: "http://avatars.yahoo.com" },
+                            { text: "Groups", url: "http://groups.yahoo.com " },
+                            { text: "Internet Access", url: "http://promo.yahoo.com/broadband" },
+                            { text: "PIM", submenu: { id: "pim", itemdata: [
+        
+                                    { text: "Yahoo! Mail", url:"http://mail.yahoo.com" },
+                                    { text: "Yahoo! Address Book", url:"http://addressbook.yahoo.com" },
+                                    { text: "Yahoo! Calendar",  url:"http://calendar.yahoo.com" },
+                                    { text: "Yahoo! Notepad", url:"http://notepad.yahoo.com" }
+        
+                                ] }
+                            
+                            }, 
+                            { text: "Member Directory", url: "http://members.yahoo.com" },
+                            { text: "Messenger", url: "http://messenger.yahoo.com" },
+                            { text: "Mobile", url: "http://mobile.yahoo.com" },
+                            { text: "Photos", url: "http://photos.yahoo.com" },
+                        
+                        ],
+    
+                        "shopping": [
+    
+                            { text: "Auctions", url: "http://auctions.shopping.yahoo.com" },
+                            { text: "Autos", url: "http://autos.yahoo.com" },
+                            { text: "Classifieds", url: "http://classifieds.yahoo.com" },
+                            { text: "Flowers & Gifts", url: "http://shopping.yahoo.com/b:Flowers%20%26%20Gifts:20146735" },
+                            { text: "Points", url: "http://points.yahoo.com" },
+                            { text: "Real Estate", url: "http://realestate.yahoo.com" },
+                            { text: "Travel", url: "http://travel.yahoo.com" },
+                            { text: "Wallet", url: "http://wallet.yahoo.com" },
+                            { text: "Yellow Pages", url: "http://yp.yahoo.com" }                    
+    
+                        ],
+                        
+                        "entertainment": [
+    
+                            { text: "Fantasy Sports", url: "http://fantasysports.yahoo.com" },
+                            { text: "Games", url: "http://games.yahoo.com" },
+                            { text: "Kids", url: "http://www.yahooligans.com" },
+                            { text: "Music", url: "http://music.yahoo.com" },
+                            { text: "Movies", url: "http://movies.yahoo.com" },
+                            { text: "Radio", url: "http://music.yahoo.com/launchcast" },
+                            { text: "Travel", url: "http://travel.yahoo.com" },
+                            { text: "TV", url: "http://tv.yahoo.com" }              
+                        
+                        ],
+                        
+                        "information": [
+    
+                            { text: "Downloads", url: "http://downloads.yahoo.com" },
+                            { text: "Finance", url: "http://finance.yahoo.com" },
+                            { text: "Health", url: "http://health.yahoo.com" },
+                            { text: "Local", url: "http://local.yahoo.com" },
+                            { text: "Maps & Directions", url: "http://maps.yahoo.com" },
+                            { text: "My Yahoo!", url: "http://my.yahoo.com" },
+                            { text: "News", url: "http://news.yahoo.com" },
+                            { text: "Search", url: "http://search.yahoo.com" },
+                            { text: "Small Business", url: "http://smallbusiness.yahoo.com" },
+                            { text: "Weather", url: "http://weather.yahoo.com" }
+                        
+                        ]
+                    
+                    };
+
+
+                    this.getItem(0).cfg.setProperty("submenu", { id:"communication", itemdata: oSubmenuData["communication"] });
+                    this.getItem(1).cfg.setProperty("submenu", { id:"shopping", itemdata: oSubmenuData["shopping"] });
+                    this.getItem(2).cfg.setProperty("submenu", { id:"entertainment", itemdata: oSubmenuData["entertainment"] });
+                    this.getItem(3).cfg.setProperty("submenu", { id:"information", itemdata: oSubmenuData["information"] });
+
+                }              
+
+
+                // Instantiate and render the menu
+
+                var oMenu = new YAHOO.widget.Menu(
+                                    "productsandservices", 
+                                    {
+					width: "123px",
+                                        position:"static", 
+                                        showdelay:250,
+                                        hidedelay:750, 
+                                        lazyload:true, 
+                                        effect:{ 
+                                            effect:YAHOO.widget.ContainerEffect.FADE,
+                                            duration:0.25
+                                        } 
+                                    }
+                            );
+
+
+                // Subscribe to the "beforerender" event
+
+                oMenu.beforeRenderEvent.subscribe(onMenuBeforeRender, oMenu, true);
+
+
+                // Render the menu
+
+                oMenu.render();
+                
+            }
+
+
+            // Initialize and render the menu when it is available in the DOM
+
+            YAHOO.util.Event.onContentReady("productsandservices", YAHOO.example.onMenuReady);
+
+        </script> 
+</head>
+
+<body>
+<div id="doc" class="yui-t2">
+        <div id="hd" class="headerPane">&nbsp;
+        </div>
+        <div id="bd">
+                <div id="yui-main">
+                        <div class="yui-b">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum sodales lectus eu eros. In adipiscing pharetra pede. Ut a nibh vitae purus ornare tincidunt. Nunc nec nisi vehicula diam porta rhoncus. Phasellus eget leo. Sed facilisis aliquam arcu. Nunc et nisl. Sed placerat adipiscing massa. Sed ac eros. Donec et nibh. Mauris ac dolor. Pellentesque venenatis nulla non nisl. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris auctor turpis vel turpis. Vestibulum suscipit. Sed vel nunc quis tellus fringilla ullamcorper. Praesent gravida sem eget velit. Nunc ornare augue. Nulla ultricies adipiscing sapien. Morbi ultricies aliquet dolor.
+                                <br /><br />Duis a velit. Curabitur condimentum, mi a scelerisque malesuada, ante nisi ultricies nisi, et volutpat lorem leo nec nisi. Donec quam sapien, placerat feugiat, rutrum ut, ullamcorper in, leo. Sed est. Nulla at erat. Etiam scelerisque quam vel odio. Aliquam justo ligula, dictum ut, viverra ac, adipiscing ac, justo. Aliquam erat volutpat. Nulla augue velit, scelerisque ac, commodo quis, elementum a, tellus. In tristique dui vel ante. Praesent dui. Duis leo lorem, tempus eu, tempus et, aliquet vitae, mi.
+                                <br /><br />Curabitur hendrerit accumsan ante. Donec malesuada ullamcorper velit. Phasellus ut sem nec ante mattis suscipit. Pellentesque vel libero sit amet lacus porta consequat. Quisque consequat, nisi eu dapibus porta, ante lorem commodo risus, eget rutrum mauris est at enim. Sed cursus rhoncus turpis. Curabitur porta consectetuer justo. Vestibulum nec pede ac velit vulputate elementum. Nam laoreet viverra justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce ut ipsum. Quisque id felis a lacus tincidunt consequat. Integer ac orci bibendum eros bibendum tristique. Vestibulum ullamcorper fermentum nisi.
+                                <br /><br />Nunc posuere lectus malesuada leo. Proin adipiscing velit at mauris. Donec rhoncus mi id sem. Quisque enim. Etiam tempus vehicula nunc. Ut molestie nibh ac eros. In nec ipsum ac risus venenatis condimentum. Duis vulputate risus nec risus. Suspendisse commodo nunc quis quam. Aliquam in odio. Curabitur pretium aliquam ante. Integer ornare interdum dolor. Donec viverra nulla eu velit. Sed eleifend vehicula urna. Suspendisse aliquam odio ut mauris. Duis pede. Fusce magna ligula, tristique a, gravida ac, dictum scelerisque, ante.
+                                Nunc suscipit dignissim turpis. Phasellus imperdiet laoreet sem. In hac habitasse platea dictumst. Donec tortor libero, imperdiet nec, sollicitudin vel, commodo sit amet, magna. Ut et leo eget ligula malesuada rutrum. Sed tincidunt dolor id lorem ultricies vestibulum. Duis venenatis nunc eget arcu. Donec gravida feugiat lorem. Nam quis dolor in mi gravida consectetuer. Curabitur porta. Phasellus facilisis condimentum lorem. Aenean volutpat bibendum turpis. Sed dictum iaculis lectus.
+                        </div>
+                </div>
+                <div class="yui-b leftNav" >
+<div id="productsandservices" class="yuimenu">
+                        <div class="bd">
+                            <ul class="first-of-type">
+                                <li class="yuimenuitem"><a href="http://communication.yahoo.com">Communication</a></li>
+                                <li class="yuimenuitem"><a href="http://shopping.yahoo.com">Shopping</a></li>
+                                <li class="yuimenuitem"><a href="http://entertainment.yahoo.com">Entertainment</a></li>
+
+                                <li class="yuimenuitem">Information</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div> <!-- end id bd -->
+        <div id="ft">This is the footer</div>
+</div> <!-- end id doc -->
+</body>
+</html>
+

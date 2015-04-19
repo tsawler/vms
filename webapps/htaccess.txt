@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteRule ^/?$ /servlet/com.verilion.display.html.Page?page=Home
+RewriteRule ^content/(.*)/(.*);jsessionid=(.*) /servlet/com.verilion.display.html.$1;jsessionid=$3?page=$2
+RewriteRule ^content/(.*)/(.*) /servlet/com.verilion.display.html.$1?page=$2
+RewriteRule ^packages/(.*)/(.*)/(.*) /servlet/com.skylos.pages.$1?page=$2&package_id=$3
+RewriteRule ^news/(.*) /servlet/com.verilion.display.html.News?page=News&Item=$1
+RewriteRule ^.htaccess$ - [F]

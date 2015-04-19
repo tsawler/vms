@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<vcmstemplate>
+	<!--
+	General info about the template
+	-->
+	<details>
+		<!-- 
+		spaces, slashes, and colons are not 
+		permitted in template name, as it will be used
+		to generate a directory under the server's
+		document root. We really should define a schema 
+		for this xml.... 
+		-->
+		<name>TemplateName</name>
+		<author>Trevor Sawler</author>
+		<copyright>Released under Creative Commons License</copyright>
+		<author-email>info@verilion.com</author-email>
+		<author-url>http://www.verilion.com</author-url>
+		<version>1.0</version>
+		<!--
+		The html template will be copied into the Templates
+		table in db
+		-->
+		<html-template>filename.html</html-template>
+		<!-- 
+		Will go into DOCUMENTROOT/templates/TemplateName/css/
+		-->
+		<stylesheet>mystylesheet.css</stylesheet>
+	</details>
+	<!-- 
+	Images go into DOCUMENTROOT/templates/TemplateName/images/
+	-->
+	<images>
+		<image-filename>myImage.png</image-filename>
+		<image-filename>AnotherImage.png</image-filename>
+		<image-filename>athird.png</image-filename>
+	</images>
+</vcmstemplate>

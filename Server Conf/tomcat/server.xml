@@ -1,0 +1,52 @@
+<Host name="www2.verilion.com" debug="0" appBase="/home/httpd/verilion.com" unpackWARs="true">
+	<Context path="" docBase="html" debug="1" reloadable="true">
+        <Resource name="jdbc/verilion" scope="Shareable" auth="Container"
+        type="javax.sql.DataSource"/>
+        <ResourceParams name="jdbc/verilion">
+        <parameter>
+        <name>factory</name>
+        <value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
+        </parameter>
+        <parameter>
+        <name>username</name>
+        <value>pgsql</value>
+        </parameter>
+        <parameter>
+        <name>password</name>
+        <value>catnat!!</value>
+        </parameter>
+        <parameter>
+        <name>driverClassName</name>
+        <value>org.postgresql.Driver</value>
+        </parameter>
+        <parameter>
+        <name>maxActive</name>
+        <value>50</value>
+        </parameter>
+        <parameter>
+        <name>maxIdle</name>
+        <value>20</value>
+        </parameter>
+        <parameter>
+        <name>maxWait</name>
+        <value>10000</value>
+        </parameter>
+        <parameter>
+        <name>removeAbandoned</name>
+        <value>true</value>
+        </parameter>
+        <parameter>
+        <name>removeAbandonedTimeout</name>
+        <value>15</value>
+        </parameter>
+        <parameter>
+        <name>logAbandoned</name>
+        <value>false</value>
+        </parameter>
+        <parameter>
+        <name>url</name>
+        <value>jdbc:postgresql://localhost/verilion</value>
+        </parameter>
+        </ResourceParams>
+	</Context>
+</Host>

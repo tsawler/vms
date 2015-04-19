@@ -1,0 +1,9 @@
+
+Name: com/verilion/
+Specification-Title: vMaintain
+Specification-Vendor: Verilion Inc. http://www.verilion.com
+Specification-Version: 3.0
+Implementation-Title: com.verilion
+Implementation-Vendor: Verilion Inc.
+Implementation-Version: 2.6.0
+
