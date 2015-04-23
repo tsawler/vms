@@ -36,54 +36,54 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class BaseTag extends TagSupport {
 
-   private static final long serialVersionUID = 1559699228535153910L;
-   public PageContext pc = null;
-   public Tag parent = null;
-   public Connection conn = null;
+	private static final long serialVersionUID = 1559699228535153910L;
+	public PageContext pc = null;
+	public Tag parent = null;
+	public Connection conn = null;
 
-   public void setPageContext(PageContext p) {
-      pc = p;
-   }
+	public void setPageContext(PageContext p) {
+		pc = p;
+	}
 
-   public void setParent(Tag t) {
-      parent = t;
-   }
+	public void setParent(Tag t) {
+		parent = t;
+	}
 
-   public Tag getParent() {
-      return parent;
-   }
+	public Tag getParent() {
+		return parent;
+	}
 
-   public int doStartTag() throws JspException {
-      try {
+	public int doStartTag() throws JspException {
+		try {
 
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
-   public int doEndTag() throws JspException {
-      return EVAL_PAGE;
-   }
+	public int doEndTag() throws JspException {
+		return EVAL_PAGE;
+	}
 
-   public void release() {
-      pc = null;
-      parent = null;
-   }
+	public void release() {
+		pc = null;
+		parent = null;
+	}
 
-   /**
-    * @return Returns the conn.
-    */
-   public Connection getConn() {
-      return conn;
-   }
+	/**
+	 * @return Returns the conn.
+	 */
+	public Connection getConn() {
+		return conn;
+	}
 
-   /**
-    * @param conn
-    *           The conn to set.
-    */
-   public void setConn(Connection conn) {
-      this.conn = conn;
-   }
+	/**
+	 * @param conn
+	 *            The conn to set.
+	 */
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
 }

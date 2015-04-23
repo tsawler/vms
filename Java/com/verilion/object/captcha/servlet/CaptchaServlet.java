@@ -42,7 +42,7 @@ public class CaptchaServlet extends HttpServlet implements Servlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-	   //System.out.println("calling catpcha");
+		// System.out.println("calling catpcha");
 		// this key can be read from any controller to check wether user
 		// is a computer or human.
 		String capText = captchaProducer.createText();

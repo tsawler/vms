@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
  * Handles parse of uploaded XML documents. Called by UploadXML
  * 
  * @author tsawler
- *  
+ * 
  */
 public class ParseUserXML {
 
@@ -61,17 +61,18 @@ public class ParseUserXML {
 			digester.addSetNext("upload/user", "AddIndividual");
 
 			// now that rules and actions are configured, start the parse
-			//ParseUserXML abp = (ParseUserXML) digester.parse(new File(myFileName));
-			
+			// ParseUserXML abp = (ParseUserXML) digester.parse(new
+			// File(myFileName));
+
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * JavaBean class which holds properties on each entry
-	 * in the uploaded XML file. Must be static and public.
+	 * JavaBean class which holds properties on each entry in the uploaded XML
+	 * file. Must be static and public.
 	 * 
 	 * Jun 14, 2004
 	 * 
@@ -90,6 +91,7 @@ public class ParseUserXML {
 		public void setType(String newType) {
 			type = newType;
 		}
+
 		public String getType() {
 			return type;
 		}
@@ -97,13 +99,15 @@ public class ParseUserXML {
 		public void setFirst_name(String newName) {
 			first_name = newName;
 		}
+
 		public String getFirst_name() {
 			return first_name;
 		}
-		
+
 		public void setLast_name(String newName) {
 			last_name = newName;
 		}
+
 		public String getLast_name() {
 			return last_name;
 		}
@@ -111,6 +115,7 @@ public class ParseUserXML {
 		public void setAddress(String newAddress) {
 			address = newAddress;
 		}
+
 		public String getAddress() {
 			return address;
 		}
@@ -118,6 +123,7 @@ public class ParseUserXML {
 		public void setCity(String newCity) {
 			city = newCity;
 		}
+
 		public String getCity() {
 			return city;
 		}
@@ -125,6 +131,7 @@ public class ParseUserXML {
 		public void setProvince(String newProvince) {
 			province = newProvince;
 		}
+
 		public String getProvince() {
 			return province;
 		}
@@ -132,18 +139,20 @@ public class ParseUserXML {
 		public void setPostalcode(String newPostalcode) {
 			postalcode = newPostalcode;
 		}
+
 		public String getPostalcode() {
 			return postalcode;
 		}
 	}
-	
+
 	/**
 	 * Prints the xml information to standard output.
 	 * 
-	 * @param user  - a UserObject object
+	 * @param user
+	 *            - a UserObject object
 	 * 
-	 * TODO this just writes stuff out to stdout
-	 * We'll want to actually do something with this...
+	 *            TODO this just writes stuff out to stdout We'll want to
+	 *            actually do something with this...
 	 */
 	public void AddIndividual(UserObject user) {
 		System.out.println("TYPE: " + user.getType());

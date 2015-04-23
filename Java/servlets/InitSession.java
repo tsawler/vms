@@ -74,9 +74,9 @@ public class InitSession extends HttpServlet {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String theResponse = "OK";
-		//HttpSession session = request.getSession(true);
+		// HttpSession session = request.getSession(true);
 		HttpSession session = request.getSession();
-		if (session != null){
+		if (session != null) {
 			request.getSession(false).invalidate();
 		}
 		session = request.getSession();
@@ -119,7 +119,8 @@ public class InitSession extends HttpServlet {
 				session.setAttribute("customer_id", customer_id + "");
 				session.setAttribute("studentname",
 						drs.getString("customer_first_name"));
-				System.out.println("set session, and customer id is " + session.getAttribute("customer_id"));
+				System.out.println("set session, and customer id is "
+						+ session.getAttribute("customer_id"));
 				try {
 					customer_access_level = drs.getInt("customer_access_level");
 					session.setAttribute("customer_access_level",
@@ -133,7 +134,7 @@ public class InitSession extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		PrintWriter out = response.getWriter();
 		out.println(theResponse);
 		out.close();

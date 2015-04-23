@@ -47,79 +47,76 @@ import com.verilion.database.SingletonObjects;
  */
 public class FileUploadServlet extends HttpServlet {
 
-   private static final long serialVersionUID = 3256726169339901495L;
-   private int theId = 0;
+	private static final long serialVersionUID = 3256726169339901495L;
+	private int theId = 0;
 
-   private String sqlQuery = "";
-   private String type = "";
-   private String filename = "";
-   private PreparedStatement pst = null;
-   
-   private Connection conn;
+	private String sqlQuery = "";
+	private String type = "";
+	private String filename = "";
+	private PreparedStatement pst = null;
 
-   public void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	private Connection conn;
 
-      HttpSession session = request.getSession();
-      try {
-         MultipartRequest multi = new MultipartRequest(request,
-               SingletonObjects.getInstance().getUpload_path(), 50 * 1024);
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-         theId = Integer.parseInt((String) multi.getParameter("id"));
+		HttpSession session = request.getSession();
+		try {
+			MultipartRequest multi = new MultipartRequest(request,
+					SingletonObjects.getInstance().getUpload_path(), 50 * 1024);
 
-         Enumeration files = multi.getFileNames();
-         while (files.hasMoreElements()) {
-            String name = (String) files.nextElement();
-            filename = multi.getFilesystemName(name);
-            type = multi.getContentType(name);
-         }
+			theId = Integer.parseInt((String) multi.getParameter("id"));
 
-         // Get a connection
-         try {
-            conn = DbBean.getDbConnection();
-         } catch (Exception e) {
-            System.err.println("DbBean:getDbConnection:Exception "
-                  + e.getMessage());
-         }
+			Enumeration files = multi.getFileNames();
+			while (files.hasMoreElements()) {
+				String name = (String) files.nextElement();
+				filename = multi.getFilesystemName(name);
+				type = multi.getContentType(name);
+			}
 
-         // write to db
-         try {
-            sqlQuery = "update images set file_type = '"
-                  + type
-                  + "', image_data = ? where image_id = "
-                  + theId;
+			// Get a connection
+			try {
+				conn = DbBean.getDbConnection();
+			} catch (Exception e) {
+				System.err.println("DbBean:getDbConnection:Exception "
+						+ e.getMessage());
+			}
 
-            pst = conn.prepareStatement(sqlQuery);
+			// write to db
+			try {
+				sqlQuery = "update images set file_type = '" + type
+						+ "', image_data = ? where image_id = " + theId;
 
-            java.io.File theFile = new java.io.File(SingletonObjects
-                  .getInstance().getUpload_path(), filename);
+				pst = conn.prepareStatement(sqlQuery);
 
-            int fileLength = (int) theFile.length();
-            java.io.InputStream fin = new java.io.FileInputStream(theFile);
-            pst.setBinaryStream(1, fin, fileLength);
-            pst.execute();
-            theFile.delete();
-            pst.close();
-            pst = null;
-            DbBean.closeDbConnection(conn);
-         } catch (java.io.FileNotFoundException e) {
-            System.err.print("ClassNotFoundException: ");
-            System.err.println(e.getMessage());
-         } catch (SQLException ex) {
-            System.err.print("SQLException: ");
-            System.err.println(ex.getMessage());
-         } finally {
-            if (pst != null) {
-               pst.close();
-               pst = null;
-            }
-         }
-         // probably should send them somewhere better.
-         session.setAttribute("Error", "Upload complete.");
-         response
-               .sendRedirect((String)session.getAttribute("lastPage"));
-      } catch (Exception e) {
-         System.out.println(e.toString());
-      }
-   }
+				java.io.File theFile = new java.io.File(SingletonObjects
+						.getInstance().getUpload_path(), filename);
+
+				int fileLength = (int) theFile.length();
+				java.io.InputStream fin = new java.io.FileInputStream(theFile);
+				pst.setBinaryStream(1, fin, fileLength);
+				pst.execute();
+				theFile.delete();
+				pst.close();
+				pst = null;
+				DbBean.closeDbConnection(conn);
+			} catch (java.io.FileNotFoundException e) {
+				System.err.print("ClassNotFoundException: ");
+				System.err.println(e.getMessage());
+			} catch (SQLException ex) {
+				System.err.print("SQLException: ");
+				System.err.println(ex.getMessage());
+			} finally {
+				if (pst != null) {
+					pst.close();
+					pst = null;
+				}
+			}
+			// probably should send them somewhere better.
+			session.setAttribute("Error", "Upload complete.");
+			response.sendRedirect((String) session.getAttribute("lastPage"));
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
 }

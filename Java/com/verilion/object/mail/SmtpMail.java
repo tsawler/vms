@@ -29,12 +29,13 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
- * Allows creation and sending of smtp mail, including attachments. Does not require any
- * third party jars for talking to smtp server
+ * Allows creation and sending of smtp mail, including attachments. Does not
+ * require any third party jars for talking to smtp server
  * 
  * <P>
  * Dec 8, 2003
  * <P>
+ * 
  * @author tsawler
  * 
  */
@@ -78,7 +79,8 @@ public class SmtpMail {
 	}
 
 	/**
-	 * @param s String - the attachment
+	 * @param s
+	 *            String - the attachment
 	 */
 	@SuppressWarnings("unchecked")
 	public void addAttachment(String s) {
@@ -86,7 +88,8 @@ public class SmtpMail {
 	}
 
 	/**
-	 * @param s String - data to add
+	 * @param s
+	 *            String - data to add
 	 */
 	@SuppressWarnings("unchecked")
 	public void addData(String s) {
@@ -95,8 +98,10 @@ public class SmtpMail {
 	}
 
 	/**
-	 * @param s - first header
-	 * @param s1 - second header
+	 * @param s
+	 *            - first header
+	 * @param s1
+	 *            - second header
 	 */
 	@SuppressWarnings("unchecked")
 	public void addHeader(String s, String s1) {
@@ -105,7 +110,8 @@ public class SmtpMail {
 	}
 
 	/**
-	 * @param s - the text file to add
+	 * @param s
+	 *            - the text file to add
 	 */
 	@SuppressWarnings("unchecked")
 	public void addTextFile(String s) {
@@ -139,8 +145,7 @@ public class SmtpMail {
 		try {
 			i += sendString("QUIT");
 			so.close();
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 			return 0;
 		}
 		return i == 0 ? 1 : 0;
@@ -157,56 +162,51 @@ public class SmtpMail {
 		StringBuffer stringbuffer = new StringBuffer();
 		for (int j = 0; j < i; j += 3) {
 			if (j + 2 < i) {
-				String s =
-					toBinaryString(abyte0[j])
+				String s = toBinaryString(abyte0[j])
 						+ toBinaryString(abyte0[j + 1])
 						+ toBinaryString(abyte0[j + 2]);
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s.substring(0, 6), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s.substring(6, 12), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s.substring(12, 18), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s.substring(18, 24), 2)));
-			}
-			else if (j + 1 < i) {
-				String s1 =
-					toBinaryString(abyte0[j])
-						+ toBinaryString(abyte0[j + 1])
-						+ "00";
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s1.substring(0, 6), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s1.substring(6, 12), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s1.substring(12, 18), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s.substring(0, 6), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s.substring(6, 12), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s.substring(12, 18), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s.substring(18, 24), 2)));
+			} else if (j + 1 < i) {
+				String s1 = toBinaryString(abyte0[j])
+						+ toBinaryString(abyte0[j + 1]) + "00";
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s1.substring(0, 6), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s1.substring(6, 12), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s1.substring(12, 18), 2)));
 				stringbuffer.append('=');
-			}
-			else {
+			} else {
 				String s2 = toBinaryString(abyte0[j]) + "0000";
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s2.substring(0, 6), 2)));
-				stringbuffer.append(
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-						.charAt(
-						Integer.parseInt("00" + s2.substring(6, 12), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s2.substring(0, 6), 2)));
+				stringbuffer
+						.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+								.charAt(Integer.parseInt(
+										"00" + s2.substring(6, 12), 2)));
 				stringbuffer.append('=');
 				stringbuffer.append('=');
 			}
@@ -241,15 +241,14 @@ public class SmtpMail {
 		try {
 			so = new Socket(s, i);
 			send = new PrintWriter(so.getOutputStream(), true);
-			recv =
-				new BufferedReader(new InputStreamReader(so.getInputStream()));
+			recv = new BufferedReader(
+					new InputStreamReader(so.getInputStream()));
 			String s1 = recv.readLine();
 			char c = s1.charAt(0);
 			if ((c == '4') | (c == '5')) {
 				return 0;
 			}
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 			return 0;
 		}
 		return 1;
@@ -278,15 +277,15 @@ public class SmtpMail {
 		boolean flag = true;
 		String s1 = s;
 		try {
-			DataInputStream datainputstream =
-				new DataInputStream(new FileInputStream(s));
+			DataInputStream datainputstream = new DataInputStream(
+					new FileInputStream(s));
 			int i = s.lastIndexOf(SEPARATOR);
 			if (i >= 0) {
 				s1 = s1.substring(i + 1);
 			}
 			send.println("--" + DELIMITER);
-			send.println(
-				"Content-Type: APPLICATION/octet-stream; name=\"" + s1 + "\";");
+			send.println("Content-Type: APPLICATION/octet-stream; name=\"" + s1
+					+ "\";");
 			send.println("Content-Transfer-Encoding: BASE64");
 			send.println("Content-Description: " + s1);
 			send.print("\n");
@@ -295,8 +294,7 @@ public class SmtpMail {
 				int k;
 				if (j >= abyte0.length) {
 					k = datainputstream.read(abyte0, 0, abyte0.length);
-				}
-				else {
+				} else {
 					k = j;
 					datainputstream.readFully(abyte0, 0, k);
 					flag = false;
@@ -304,13 +302,12 @@ public class SmtpMail {
 				send.println(encode(abyte0, k));
 			}
 			datainputstream.close();
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 		}
 	}
 
 	/**
-	 * Sends a string 
+	 * Sends a string
 	 * 
 	 * @param s
 	 * @return int
@@ -320,8 +317,7 @@ public class SmtpMail {
 		try {
 			send.println(s);
 			s1 = recv.readLine();
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 			return 0;
 		}
 		if (s1.length() == 0) {
@@ -338,16 +334,14 @@ public class SmtpMail {
 	 */
 	private void sendTextFile(String s) {
 		try {
-			BufferedReader bufferedreader =
-				new BufferedReader(
+			BufferedReader bufferedreader = new BufferedReader(
 					new InputStreamReader(new FileInputStream(s)));
 			String s1;
 			while ((s1 = bufferedreader.readLine()) != null) {
 				send.println(s1);
 			}
 			bufferedreader.close();
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 		}
 	}
 
@@ -451,10 +445,8 @@ public class SmtpMail {
 			}
 		}
 		if (to.length() != 0) {
-			for (StringTokenizer stringtokenizer =
-				new StringTokenizer(to, ", \t");
-				stringtokenizer.hasMoreTokens();
-				) {
+			for (StringTokenizer stringtokenizer = new StringTokenizer(to,
+					", \t"); stringtokenizer.hasMoreTokens();) {
 				int i1 = sendString("RCPT TO:" + stringtokenizer.nextToken());
 				if (i1 != 1) {
 					return 0;
@@ -478,8 +470,7 @@ public class SmtpMail {
 		}
 		send.println("X-Mailer: Coldjava 1999-2001 ver 1.5");
 		if (attach.size() > 0) {
-			send.println(
-				"Content-Type: MULTIPART/mixed; BOUNDARY=" + DELIMITER);
+			send.println("Content-Type: MULTIPART/mixed; BOUNDARY=" + DELIMITER);
 		}
 		try {
 			send.print("\n\n");
@@ -493,8 +484,7 @@ public class SmtpMail {
 				String s1 = (String) body.elementAt(k1);
 				if (s1.compareTo("1") == 0) {
 					send.println((String) body.elementAt(k1 + 1));
-				}
-				else if (s1.compareTo("2") == 0) {
+				} else if (s1.compareTo("2") == 0) {
 					sendTextFile((String) body.elementAt(k1 + 1));
 				}
 			}
@@ -507,8 +497,7 @@ public class SmtpMail {
 				send.println("--" + DELIMITER + "--");
 			}
 			return sendString("\n.\n");
-		}
-		catch (Exception _ex) {
+		} catch (Exception _ex) {
 			return 0;
 		}
 	}

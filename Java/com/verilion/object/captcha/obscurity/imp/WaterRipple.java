@@ -46,7 +46,8 @@ public class WaterRipple implements GimpyEngine {
 	/**
 	 * Apply Ripple and Water ImageFilters to distort the image.
 	 * 
-	 * @param image the image to be distorted
+	 * @param image
+	 *            the image to be distorted
 	 * @return the distort image
 	 */
 	public BufferedImage getDistortedImage(BufferedImage image) {
@@ -73,8 +74,8 @@ public class WaterRipple implements GimpyEngine {
 		water.setWavelength(70);
 
 		// apply filter water
-		FilteredImageSource filtered = new FilteredImageSource(image
-				.getSource(), water);
+		FilteredImageSource filtered = new FilteredImageSource(
+				image.getSource(), water);
 		Image img = Toolkit.getDefaultToolkit().createImage(filtered);
 
 		// apply filter ripple
@@ -96,7 +97,9 @@ public class WaterRipple implements GimpyEngine {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
+	 * @see
+	 * com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.
+	 * util.Properties)
 	 */
 	public void setProperties(Properties props) {
 		this.props = props;

@@ -54,78 +54,78 @@ import com.verilion.database.DbBean;
  */
 public class ShowImageBytea extends HttpServlet {
 
-   private static final long serialVersionUID = 3258125860459459377L;
-   private int theId = 0;
-   private ResultSet rs = null;
-   private Connection conn = null;
-   PreparedStatement pst = null;
+	private static final long serialVersionUID = 3258125860459459377L;
+	private int theId = 0;
+	private ResultSet rs = null;
+	private Connection conn = null;
+	PreparedStatement pst = null;
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-      String sqlQuery = "";
-      String mime_type = "";
-      theId = Integer.parseInt((String) request.getParameter("id"));
+		String sqlQuery = "";
+		String mime_type = "";
+		theId = Integer.parseInt((String) request.getParameter("id"));
 
-      // get image data and write it to the browser
-      try {
-         conn = DbBean.getDbConnection();
+		// get image data and write it to the browser
+		try {
+			conn = DbBean.getDbConnection();
 
-         sqlQuery = "select image_data, file_type from images where image_id = ?";
-         PreparedStatement pst = conn.prepareStatement(sqlQuery);
-         pst.setInt(1, theId);
-         rs = pst.executeQuery();
+			sqlQuery = "select image_data, file_type from images where image_id = ?";
+			PreparedStatement pst = conn.prepareStatement(sqlQuery);
+			pst.setInt(1, theId);
+			rs = pst.executeQuery();
 
-         if (rs != null) {
-            while (rs.next()) {
-               byte[] theImage = rs.getBytes(1);
-               mime_type = rs.getString("file_type");
-               response.setContentType(mime_type);
-               response.setHeader("Cache-Control", "no-cache");
-               response.setHeader("pragma", "no-cache");
-               response.setDateHeader("Expires", 0);
-               ServletOutputStream out = response.getOutputStream();
-               out.write(theImage);
-               out.close();
+			if (rs != null) {
+				while (rs.next()) {
+					byte[] theImage = rs.getBytes(1);
+					mime_type = rs.getString("file_type");
+					response.setContentType(mime_type);
+					response.setHeader("Cache-Control", "no-cache");
+					response.setHeader("pragma", "no-cache");
+					response.setDateHeader("Expires", 0);
+					ServletOutputStream out = response.getOutputStream();
+					out.write(theImage);
+					out.close();
 
-            }
-         }
-         rs.close();
-         rs = null;
-         pst.close();
-         pst = null;
-         DbBean.closeDbConnection(conn);
-         conn = null;
-      } catch (SQLException e) {
-         throw new ServletException("ShowImageBytea:SQLException");
-      } catch (Exception e) {
-         System.out.println("Error in show image" + e.toString());
-         e.printStackTrace();
-      } finally {
-         if (rs != null) {
-            try {
-               rs.close();
-            } catch (SQLException e1) {
+				}
+			}
+			rs.close();
+			rs = null;
+			pst.close();
+			pst = null;
+			DbBean.closeDbConnection(conn);
+			conn = null;
+		} catch (SQLException e) {
+			throw new ServletException("ShowImageBytea:SQLException");
+		} catch (Exception e) {
+			System.out.println("Error in show image" + e.toString());
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e1) {
 
-            }
-            rs = null;
-         }
-         if (pst != null) {
-            try {
-               pst.close();
-            } catch (SQLException e1) {
-               e1.printStackTrace();
-            }
-            pst = null;
-         }
-      }
-      if (conn != null) {
-         try {
-            DbBean.closeDbConnection(conn);
-         } catch (Exception e1) {
-            e1.printStackTrace();
-         }
-         conn = null;
-      }
-   }
+				}
+				rs = null;
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				pst = null;
+			}
+		}
+		if (conn != null) {
+			try {
+				DbBean.closeDbConnection(conn);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			conn = null;
+		}
+	}
 }

@@ -23,30 +23,30 @@ import java.net.UnknownHostException;
  */
 public class TestSocket {
 
-   /**
-    * Just open a test socket to specified server/port.
-    * 
-    * @param host
-    * @param port
-    * @return true if up, false if down
-    * @throws IOException
-    */
-   public boolean CheckSocket(String host, int port) throws IOException {
-      
-      Socket echoSocket = null;
-      boolean okay = true;
+	/**
+	 * Just open a test socket to specified server/port.
+	 * 
+	 * @param host
+	 * @param port
+	 * @return true if up, false if down
+	 * @throws IOException
+	 */
+	public boolean CheckSocket(String host, int port) throws IOException {
 
-      try {
-         echoSocket = new Socket(host, port);
-      } catch (UnknownHostException e) {
-         okay = false;
-      } catch (IOException e) {
-         okay = false;
-      }
+		Socket echoSocket = null;
+		boolean okay = true;
 
-      echoSocket.close();
+		try {
+			echoSocket = new Socket(host, port);
+		} catch (UnknownHostException e) {
+			okay = false;
+		} catch (IOException e) {
+			okay = false;
+		}
 
-      return okay;
-   }
+		echoSocket.close();
+
+		return okay;
+	}
 
 }

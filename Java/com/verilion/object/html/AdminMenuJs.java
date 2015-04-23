@@ -32,52 +32,52 @@ import com.verilion.database.DbBean;
  * <P>
  * October 1, 2004
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class AdminMenuJs extends HttpServlet {
 
-   private static final long serialVersionUID = 3257284729769375025L;
-   private String theJs = "";
-   private Connection conn = null;
+	private static final long serialVersionUID = 3257284729769375025L;
+	private String theJs = "";
+	private Connection conn = null;
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-      // Get a connection
-      try {
-         conn = DbBean.getDbConnection();
-      } catch (Exception e) {
-         System.err
-               .println("AdminMenuJs:DbBean:getDbConnection:Exception "
-                     + e.getMessage());
-      }
+		// Get a connection
+		try {
+			conn = DbBean.getDbConnection();
+		} catch (Exception e) {
+			System.err.println("AdminMenuJs:DbBean:getDbConnection:Exception "
+					+ e.getMessage());
+		}
 
-      // get string and write it to the browser
-      try {
-         AdminMenu myMenu = new AdminMenu();
-         myMenu.setConn(conn);
+		// get string and write it to the browser
+		try {
+			AdminMenu myMenu = new AdminMenu();
+			myMenu.setConn(conn);
 
-         theJs = myMenu.generateMenuJavaScript();
-         response.setContentType("text/plain");
-         PrintWriter out;
-         out = response.getWriter();
-         out.write(theJs);
-         out.close();
-         conn.close();
-         conn = null;
-      } catch (Exception e) {
-         throw new ServletException("AdminMenuJs:Exception");
-      } finally {
-         if (conn != null) {
-            try {
-               conn.close();
-            } catch (SQLException e1) {
-               e1.printStackTrace();
-            }
-            conn = null;
+			theJs = myMenu.generateMenuJavaScript();
+			response.setContentType("text/plain");
+			PrintWriter out;
+			out = response.getWriter();
+			out.write(theJs);
+			out.close();
+			conn.close();
+			conn = null;
+		} catch (Exception e) {
+			throw new ServletException("AdminMenuJs:Exception");
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				conn = null;
 
-         }
-      }
-   }
+			}
+		}
+	}
 }

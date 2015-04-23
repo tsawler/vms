@@ -17,59 +17,94 @@ import java.io.OutputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author tcs
+ *
+ */
 public class CacheResponseStream extends ServletOutputStream {
-   
-   protected boolean closed = false;
-   protected HttpServletResponse response = null;
-   protected ServletOutputStream output = null;
-   protected OutputStream cache = null;
 
-   public CacheResponseStream(HttpServletResponse response, OutputStream cache)
-         throws IOException {
-      super();
-      closed = false;
-      this.response = response;
-      this.cache = cache;
-   }
+	protected boolean closed = false;
+	protected HttpServletResponse response = null;
+	protected ServletOutputStream output = null;
+	protected OutputStream cache = null;
 
-   public void close() throws IOException {
-      if (closed) {
-         throw new IOException("This output stream has already been closed");
-      }
-      cache.close();
-      closed = true;
-   }
+	/**
+	 * @param response
+	 * @param cache
+	 * @throws IOException
+	 */
+	public CacheResponseStream(HttpServletResponse response, OutputStream cache)
+			throws IOException {
+		super();
+		closed = false;
+		this.response = response;
+		this.cache = cache;
+	}
 
-   public void flush() throws IOException {
-      if (closed) {
-         throw new IOException("Cannot flush a closed output stream");
-      }
-      cache.flush();
-   }
+	/* (non-Javadoc)
+	 * @see java.io.OutputStream#close()
+	 */
+	@Override
+	public void close() throws IOException {
+		if (closed) {
+			throw new IOException("This output stream has already been closed");
+		}
+		cache.close();
+		closed = true;
+	}
 
-   public void write(int b) throws IOException {
-      if (closed) {
-         throw new IOException("Cannot write to a closed output stream");
-      }
-      cache.write((byte) b);
-   }
+	/* (non-Javadoc)
+	 * @see java.io.OutputStream#flush()
+	 */
+	@Override
+	public void flush() throws IOException {
+		if (closed) {
+			throw new IOException("Cannot flush a closed output stream");
+		}
+		cache.flush();
+	}
 
-   public void write(byte b[]) throws IOException {
-      write(b, 0, b.length);
-   }
+	/* (non-Javadoc)
+	 * @see java.io.OutputStream#write(int)
+	 */
+	@Override
+	public void write(int b) throws IOException {
+		if (closed) {
+			throw new IOException("Cannot write to a closed output stream");
+		}
+		cache.write((byte) b);
+	}
 
-   public void write(byte b[], int off, int len) throws IOException {
-      if (closed) {
-         throw new IOException("Cannot write to a closed output stream");
-      }
-      cache.write(b, off, len);
-   }
+	/* (non-Javadoc)
+	 * @see java.io.OutputStream#write(byte[])
+	 */
+	@Override
+	public void write(byte b[]) throws IOException {
+		write(b, 0, b.length);
+	}
 
-   public boolean closed() {
-      return (this.closed);
-   }
+	/* (non-Javadoc)
+	 * @see java.io.OutputStream#write(byte[], int, int)
+	 */
+	@Override
+	public void write(byte b[], int off, int len) throws IOException {
+		if (closed) {
+			throw new IOException("Cannot write to a closed output stream");
+		}
+		cache.write(b, off, len);
+	}
 
-   public void reset() {
-      //noop
-   }
+	/**
+	 * @return
+	 */
+	public boolean closed() {
+		return (this.closed);
+	}
+
+	/**
+	 * 
+	 */
+	public void reset() {
+		// noop
+	}
 }

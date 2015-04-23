@@ -30,89 +30,86 @@ import com.verilion.utility.TextUtils;
  */
 public class LatestNewsTag extends BaseTag {
 
-   private static final long serialVersionUID = -4965726296134383924L;
-   private int showTitle = 0;
+	private static final long serialVersionUID = -4965726296134383924L;
+	private int showTitle = 0;
 
-   public int doStartTag() throws JspException {
-      try {
+	public int doStartTag() throws JspException {
+		try {
 
-         String theNewsItems = "";
-         NewsItem myNews = new NewsItem();
-         XDisconnectedRowSet crs = new XDisconnectedRowSet();
+			String theNewsItems = "";
+			NewsItem myNews = new NewsItem();
+			XDisconnectedRowSet crs = new XDisconnectedRowSet();
 
-         try {
-            if (showTitle > 0) {
-            theNewsItems = "<table class=\"newsbox\" style=\"text-align: left;\">"
-                  + "<tr style=\"width: 100%;\"><td colspan=\"2\" class=\"moduletitle\">"
-                  + "Latest News</td></tr>";
-            } else {
-               theNewsItems = "<ul class=\"newslist\" style=\"text-align: left;\">";
-            }
+			try {
+				if (showTitle > 0) {
+					theNewsItems = "<table class=\"newsbox\" style=\"text-align: left;\">"
+							+ "<tr style=\"width: 100%;\"><td colspan=\"2\" class=\"moduletitle\">"
+							+ "Latest News</td></tr>";
+				} else {
+					theNewsItems = "<ul class=\"newslist\" style=\"text-align: left;\">";
+				}
 
-            myNews.setConn(conn);
-            crs = myNews.getNewsHeadlines();
+				myNews.setConn(conn);
+				crs = myNews.getNewsHeadlines();
 
-            if (crs.next()) {
-               crs.previous();
-               while (crs.next()) {
-                  // read in the news items
+				if (crs.next()) {
+					crs.previous();
+					while (crs.next()) {
+						// read in the news items
 
-                  String theTitleText = TextUtils.StripHtml(crs
-                        .getString("news_teaser_text"));
-                  String theNewsItem = crs.getString("news_teaser_text");
-                  
-                  if (theTitleText.length() > 100) {
-                     theTitleText = theTitleText.substring(0, 99);
-                  }
-                  
-                  if (theNewsItem.length() > 200) {
-                     theNewsItem = theNewsItem.substring(0, 199) + "...";
-                  }
-                  theNewsItems += "<li><a class=\"moduletext\" "
-                        + "title=\""
-                        + theTitleText
-                        + "..."
-                        + "\" style=\"font-weight: bold;\" href=\"/public/jpage/1/p/News/a/newsitem/id/"
-                        + crs.getInt("news_id")
-                        + "/content.do\">"
-                        + crs.getString("news_title")
-                        + "</a><span class=\"content\">:&nbsp;"
-                        + theNewsItem
-                        + "</span></li>";
+						String theTitleText = TextUtils.StripHtml(crs
+								.getString("news_teaser_text"));
+						String theNewsItem = crs.getString("news_teaser_text");
 
-               }
-            } else {
-               // No news items to display
-               theNewsItems += "<li>"
-                     + "<span class=\"moduletext\">"
-                     + "Currently unavailable"
-                     + "</li>";
-            }
-            theNewsItems += "</ul>";
+						if (theTitleText.length() > 100) {
+							theTitleText = theTitleText.substring(0, 99);
+						}
 
-            crs.close();
-            crs = null;
-            pc.getOut().write(theNewsItems);
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+						if (theNewsItem.length() > 200) {
+							theNewsItem = theNewsItem.substring(0, 199) + "...";
+						}
+						theNewsItems += "<li><a class=\"moduletext\" "
+								+ "title=\""
+								+ theTitleText
+								+ "..."
+								+ "\" style=\"font-weight: bold;\" href=\"/public/jpage/1/p/News/a/newsitem/id/"
+								+ crs.getInt("news_id") + "/content.do\">"
+								+ crs.getString("news_title")
+								+ "</a><span class=\"content\">:&nbsp;"
+								+ theNewsItem + "</span></li>";
 
-   /**
-    * @return Returns the showTitle.
-    */
-   public int getShowTitle() {
-      return showTitle;
-   }
+					}
+				} else {
+					// No news items to display
+					theNewsItems += "<li>" + "<span class=\"moduletext\">"
+							+ "Currently unavailable" + "</li>";
+				}
+				theNewsItems += "</ul>";
 
-   /**
-    * @param showTitle The showTitle to set.
-    */
-   public void setShowTitle(int showTitle) {
-      this.showTitle = showTitle;
-   }
+				crs.close();
+				crs = null;
+				pc.getOut().write(theNewsItems);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
+
+	/**
+	 * @return Returns the showTitle.
+	 */
+	public int getShowTitle() {
+		return showTitle;
+	}
+
+	/**
+	 * @param showTitle
+	 *            The showTitle to set.
+	 */
+	public void setShowTitle(int showTitle) {
+		this.showTitle = showTitle;
+	}
 }

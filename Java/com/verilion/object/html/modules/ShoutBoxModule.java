@@ -51,7 +51,8 @@ public class ShoutBoxModule implements ModuleInterface {
 				theModuleText = "<div class=\"vmodule\">\n"
 						+ "<form method=\"post\" action=\"/shoutbox.jsp\">"
 						+ "<div class=\"vmoduleheading\">Shoutbox!</div>\n"
-						+ "<div class=\"vmodulebody\" style=\"text-align: center\">\n" + "<strong>"
+						+ "<div class=\"vmodulebody\" style=\"text-align: center\">\n"
+						+ "<strong>"
 						+ "Most recent shout:</strong><br /><br />";
 				ShoutBoxModuleObject c = new ShoutBoxModuleObject();
 				String theShout = c.getMostRecentShout();
@@ -61,14 +62,13 @@ public class ShoutBoxModule implements ModuleInterface {
 					theModuleText += theShout + "<br /><br />";
 				}
 				theModuleText += "<input type=\"text\" size=\"12\" name=\"shout\" />"
-					+ "<input type=\"submit\" value=\"Shout!\">"
-					+ "\n<input type=\"hidden\" name=\"url\" value=\""
-					+ theUrl
-					+ "\" />"
-					+ "\n"
-					+ "<input type=\"hidden\" name=\"user\" value=\""
-					+ user
-					+ "\" />";
+						+ "<input type=\"submit\" value=\"Shout!\">"
+						+ "\n<input type=\"hidden\" name=\"url\" value=\""
+						+ theUrl
+						+ "\" />"
+						+ "\n"
+						+ "<input type=\"hidden\" name=\"user\" value=\""
+						+ user + "\" />";
 				theModuleText += "</div></form></div>";
 			}
 		} catch (Exception e) {

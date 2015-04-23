@@ -14,24 +14,29 @@ package servlets;
 import com.verilion.display.html.Page;
 
 /**
-* <p>Generic servlet for creating HTML pages from HTML templates stored in the
-* database. reads first three values in url  as page name, action, language id.
-* Subsequent values in the url like this</p>
-* <p>http://site/Page/action/languageid/name/value/content.do)</p>
-* <p>are read as name value pairs</p>
-* <P>
-* Nov 16, 2004
-* <P>
-* 
-* @author tsawler
-*  
-*/
+ * <p>
+ * Generic servlet for creating HTML pages from HTML templates stored in the
+ * database. reads first three values in url as page name, action, language id.
+ * Subsequent values in the url like this
+ * </p>
+ * <p>
+ * http://site/Page/action/languageid/name/value/content.do)
+ * </p>
+ * <p>
+ * are read as name value pairs
+ * </p>
+ * <P>
+ * Nov 16, 2004
+ * <P>
+ * 
+ * @author tsawler
+ * 
+ */
 public class VerilionServlet extends Page {
 
-   /**
-    * Comment for <code>serialVersionUID</code>
-    */
-   private static final long serialVersionUID = 1L;
+	/**
+	 * Comment for <code>serialVersionUID</code>
+	 */
+	private static final long serialVersionUID = 1L;
 
- 
 }

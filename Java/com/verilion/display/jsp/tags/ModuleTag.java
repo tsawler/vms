@@ -39,36 +39,36 @@ import com.verilion.object.html.modules.ModuleObject;
  * TagLib to display Modules.
  * 
  * @author tsawler
- *  
+ * 
  */
 public class ModuleTag extends BaseTag {
-   
-   private static final long serialVersionUID = -4965726296134383924L;
-   private int position = 0;
 
-   public int doStartTag() throws JspException {
-      try {
-         String theModules = ModuleObject.makeModuleHtml(conn, position, pc
-               .getSession(), (HttpServletRequest) pc.getRequest());
-         pc.getOut().write(theModules);
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+	private static final long serialVersionUID = -4965726296134383924L;
+	private int position = 0;
 
-  
-   /**
-    * @return Returns the position.
-    */
-   public int getPosition() {
-      return position;
-   }
-   
-   /**
-    * @param position The position to set.
-    */
-   public void setPosition(int position) {
-      this.position = position;
-   }
+	public int doStartTag() throws JspException {
+		try {
+			String theModules = ModuleObject.makeModuleHtml(conn, position,
+					pc.getSession(), (HttpServletRequest) pc.getRequest());
+			pc.getOut().write(theModules);
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
+
+	/**
+	 * @return Returns the position.
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position
+	 *            The position to set.
+	 */
+	public void setPosition(int position) {
+		this.position = position;
+	}
 }

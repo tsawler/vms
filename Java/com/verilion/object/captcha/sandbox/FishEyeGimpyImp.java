@@ -81,7 +81,9 @@ public class FishEyeGimpyImp implements GimpyEngine {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
+	 * @see
+	 * com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.
+	 * util.Properties)
 	 */
 	public void setProperties(Properties props) {
 		this.props = props;

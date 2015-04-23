@@ -22,14 +22,14 @@ import javax.servlet.jsp.JspTagException;
  */
 public class BlogTag extends BaseTag {
 
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public int doStartTag() throws JspException {
-      try {
+	public int doStartTag() throws JspException {
+		try {
 
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 }

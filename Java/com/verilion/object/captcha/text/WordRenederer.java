@@ -21,18 +21,19 @@ import java.util.Properties;
  * 
  */
 public interface WordRenederer {
-	/** 
+	/**
 	 * Render a word to a BufferedImage.
 	 * 
-	 * @param word The word to be rendered.
-	 * @param width The width of the image to be created.
-	 * @param height The heigth of the image to be created.
+	 * @param word
+	 *            The word to be rendered.
+	 * @param width
+	 *            The width of the image to be created.
+	 * @param height
+	 *            The heigth of the image to be created.
 	 * @return The BufferedImage created from the word,
 	 */
-	public abstract BufferedImage renderWord(
-		String word,
-		int width,
-		int height);
+	public abstract BufferedImage renderWord(String word, int width, int height);
+
 	/**
 	 * @param properties
 	 */

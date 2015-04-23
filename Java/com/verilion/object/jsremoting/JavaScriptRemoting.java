@@ -136,7 +136,7 @@ public class JavaScriptRemoting {
 		}
 		return okay;
 	}
-	
+
 	public boolean isNumeric(String theVal) {
 		boolean okay = true;
 		try {

@@ -76,7 +76,7 @@ public class DefaultBackgroundImp implements BackgroundProducer {
 		GradientPaint ytow = new GradientPaint(0, 0, from, width, height, to);
 
 		graph.setPaint(ytow);
-		
+
 		// draw gradient color
 		graph.fill(new Rectangle2D.Double(0, 0, width, height));
 

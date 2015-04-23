@@ -26,7 +26,7 @@ public class Constants {
 	public final static String SIMPLE_CAPTCHA_BOX_C = "cap.border.c";
 	public final static String SIMPLE_CAPTCHA_BOX_TH = "cap.border.th";
 	public final static String SIMPLE_CAPTCHA_NOISE_COLOR = "cap.noise.c";
-	public final static String SIMPLE_CAPTCHA_NOISE_IMP = "cap.noise.imp";	
+	public final static String SIMPLE_CAPTCHA_NOISE_IMP = "cap.noise.imp";
 	public final static String SIMPLE_CAPTCHA_OBSCURIFICATOR = "cap.obscurificator";
 	public final static String SIMPLE_CAPTCHA_PRODUCER = "cap.producer";
 	public final static String SIMPLE_CAPTCHA_TEXTPRODUCER_CHARR = "cap.char.arr";

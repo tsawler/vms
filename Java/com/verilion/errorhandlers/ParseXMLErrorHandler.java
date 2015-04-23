@@ -31,68 +31,68 @@ import org.xml.sax.helpers.DefaultHandler;
  * 
  */
 public class ParseXMLErrorHandler extends DefaultHandler {
-   private MessageFormat message = new MessageFormat("({0}: {1}, {2}): {3}");
+	private MessageFormat message = new MessageFormat("({0}: {1}, {2}): {3}");
 
-   // private HttpSession session;
+	// private HttpSession session;
 
-   /**
-    * @param session
-    */
-   public ParseXMLErrorHandler(HttpSession session) {
-      super();
-      // this.session = session;
-   }
+	/**
+	 * @param session
+	 */
+	public ParseXMLErrorHandler(HttpSession session) {
+		super();
+		// this.session = session;
+	}
 
-   public ParseXMLErrorHandler() {
-      super();
-   }
+	public ParseXMLErrorHandler() {
+		super();
+	}
 
-   /**
-    * Write an error message to exceptions file
-    * 
-    * @param e
-    * @throws FileNotFoundException
-    */
-   private void print(SAXParseException e) throws FileNotFoundException {
+	/**
+	 * Write an error message to exceptions file
+	 * 
+	 * @param e
+	 * @throws FileNotFoundException
+	 */
+	private void print(SAXParseException e) throws FileNotFoundException {
 
-      try {
+		try {
 
-         // get the error message
-         String msg = message.format(new Object[] { e.getSystemId(),
-               new Integer(e.getLineNumber()),
-               new Integer(e.getColumnNumber()), e.getMessage() });
+			// get the error message
+			String msg = message.format(new Object[] { e.getSystemId(),
+					new Integer(e.getLineNumber()),
+					new Integer(e.getColumnNumber()), e.getMessage() });
 
-         // write it to the exceptions file
-         System.out.println(msg);
-      } catch (Exception ex) {
-         ex.printStackTrace();
-      }
-   }
+			// write it to the exceptions file
+			System.out.println(msg);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
-   public void warning(SAXParseException e) throws SAXParseException {
-      try {
-         print(e);
-      } catch (Exception e1) {
-         e1.printStackTrace();
-      }
-      throw e;
-   }
+	public void warning(SAXParseException e) throws SAXParseException {
+		try {
+			print(e);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		throw e;
+	}
 
-   public void error(SAXParseException e) throws SAXParseException {
-      try {
-         print(e);
-      } catch (Exception e1) {
-         e1.printStackTrace();
-      }
-      throw e;
-   }
+	public void error(SAXParseException e) throws SAXParseException {
+		try {
+			print(e);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		throw e;
+	}
 
-   public void fatalError(SAXParseException e) throws SAXParseException {
-      try {
-         print(e);
-      } catch (Exception ex) {
-         ex.printStackTrace();
-      }
-      throw e;
-   }
+	public void fatalError(SAXParseException e) throws SAXParseException {
+		try {
+			print(e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		throw e;
+	}
 }

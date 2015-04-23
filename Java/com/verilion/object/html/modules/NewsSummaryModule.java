@@ -26,14 +26,14 @@ import com.verilion.object.Errors;
 import com.verilion.utility.TextUtils;
 
 /**
-* Gets news headlines and summary for inclusion on html page
-* <P>
-*11 Nov 2008
-* <P>
-* 
-* @author tsawler
-*  
-*/
+ * Gets news headlines and summary for inclusion on html page
+ * <P>
+ * 11 Nov 2008
+ * <P>
+ * 
+ * @author tsawler
+ * 
+ */
 public class NewsSummaryModule implements ModuleInterface {
 
 	/**
@@ -42,18 +42,19 @@ public class NewsSummaryModule implements ModuleInterface {
 	 * @return String - fully formatted news headlines as html
 	 * @throws Exception
 	 */
-	public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request) throws Exception {
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception {
 
 		String theNewsItems = "";
 		NewsItem myNews = new NewsItem();
 		XDisconnectedRowSet crs = new XDisconnectedRowSet();
-		
-		try {	
+
+		try {
 			theNewsItems = "<div class=\"vmodule\">\n";
 
 			myNews.setConn(conn);
 			crs = myNews.getNewsHeadlines();
-			
+
 			int i = 0;
 
 			if (crs.next()) {
@@ -61,28 +62,26 @@ public class NewsSummaryModule implements ModuleInterface {
 				while (crs.next() && i < 3) {
 					i++;
 					// read in the news items
-				   String theTitleText = TextUtils.StripHtml(crs.getString("news_teaser_text"));
-				   if (theTitleText.length() > 100) {
-				      theTitleText = theTitleText.substring(0, 99);
-				   }
-					theNewsItems +="<div class=\"vmodulebody\">\n"
-						+ "<h2><a href=\"/public/jpage/1/p/News/a/newsitem/id/"
-				    	+ crs.getInt("news_id")
-						+ "/content.do\">"
-						+ crs.getString("news_title")
-						+ "</a></h2>\n"
-						+ theTitleText
-						+ "...<br /><br /></div>";
-					    
+					String theTitleText = TextUtils.StripHtml(crs
+							.getString("news_teaser_text"));
+					if (theTitleText.length() > 100) {
+						theTitleText = theTitleText.substring(0, 99);
+					}
+					theNewsItems += "<div class=\"vmodulebody\">\n"
+							+ "<h2><a href=\"/public/jpage/1/p/News/a/newsitem/id/"
+							+ crs.getInt("news_id") + "/content.do\">"
+							+ crs.getString("news_title") + "</a></h2>\n"
+							+ theTitleText + "...<br /><br /></div>";
+
 				}
 			} else {
 				// No news items to display
 				theNewsItems += "<div class=\"vmodulebody\">Currently unavailable</div>\n";
 			}
 			theNewsItems += "\n<div style=\"text-align: center\"><a href=\"/newsfeed.doxml\">"
-			   + "<br /><img src=\"/images/rss.png\" height=\"14\" "
-			   + "width=\"36\" style=\"border: 0\" alt=\"rss\""
-			   + " title=\"Subscribe to our RSS news feed\" /></a></div></div>\n";
+					+ "<br /><img src=\"/images/rss.png\" height=\"14\" "
+					+ "width=\"36\" style=\"border: 0\" alt=\"rss\""
+					+ " title=\"Subscribe to our RSS news feed\" /></a></div></div>\n";
 
 			crs.close();
 			crs = null;
@@ -90,10 +89,10 @@ public class NewsSummaryModule implements ModuleInterface {
 			Errors.addError("NewsSummaryModule.getNewsHeadlines:Exception:"
 					+ e.toString());
 		} finally {
-		    if (crs != null) {
-		        crs.close();
-		        crs = null;
-		    }
+			if (crs != null) {
+				crs.close();
+				crs = null;
+			}
 		}
 		return theNewsItems;
 	}

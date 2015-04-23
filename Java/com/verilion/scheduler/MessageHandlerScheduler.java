@@ -29,40 +29,39 @@ import com.verilion.object.mail.MessageHandler;
  */
 
 public class MessageHandlerScheduler {
-   Toolkit toolkit;
-   Timer timer;
+	Toolkit toolkit;
+	Timer timer;
 
-   public MessageHandlerScheduler() {
-      toolkit = Toolkit.getDefaultToolkit();
-      timer = new Timer(true);
-      timer.schedule(new RemindTask(), 0, // initial delay
-            1000 * 60 * 5); // subsequent rate every 1 min
-   }
-   
-   public void Stop() {
-      if (timer != null) {
-         timer.cancel();
-      }
-   }
+	public MessageHandlerScheduler() {
+		toolkit = Toolkit.getDefaultToolkit();
+		timer = new Timer(true);
+		timer.schedule(new RemindTask(), 0, // initial delay
+				1000 * 60 * 5); // subsequent rate every 1 min
+	}
 
-   class RemindTask extends TimerTask {
-      public void run() {
-         //System.out.println("Sending email");
-         MessageHandler myHandler = new MessageHandler();
-         try {
-            myHandler.SendMessagesInQueue();
-         } catch (Exception e) {
-            System.out.println("Error sending email: " + e.toString());
-            e.printStackTrace();
-         }
-      }
-   }
+	public void Stop() {
+		if (timer != null) {
+			timer.cancel();
+		}
+	}
 
-   public static void main() {
-      System.out.println("About to schedule task.");
-      new MessageHandlerScheduler();
-      System.out.println("Task scheduled.");
-   }
-   
-   
+	class RemindTask extends TimerTask {
+		public void run() {
+			// System.out.println("Sending email");
+			MessageHandler myHandler = new MessageHandler();
+			try {
+				myHandler.SendMessagesInQueue();
+			} catch (Exception e) {
+				System.out.println("Error sending email: " + e.toString());
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void main() {
+		System.out.println("About to schedule task.");
+		new MessageHandlerScheduler();
+		System.out.println("Task scheduled.");
+	}
+
 }

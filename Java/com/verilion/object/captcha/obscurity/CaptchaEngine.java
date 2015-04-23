@@ -19,8 +19,8 @@ import java.awt.image.BufferedImage;
  * @author tsawler
  *
  */
-public interface CaptchaEngine  {
-	
+public interface CaptchaEngine {
+
 	public abstract BufferedImage getDistortedImage(BufferedImage image);
-	
+
 }

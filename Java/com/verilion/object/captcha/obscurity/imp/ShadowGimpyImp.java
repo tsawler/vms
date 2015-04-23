@@ -60,8 +60,8 @@ public class ShadowGimpyImp implements GimpyEngine {
 
 		// apply filter water
 
-		FilteredImageSource wfiltered = new FilteredImageSource(image
-				.getSource(), wfilter);
+		FilteredImageSource wfiltered = new FilteredImageSource(
+				image.getSource(), wfilter);
 
 		Image img = Toolkit.getDefaultToolkit().createImage(wfiltered);
 		img = Toolkit.getDefaultToolkit().createImage(wfiltered);
@@ -85,7 +85,9 @@ public class ShadowGimpyImp implements GimpyEngine {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
+	 * @see
+	 * com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.
+	 * util.Properties)
 	 */
 	public void setProperties(Properties props) {
 		this.props = props;

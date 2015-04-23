@@ -16,15 +16,13 @@ import java.util.Properties;
 
 /**
  * Produce noise for captcha image (interface)
+ * 
  * @author tsawler
  *
  */
 public interface NoiseProducer {
 	public abstract void setProperties(Properties props);
-	public abstract void makeNoise(
-		BufferedImage image,
-		float factorOne,
-		float factorTwo,
-		float factorThree,
-		float factorFour);
+
+	public abstract void makeNoise(BufferedImage image, float factorOne,
+			float factorTwo, float factorThree, float factorFour);
 }

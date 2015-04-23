@@ -39,7 +39,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class LanguageMenu {
 
@@ -47,10 +47,10 @@ public class LanguageMenu {
 
 	/**
 	 * Generates a drop down list of available lanaguages
-	 *  
+	 * 
 	 */
 	public static String getLanguageDropDownListHTML(HttpSession session)
-		throws Exception {
+			throws Exception {
 
 		String theMenu = "";
 		XDisconnectedRowSet rs = new XDisconnectedRowSet();
@@ -59,18 +59,16 @@ public class LanguageMenu {
 		try {
 			// check to see if we already have a language choice
 			if (session.getAttribute("languageId") != null) {
-				curLang =
-					Integer.parseInt(
-						(String) session.getAttribute("languageId"));
+				curLang = Integer.parseInt((String) session
+						.getAttribute("languageId"));
 			}
 			// open database connection for database object
-			//conn = DbBean.getDbConnection();
+			// conn = DbBean.getDbConnection();
 			CtLanguages myLanguages = new CtLanguages();
 			myLanguages.setConn(conn);
 
 			// build our menu
-			theMenu =
-				"<form action=\"/servlet/com.verilion.DoLanguageChoice\" method = \"post\">";
+			theMenu = "<form action=\"/servlet/com.verilion.DoLanguageChoice\" method = \"post\">";
 			theMenu += "<select class=\"inputbox\" name=\"lang\">";
 
 			rs = myLanguages.getAllActiveLanguageNamesIds();
@@ -90,23 +88,22 @@ public class LanguageMenu {
 			theMenu += "</select>";
 			theMenu += "<input type = \"submit\" value = \"Go\">";
 			theMenu += "</form>";
-			
+
 			rs.close();
 			rs = null;
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.display.util.LanguageMenu.getLanguageMenu:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.display.util.LanguageMenu.getLanguageMenu:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
 		}
 		// return the message
 		return theMenu;
 	}
+
 	/**
 	 * @return Returns the conn.
 	 */
@@ -115,7 +112,8 @@ public class LanguageMenu {
 	}
 
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public static void setConn(Connection conn) {
 		LanguageMenu.conn = conn;

@@ -30,7 +30,8 @@ import javax.servlet.http.HttpSession;
  * 
  */
 public interface ModuleInterface {
-   
-   public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request) throws Exception;
+
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception;
 
 }

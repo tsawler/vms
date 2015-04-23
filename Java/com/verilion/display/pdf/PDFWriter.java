@@ -89,362 +89,349 @@ import com.verilion.utility.html.parser.HTMLTokenizer;
  * client via ServletOutputStream
  * 
  * @author tsawler
- *  
+ * 
  */
 public class PDFWriter extends HttpServlet {
 
-   private static final long serialVersionUID = -2552549899324924536L;
-   public String page_name = "";
-   public String action = "";
-   public int myLanguageId = 1;
-   public String page_detail_contents = "";
-   public int page_access_level = 0;
-   public String page_detail_title = "";
-   public int page_id = 0;
-   public String page_active_yn = "";
-   public int thePort = 0;
-   public StringBuffer sb;
-   public HTMLTemplateDb MasterTemplate;
-   public boolean redirect = false;
-   public String url = "";
-   public String theError = "";
-   Package pkg = Package.getPackage("com.verilion");
-   public Connection conn = null;
-   public HashMap hm = new HashMap();
-   public XDisconnectedRowSet rs = new XDisconnectedRowSet();
+	private static final long serialVersionUID = -2552549899324924536L;
+	public String page_name = "";
+	public String action = "";
+	public int myLanguageId = 1;
+	public String page_detail_contents = "";
+	public int page_access_level = 0;
+	public String page_detail_title = "";
+	public int page_id = 0;
+	public String page_active_yn = "";
+	public int thePort = 0;
+	public StringBuffer sb;
+	public HTMLTemplateDb MasterTemplate;
+	public boolean redirect = false;
+	public String url = "";
+	public String theError = "";
+	Package pkg = Package.getPackage("com.verilion");
+	public Connection conn = null;
+	public HashMap hm = new HashMap();
+	public XDisconnectedRowSet rs = new XDisconnectedRowSet();
 
-   public PDFWriter() {
-      super();
-   }
+	public PDFWriter() {
+		super();
+	}
 
-   public void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      this.doPost(request, response);
-   }
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doPost(request, response);
+	}
 
-   /**
-    * 
-    * implement doGet so that we process all HTTP GET requests
-    * 
-    * @param request
-    *           HTTP request object
-    * @param response
-    *           HTTP response object
-    *  
-    */
-   @SuppressWarnings("unchecked")
-public void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws javax.servlet.ServletException, java.io.IOException {
+	/**
+	 * 
+	 * implement doGet so that we process all HTTP GET requests
+	 * 
+	 * @param request
+	 *            HTTP request object
+	 * @param response
+	 *            HTTP response object
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws javax.servlet.ServletException, java.io.IOException {
 
-      ByteArrayOutputStream baosPDF = null;
-      HttpSession session = request.getSession();
+		ByteArrayOutputStream baosPDF = null;
+		HttpSession session = request.getSession();
 
-      try {
+		try {
 
-         StringTokenizer st = new StringTokenizer(request.getRequestURI()
-               .substring(1, request.getRequestURI().lastIndexOf("/")), "/");
-         int i = st.countTokens();
+			StringTokenizer st = new StringTokenizer(request.getRequestURI()
+					.substring(1, request.getRequestURI().lastIndexOf("/")),
+					"/");
+			int i = st.countTokens();
 
-         if (i < 3) {
-            // we have to have at least three arguments - page, action, and the
-            // content.do part
-            session.setAttribute("Error", "Invalid request");
-            response.sendRedirect("/Home/display/1/content.do");
-            return;
-         }
+			if (i < 3) {
+				// we have to have at least three arguments - page, action, and
+				// the
+				// content.do part
+				session.setAttribute("Error", "Invalid request");
+				response.sendRedirect("/Home/display/1/content.do");
+				return;
+			}
 
-         // get the page name
-         if (st.hasMoreElements()) {
-            page_name = (String) st.nextToken();
-         }
+			// get the page name
+			if (st.hasMoreElements()) {
+				page_name = (String) st.nextToken();
+			}
 
-         // get the action
-         if (st.hasMoreElements()) {
-            action = (String) st.nextToken();
-         }
+			// get the action
+			if (st.hasMoreElements()) {
+				action = (String) st.nextToken();
+			}
 
-         // get the language
-         if (st.hasMoreElements()) {
-            myLanguageId = Integer.parseInt((String) st.nextToken());
-         }
+			// get the language
+			if (st.hasMoreElements()) {
+				myLanguageId = Integer.parseInt((String) st.nextToken());
+			}
 
-         // now read any other values into a hashmap, as
-         // name value pairs
-         while (st.hasMoreElements()) {
-            hm.put(st.nextToken(), st.nextToken());
-         }
+			// now read any other values into a hashmap, as
+			// name value pairs
+			while (st.hasMoreElements()) {
+				hm.put(st.nextToken(), st.nextToken());
+			}
 
-         thePort = Integer.parseInt(SingletonObjects.getInstance()
-               .getInsecure_port());
+			thePort = Integer.parseInt(SingletonObjects.getInstance()
+					.getInsecure_port());
 
-         // make sure we're pointing to the right port
-         if (request.getServerPort() != thePort) {
-            response.sendRedirect(response.encodeRedirectURL("http://"
-                  + request.getServerName()
-                  + request.getRequestURI()));
-            return;
-         }
+			// make sure we're pointing to the right port
+			if (request.getServerPort() != thePort) {
+				response.sendRedirect(response.encodeRedirectURL("http://"
+						+ request.getServerName() + request.getRequestURI()));
+				return;
+			}
 
-         // make sure we're pointing to the right server name
-         if (!(request.getServerName().equals((String) SingletonObjects
-               .getInstance().getHost_name()))) {
-            response.sendRedirect(response.encodeRedirectURL("http://"
-                  + (String) SingletonObjects.getInstance().getHost_name()
-                  + request.getRequestURI()));
-            return;
-         }
+			// make sure we're pointing to the right server name
+			if (!(request.getServerName().equals((String) SingletonObjects
+					.getInstance().getHost_name()))) {
+				response.sendRedirect(response.encodeRedirectURL("http://"
+						+ (String) SingletonObjects.getInstance()
+								.getHost_name() + request.getRequestURI()));
+				return;
+			}
 
-         // check our language choice status
-         if (session.getAttribute("languageId") != null) {
-            myLanguageId = Integer.parseInt((String) session
-                  .getAttribute("languageId"));
-         }
+			// check our language choice status
+			if (session.getAttribute("languageId") != null) {
+				myLanguageId = Integer.parseInt((String) session
+						.getAttribute("languageId"));
+			}
 
-         try {
-            // Get page details
-            conn = DbBean.getDbConnection();
-         } catch (Exception e2) {
-            e2.printStackTrace();
-         }
+			try {
+				// Get page details
+				conn = DbBean.getDbConnection();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 
-         PageRoutines myPage = new PageRoutines();
-         myPage.setConn(conn);
-         myPage.setPage_name(page_name);
-         myPage.setCt_language_id(myLanguageId);
+			PageRoutines myPage = new PageRoutines();
+			myPage.setConn(conn);
+			myPage.setPage_name(page_name);
+			myPage.setCt_language_id(myLanguageId);
 
-         try {
-            myPage.PageInfoByPageName();
-            if (myPage.getPage_id() == 0) {
-               session.setAttribute("Error", "Invalid request");
-               response.sendRedirect("/Home/display/1/content.do");
-               return;
-            }
-         } catch (SQLException e1) {
-            e1.printStackTrace();
-            session.setAttribute("Error", "Invalid request");
-            response.sendRedirect("/Home/display/1/content.do");
-            return;
-         } catch (Exception e1) {
-            e1.printStackTrace();
-            session.setAttribute("Error", "Invalid request");
-            response.sendRedirect("/Home/display/1/content.do");
-            return;
-         }
-         if (action.equals("newsitem")) {
-            int theItem = 0;
-            NewsItem myNewsItem = new NewsItem();
-            myNewsItem.setConn(conn);
-            ResultSet rs = null;
+			try {
+				myPage.PageInfoByPageName();
+				if (myPage.getPage_id() == 0) {
+					session.setAttribute("Error", "Invalid request");
+					response.sendRedirect("/Home/display/1/content.do");
+					return;
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				session.setAttribute("Error", "Invalid request");
+				response.sendRedirect("/Home/display/1/content.do");
+				return;
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				session.setAttribute("Error", "Invalid request");
+				response.sendRedirect("/Home/display/1/content.do");
+				return;
+			}
+			if (action.equals("newsitem")) {
+				int theItem = 0;
+				NewsItem myNewsItem = new NewsItem();
+				myNewsItem.setConn(conn);
+				ResultSet rs = null;
 
-            try {
-               // get our parameter for the news item
-               theItem = Integer.parseInt((String) hm.get("id"));
-               myNewsItem.setNews_id(theItem);
+				try {
+					// get our parameter for the news item
+					theItem = Integer.parseInt((String) hm.get("id"));
+					myNewsItem.setNews_id(theItem);
 
-               // get our news item from the database
-               rs = myNewsItem.getNewsItemById();
+					// get our news item from the database
+					rs = myNewsItem.getNewsItemById();
 
-               if (rs.next()) {
-                  page_detail_title = rs.getString("news_title");
-                  page_detail_contents = rs.getString("news_teaser_text")
-                        + rs.getString("news_body_text");
-               }
-               rs.close();
-               rs = null;
-            } catch (Exception e) {
+					if (rs.next()) {
+						page_detail_title = rs.getString("news_title");
+						page_detail_contents = rs.getString("news_teaser_text")
+								+ rs.getString("news_body_text");
+					}
+					rs.close();
+					rs = null;
+				} catch (Exception e) {
 
-            }
-         } else {
-            page_id = myPage.getPage_id();
-            page_access_level = myPage.getPage_access_level();
-            page_detail_contents = myPage.getPage_detail_contents();
-            page_detail_title = myPage.getPage_detail_title();
-            page_active_yn = myPage.getPage_active_yn();
-         }
+				}
+			} else {
+				page_id = myPage.getPage_id();
+				page_access_level = myPage.getPage_access_level();
+				page_detail_contents = myPage.getPage_detail_contents();
+				page_detail_title = myPage.getPage_detail_title();
+				page_active_yn = myPage.getPage_active_yn();
+			}
 
-         // Kick them out if they aren't supposed to be here
-         if (page_access_level > 1) {
-            if (session.getAttribute("user") == null) {
-               // our user is not logged in, so they shouldn't be here
-               theError = "You must log in before accessing the requested page!";
-               redirect = true;
-            } else {
-               if (Integer.parseInt((String) session
-                     .getAttribute("customer_access_level")) < page_access_level) {
-                  // user does not have sufficient rights to be here
-                  theError = "You do not have access to the requested page!";
-                  redirect = true;
-               }
-            }
-         }
+			// Kick them out if they aren't supposed to be here
+			if (page_access_level > 1) {
+				if (session.getAttribute("user") == null) {
+					// our user is not logged in, so they shouldn't be here
+					theError = "You must log in before accessing the requested page!";
+					redirect = true;
+				} else {
+					if (Integer.parseInt((String) session
+							.getAttribute("customer_access_level")) < page_access_level) {
+						// user does not have sufficient rights to be here
+						theError = "You do not have access to the requested page!";
+						redirect = true;
+					}
+				}
+			}
 
-         // if the page is not active (unpublished) redirect to error page.
-         // only check if we have page_name
-         if ((page_active_yn.equals("n")) && (page_name != null)) {
-            theError = "The page you have requested is not currently active!";
-            redirect = true;
-         } else if (page_name == null) {
-            theError = "The page you have requested is not currently active!";
-            redirect = true;
-         } else if (page_name.length() < 1) {
-            theError = "The page you have requested is not currently active!";
-            redirect = true;
-         }
+			// if the page is not active (unpublished) redirect to error page.
+			// only check if we have page_name
+			if ((page_active_yn.equals("n")) && (page_name != null)) {
+				theError = "The page you have requested is not currently active!";
+				redirect = true;
+			} else if (page_name == null) {
+				theError = "The page you have requested is not currently active!";
+				redirect = true;
+			} else if (page_name.length() < 1) {
+				theError = "The page you have requested is not currently active!";
+				redirect = true;
+			}
 
-         if (!redirect) {
-            Date today = new Date();
-            page_detail_contents = TextUtils
-                  .RemoveHtmlEquivs(page_detail_contents);
-            HTMLTokenizer ht = new HTMLTokenizer(page_detail_contents, true);
-            Enumeration enumTokenList = ht.getTokens();
-            while (enumTokenList.hasMoreElements()) {
-               /**
-                * TODO
-                * parse html and change to pdf code
-                * 
-                */
-               String sToken = enumTokenList.nextElement().toString();
-               System.out.println("token: " + sToken);
-               System.out.println("size: " + sToken.length());
-            }
+			if (!redirect) {
+				Date today = new Date();
+				page_detail_contents = TextUtils
+						.RemoveHtmlEquivs(page_detail_contents);
+				HTMLTokenizer ht = new HTMLTokenizer(page_detail_contents, true);
+				Enumeration enumTokenList = ht.getTokens();
+				while (enumTokenList.hasMoreElements()) {
+					/**
+					 * TODO parse html and change to pdf code
+					 * 
+					 */
+					String sToken = enumTokenList.nextElement().toString();
+					System.out.println("token: " + sToken);
+					System.out.println("size: " + sToken.length());
+				}
 
-            baosPDF = generatePDFDocumentBytes(
-                  request,
-                  page_detail_title,
-                  today.toString(),
-                  "http://"
-                        + request.getServerName()
-                        + "/"
-                        + request.getRequestURI(),
-                  page_detail_contents,
-                  this.getServletContext());
+				baosPDF = generatePDFDocumentBytes(request, page_detail_title,
+						today.toString(), "http://" + request.getServerName()
+								+ "/" + request.getRequestURI(),
+						page_detail_contents, this.getServletContext());
 
-            StringBuffer sbFilename = new StringBuffer();
-            sbFilename.append("filename_");
-            sbFilename.append(System.currentTimeMillis());
-            sbFilename.append(".pdf");
+				StringBuffer sbFilename = new StringBuffer();
+				sbFilename.append("filename_");
+				sbFilename.append(System.currentTimeMillis());
+				sbFilename.append(".pdf");
 
-            response.setHeader("Cache-Control", "max-age=30");
-            response.setContentType("application/pdf");
+				response.setHeader("Cache-Control", "max-age=30");
+				response.setContentType("application/pdf");
 
-            StringBuffer sbContentDispValue = new StringBuffer();
-            sbContentDispValue.append("inline");
-            sbContentDispValue.append("; filename=");
-            sbContentDispValue.append(sbFilename);
+				StringBuffer sbContentDispValue = new StringBuffer();
+				sbContentDispValue.append("inline");
+				sbContentDispValue.append("; filename=");
+				sbContentDispValue.append(sbFilename);
 
-            response.setHeader("Content-disposition", sbContentDispValue
-                  .toString());
-            response.setContentLength(baosPDF.size());
-            ServletOutputStream sos;
-            sos = response.getOutputStream();
+				response.setHeader("Content-disposition",
+						sbContentDispValue.toString());
+				response.setContentLength(baosPDF.size());
+				ServletOutputStream sos;
+				sos = response.getOutputStream();
 
-            baosPDF.writeTo(sos);
+				baosPDF.writeTo(sos);
 
-            sos.flush();
-         } else {
-            session.setAttribute("Error", theError);
-            url = response.encodeRedirectURL("/Home/display/1/content.do");
-            response.sendRedirect(url);
-            return;
-         }
+				sos.flush();
+			} else {
+				session.setAttribute("Error", theError);
+				url = response.encodeRedirectURL("/Home/display/1/content.do");
+				response.sendRedirect(url);
+				return;
+			}
 
-      } catch (DocumentException dex) {
-         response.setContentType("text/html");
-         PrintWriter writer = response.getWriter();
-         writer.println(this.getClass().getName()
-               + " caught an exception: "
-               + dex.getClass().getName()
-               + "<br>");
-         writer.println("<pre>");
-         dex.printStackTrace(writer);
-         writer.println("</pre>");
-      } finally {
-         if (baosPDF != null) {
-            baosPDF.reset();
-         }
-      }
+		} catch (DocumentException dex) {
+			response.setContentType("text/html");
+			PrintWriter writer = response.getWriter();
+			writer.println(this.getClass().getName() + " caught an exception: "
+					+ dex.getClass().getName() + "<br>");
+			writer.println("<pre>");
+			dex.printStackTrace(writer);
+			writer.println("</pre>");
+		} finally {
+			if (baosPDF != null) {
+				baosPDF.reset();
+			}
+		}
 
-   }
+	}
 
-   /**
-    * Generates PDF Document as outputstream.
-    * 
-    * @param request
-    * @param psTitle
-    * @param psFooter
-    * @param psURL
-    * @param psBodyText
-    * @param ctx
-    * @return ByteArrayOutputStream
-    * @throws DocumentException
-    */
-   protected ByteArrayOutputStream generatePDFDocumentBytes(
-         final HttpServletRequest request,
-         final String psTitle,
-         final String psFooter,
-         final String psURL,
-         final String psBodyText,
-         final ServletContext ctx) throws DocumentException
+	/**
+	 * Generates PDF Document as outputstream.
+	 * 
+	 * @param request
+	 * @param psTitle
+	 * @param psFooter
+	 * @param psURL
+	 * @param psBodyText
+	 * @param ctx
+	 * @return ByteArrayOutputStream
+	 * @throws DocumentException
+	 */
+	protected ByteArrayOutputStream generatePDFDocumentBytes(
+			final HttpServletRequest request, final String psTitle,
+			final String psFooter, final String psURL, final String psBodyText,
+			final ServletContext ctx) throws DocumentException
 
-   {
-      //Document doc = new Document();
-      Document doc = new Document(PageSize.LETTER, 72, 72, 72, 36);
+	{
+		// Document doc = new Document();
+		Document doc = new Document(PageSize.LETTER, 72, 72, 72, 36);
 
-      ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-      PdfWriter docWriter = null;
+		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+		PdfWriter docWriter = null;
 
-      try {
-         docWriter = PdfWriter.getInstance(doc, baosPDF);
+		try {
+			docWriter = PdfWriter.getInstance(doc, baosPDF);
 
-         doc.addAuthor(this.getClass().getName());
-         doc.addCreationDate();
-         doc.addProducer();
-         doc.addCreator(this.getClass().getName());
-         doc.addTitle(psTitle);
+			doc.addAuthor(this.getClass().getName());
+			doc.addCreationDate();
+			doc.addProducer();
+			doc.addCreator(this.getClass().getName());
+			doc.addTitle(psTitle);
 
-         Phrase hPhrase = new Phrase(new Chunk(psTitle, FontFactory.getFont(
-               FontFactory.TIMES_BOLD,
-               12)));
-         HeaderFooter header = new HeaderFooter(hPhrase, false);
-         header.setAlignment(1);
-         header.setBorder(2);
-         doc.setHeader(header);
+			Phrase hPhrase = new Phrase(new Chunk(psTitle, FontFactory.getFont(
+					FontFactory.TIMES_BOLD, 12)));
+			HeaderFooter header = new HeaderFooter(hPhrase, false);
+			header.setAlignment(1);
+			header.setBorder(2);
+			doc.setHeader(header);
 
-         Phrase fPhrase = new Phrase(new Chunk("This document can be found at "
-               + psURL
-               + "\nCreated on "
-               + psFooter, FontFactory.getFont(FontFactory.TIMES_ITALIC, 9)));
-         HeaderFooter footer = new HeaderFooter(fPhrase, false);
-         footer.setAlignment(1);
-         doc.setFooter(footer);
-         doc.open();
-         String formattedText = psBodyText;
-         //formattedText = psBodyText.replaceAll("<br />", "\n");
-         formattedText = TextUtils.StripNewlines(formattedText);
-         formattedText = TextUtils.StripHtml(formattedText);
+			Phrase fPhrase = new Phrase(new Chunk(
+					"This document can be found at " + psURL + "\nCreated on "
+							+ psFooter, FontFactory.getFont(
+							FontFactory.TIMES_ITALIC, 9)));
+			HeaderFooter footer = new HeaderFooter(fPhrase, false);
+			footer.setAlignment(1);
+			doc.setFooter(footer);
+			doc.open();
+			String formattedText = psBodyText;
+			// formattedText = psBodyText.replaceAll("<br />", "\n");
+			formattedText = TextUtils.StripNewlines(formattedText);
+			formattedText = TextUtils.StripHtml(formattedText);
 
-         Paragraph p = new Paragraph(new Paragraph(new Chunk(formattedText,
-               FontFactory.getFont(FontFactory.TIMES, 10))));
-         p.setAlignment("JUSTIFY");
-         doc.add(p);
+			Paragraph p = new Paragraph(new Paragraph(new Chunk(formattedText,
+					FontFactory.getFont(FontFactory.TIMES, 10))));
+			p.setAlignment("JUSTIFY");
+			doc.add(p);
 
-      } catch (DocumentException dex) {
-         baosPDF.reset();
-         throw dex;
-      } finally {
-         if (doc != null) {
-            doc.close();
-         }
-         if (docWriter != null) {
-            docWriter.close();
-         }
-      }
+		} catch (DocumentException dex) {
+			baosPDF.reset();
+			throw dex;
+		} finally {
+			if (doc != null) {
+				doc.close();
+			}
+			if (docWriter != null) {
+				docWriter.close();
+			}
+		}
 
-      if (baosPDF.size() < 1) {
-         throw new DocumentException("document has "
-               + baosPDF.size()
-               + " bytes");
-      }
-      return baosPDF;
-   }
+		if (baosPDF.size() < 1) {
+			throw new DocumentException("document has " + baosPDF.size()
+					+ " bytes");
+		}
+		return baosPDF;
+	}
 }

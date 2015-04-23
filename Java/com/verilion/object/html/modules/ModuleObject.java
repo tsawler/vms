@@ -123,12 +123,11 @@ public class ModuleObject {
 							// this is an uploaded module.
 							JarClassLoader jcl = new JarClassLoader(
 									SingletonObjects.getInstance()
-											.getSystem_path()
-											+ "UserJars/", ModuleObject.class
-											.getClassLoader());
-							c = jcl.LoadModuleClassDataFromJar(rs
-									.getString("jarfile"), rs
-									.getString("module_class_name"));
+											.getSystem_path() + "UserJars/",
+									ModuleObject.class.getClassLoader());
+							c = jcl.LoadModuleClassDataFromJar(
+									rs.getString("jarfile"),
+									rs.getString("module_class_name"));
 							instance = c.newInstance();
 						} else {
 							c = Class

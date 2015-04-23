@@ -34,239 +34,249 @@ import java.util.Enumeration;
  */
 public class HTMLTree {
 
-   private HTMLNode root; // The root of the HTML tree.
+	private HTMLNode root; // The root of the HTML tree.
 
-   /**
-    * Constructs a new HTMLTree using the tokens from the specified Enumeration.
-    */
-   public HTMLTree(Enumeration e) {
+	/**
+	 * Constructs a new HTMLTree using the tokens from the specified
+	 * Enumeration.
+	 */
+	public HTMLTree(Enumeration e) {
 
-      // Create the root element from the enumeration of tokens.
-      root = new HTMLNode(null, null, e);
-   }
+		// Create the root element from the enumeration of tokens.
+		root = new HTMLNode(null, null, e);
+	}
 
-   /**
-    * Constructs a new HTMLTree using the tokens from the specified
-    * HTMLTokenizer.
-    * 
-    * @param ht the source of the HTML tokens.
-    */
-   public HTMLTree(HTMLTokenizer ht) {
+	/**
+	 * Constructs a new HTMLTree using the tokens from the specified
+	 * HTMLTokenizer.
+	 * 
+	 * @param ht
+	 *            the source of the HTML tokens.
+	 */
+	public HTMLTree(HTMLTokenizer ht) {
 
-      // Create the root element from the tokens.
-      root = new HTMLNode(null, null, ht.getTokens());
-   }
+		// Create the root element from the tokens.
+		root = new HTMLNode(null, null, ht.getTokens());
+	}
 
-   /**
-    * Constructs a new HTMLTree from the specified HTML file.
-    * 
-    * @param filename the name of the HTML file.
-    */
-   public HTMLTree(String filename) {
+	/**
+	 * Constructs a new HTMLTree from the specified HTML file.
+	 * 
+	 * @param filename
+	 *            the name of the HTML file.
+	 */
+	public HTMLTree(String filename) {
 
-      // Tokenize the HTML file.
-      HTMLTokenizer ht = new HTMLTokenizer(filename);
+		// Tokenize the HTML file.
+		HTMLTokenizer ht = new HTMLTokenizer(filename);
 
-      // Create the root element from the tokens.
-      root = new HTMLNode(null, null, ht.getTokens());
-   }
+		// Create the root element from the tokens.
+		root = new HTMLNode(null, null, ht.getTokens());
+	}
 
-   /**
-    * Finds the first element with the specified name in the specified subtree.
-    * 
-    * @param name the name of the element to search for.
-    * @param tree the subtree to search.
-    */
-   public HTMLNode findInSubtree(String name, HTMLNode tree) {
-      return find(name, tree, null, true, false);
-   }
+	/**
+	 * Finds the first element with the specified name in the specified subtree.
+	 * 
+	 * @param name
+	 *            the name of the element to search for.
+	 * @param tree
+	 *            the subtree to search.
+	 */
+	public HTMLNode findInSubtree(String name, HTMLNode tree) {
+		return find(name, tree, null, true, false);
+	}
 
-   /**
-    * Finds the next element after the specified one in the subtree. If the
-    * previous element is not in the subtree then nothing will be found.
-    * 
-    * @param tree the subtree to search.
-    * @param prev a previously found element.
-    */
-   public HTMLNode findNextInSubtree(HTMLNode tree, HTMLNode prev) {
+	/**
+	 * Finds the next element after the specified one in the subtree. If the
+	 * previous element is not in the subtree then nothing will be found.
+	 * 
+	 * @param tree
+	 *            the subtree to search.
+	 * @param prev
+	 *            a previously found element.
+	 */
+	public HTMLNode findNextInSubtree(HTMLNode tree, HTMLNode prev) {
 
-      // Return nothing if there is no previous element.
-      if (prev == null)
-         return null;
+		// Return nothing if there is no previous element.
+		if (prev == null)
+			return null;
 
-      // Search the subtree for the next element with the same name.
-      return find(prev.getName(), tree, prev, true, false);
-   }
+		// Search the subtree for the next element with the same name.
+		return find(prev.getName(), tree, prev, true, false);
+	}
 
-   /**
-    * Finds the first element with the specified name in the entire tree.
-    * 
-    * @param name the name of the element to search for.
-    */
-   public HTMLNode findInAll(String name) {
-      return find(name, root, null, true, false);
-   }
+	/**
+	 * Finds the first element with the specified name in the entire tree.
+	 * 
+	 * @param name
+	 *            the name of the element to search for.
+	 */
+	public HTMLNode findInAll(String name) {
+		return find(name, root, null, true, false);
+	}
 
-   /**
-    * Finds the next element with the same name as the one specified in the
-    * entire tree.
-    * 
-    * @param prev the previously found element.
-    */
-   public HTMLNode findNextInAll(HTMLNode prev) {
+	/**
+	 * Finds the next element with the same name as the one specified in the
+	 * entire tree.
+	 * 
+	 * @param prev
+	 *            the previously found element.
+	 */
+	public HTMLNode findNextInAll(HTMLNode prev) {
 
-      // Return nothing if there is no previous element.
-      if (prev == null)
-         return null;
+		// Return nothing if there is no previous element.
+		if (prev == null)
+			return null;
 
-      // Search for the next element in the entire tree.
-      return find(prev.getName(), prev.getParent(), prev, true, true);
-   }
+		// Search for the next element in the entire tree.
+		return find(prev.getName(), prev.getParent(), prev, true, true);
+	}
 
-   /**
-    * Find the first element with the specified name in the specified element's
-    * context (that is, the elements parent's subtree).
-    * 
-    * @param name the name of the element to search for.
-    * @param el the element whose context is to be searched.
-    */
-   public HTMLNode findInContext(String name, HTMLNode el) {
+	/**
+	 * Find the first element with the specified name in the specified element's
+	 * context (that is, the elements parent's subtree).
+	 * 
+	 * @param name
+	 *            the name of the element to search for.
+	 * @param el
+	 *            the element whose context is to be searched.
+	 */
+	public HTMLNode findInContext(String name, HTMLNode el) {
 
-      // Return nothing if the arguments are invalid.
-      if (el == null)
-         return null;
+		// Return nothing if the arguments are invalid.
+		if (el == null)
+			return null;
 
-      // Search the elements parent's subtree.
-      return find(name, el.getParent(), null, true, false);
-   }
+		// Search the elements parent's subtree.
+		return find(name, el.getParent(), null, true, false);
+	}
 
-   /**
-    * Find the next element with the same name as the specified one in the first
-    * element's context (that is, the first elements parent's subtree). If the
-    * previous element is not in the subtree then nothing will be found.
-    * 
-    * @param el the element whose context is to be searched.
-    * @param prev the previously found element.
-    */
-   public HTMLNode findNextInContext(HTMLNode el, HTMLNode prev) {
+	/**
+	 * Find the next element with the same name as the specified one in the
+	 * first element's context (that is, the first elements parent's subtree).
+	 * If the previous element is not in the subtree then nothing will be found.
+	 * 
+	 * @param el
+	 *            the element whose context is to be searched.
+	 * @param prev
+	 *            the previously found element.
+	 */
+	public HTMLNode findNextInContext(HTMLNode el, HTMLNode prev) {
 
-      // Return nothing if the arguments are invalid.
-      if (el == null)
-         return null;
+		// Return nothing if the arguments are invalid.
+		if (el == null)
+			return null;
 
-      // Search the elements parent's subtree.
-      return find(el.getName(), el.getParent(), prev, true, false);
-   }
+		// Search the elements parent's subtree.
+		return find(el.getName(), el.getParent(), prev, true, false);
+	}
 
-   /**
-    * Finds the next element with the same name as the specified one amongst
-    * that elements siblings (that is, the elements parent's children).
-    * 
-    * @param el the element whose siblings are to be searched.
-    */
-   public HTMLNode findSibling(HTMLNode el) {
+	/**
+	 * Finds the next element with the same name as the specified one amongst
+	 * that elements siblings (that is, the elements parent's children).
+	 * 
+	 * @param el
+	 *            the element whose siblings are to be searched.
+	 */
+	public HTMLNode findSibling(HTMLNode el) {
 
-      // Return nothing if the element is invalid.
-      if (el == null)
-         return null;
+		// Return nothing if the element is invalid.
+		if (el == null)
+			return null;
 
-      // Search for a sibling in the elements parent's subtree.
-      return find(el.getName(), el.getParent(), el, false, false);
-   }
+		// Search for a sibling in the elements parent's subtree.
+		return find(el.getName(), el.getParent(), el, false, false);
+	}
 
-   /**
-    * Prints a string representation of the HTMLTree.
-    */
-   public String toString() {
-      return "HTMLTree[" + root + "]";
-   }
+	/**
+	 * Prints a string representation of the HTMLTree.
+	 */
+	public String toString() {
+		return "HTMLTree[" + root + "]";
+	}
 
-   /**
-    * Generic find method which searches for a string in the given tree's
-    * children. However, the search will not start until the start element has
-    * been passed. The tree's grandchildren will be searched recursively if the
-    * <code>recursive</code> argument is true. The whole tree after the
-    * element will be searched if the <code>searchParent</code> argument is
-    * true. In this case the method will recurse back towards the root element.
-    */
-   private HTMLNode find(
-         String name,
-         HTMLNode tree,
-         HTMLNode start,
-         boolean recursive,
-         boolean searchParent) {
+	/**
+	 * Generic find method which searches for a string in the given tree's
+	 * children. However, the search will not start until the start element has
+	 * been passed. The tree's grandchildren will be searched recursively if the
+	 * <code>recursive</code> argument is true. The whole tree after the element
+	 * will be searched if the <code>searchParent</code> argument is true. In
+	 * this case the method will recurse back towards the root element.
+	 */
+	private HTMLNode find(String name, HTMLNode tree, HTMLNode start,
+			boolean recursive, boolean searchParent) {
 
-      Enumeration children; // The immediate children of the subtree.
-      Object next; // The next object from the enumeration.
-      boolean searching; // True if we are actively searching.
-      HTMLNode child; // One of the subtree's children.
-      HTMLNode found; // Result of a subtree search.
+		Enumeration children; // The immediate children of the subtree.
+		Object next; // The next object from the enumeration.
+		boolean searching; // True if we are actively searching.
+		HTMLNode child; // One of the subtree's children.
+		HTMLNode found; // Result of a subtree search.
 
-      // Return nothing if the arguments are invalid.
-      if (name == null || tree == null)
-         return null;
+		// Return nothing if the arguments are invalid.
+		if (name == null || tree == null)
+			return null;
 
-      // Check if we should delay the search until we find the
-      // specified start element.
-      searching = (start == null);
+		// Check if we should delay the search until we find the
+		// specified start element.
+		searching = (start == null);
 
-      // Get the subtree's children.
-      children = tree.getChildren();
+		// Get the subtree's children.
+		children = tree.getChildren();
 
-      // Return nothing if the subtree has no children.
-      if (children == null)
-         return null;
+		// Return nothing if the subtree has no children.
+		if (children == null)
+			return null;
 
-      // Loop through the subtree's children.
-      while (children.hasMoreElements()) {
+		// Loop through the subtree's children.
+		while (children.hasMoreElements()) {
 
-         // Get the next child from the enumeration.
-         next = children.nextElement();
+			// Get the next child from the enumeration.
+			next = children.nextElement();
 
-         // Check if this child is an HTMLNode.
-         if (!(next instanceof HTMLNode))
-            continue;
+			// Check if this child is an HTMLNode.
+			if (!(next instanceof HTMLNode))
+				continue;
 
-         // Cast the child into type HTMLNode.
-         child = (HTMLNode) next;
+			// Cast the child into type HTMLNode.
+			child = (HTMLNode) next;
 
-         if (searching) {
+			if (searching) {
 
-            // Check if we have found the element.
-            if (name.equalsIgnoreCase(child.getName()))
-               return child;
+				// Check if we have found the element.
+				if (name.equalsIgnoreCase(child.getName()))
+					return child;
 
-            // Check if we should search grandchildren.
-            if (recursive) {
+				// Check if we should search grandchildren.
+				if (recursive) {
 
-               // Search the child's subtree.
-               found = find(name, child, null, true, false);
+					// Search the child's subtree.
+					found = find(name, child, null, true, false);
 
-               // Return the element if we found one.
-               if (found != null)
-                  return found;
-            }
-         } else {
+					// Return the element if we found one.
+					if (found != null)
+						return found;
+				}
+			} else {
 
-            // Check if this element is the start element.
-            if (child == start)
-               searching = true;
-         }
-      }
+				// Check if this element is the start element.
+				if (child == start)
+					searching = true;
+			}
+		}
 
-      // Check if we should search the subtree's parent tree.
-      if (searchParent) {
+		// Check if we should search the subtree's parent tree.
+		if (searchParent) {
 
-         HTMLNode parent = tree.getParent();
+			HTMLNode parent = tree.getParent();
 
-         // Check if the subtree has a parent.
-         if (parent == null)
-            return null;
+			// Check if the subtree has a parent.
+			if (parent == null)
+				return null;
 
-         // Otherwise search it, starting after the subtree.
-         return find(name, parent, tree, true, true);
-      }
+			// Otherwise search it, starting after the subtree.
+			return find(name, parent, tree, true, true);
+		}
 
-      return null;
-   }
+		return null;
+	}
 }

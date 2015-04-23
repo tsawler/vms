@@ -144,7 +144,7 @@ public class GetMenu {
 	public static String getHTMLPageGroupMenu(String pageGroupName,
 			int ctLanguageId, String useSef, HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) throws Exception {
-		
+
 		String theMenu = "";
 		XDisconnectedRowSet drs = new XDisconnectedRowSet();
 		GenericTable myTable = new GenericTable("page_group");
@@ -158,27 +158,27 @@ public class GetMenu {
 		String page_name = "";
 		int page_id = 0;
 		int page_group_id = 0;
-		
+
 		// figure out which menu to display based on page group name
-//		myTable.setConn(conn);
-//		myTable.setSSelectWhat("page_group_id");
-//		myTable.setSCustomWhere(" and page_group_name = '" + pageGroupName
-//				+ "'");
-		
+		// myTable.setConn(conn);
+		// myTable.setSSelectWhat("page_group_id");
+		// myTable.setSCustomWhere(" and page_group_name = '" + pageGroupName
+		// + "'");
+
 		// figure out what page we are on, and whether or not to display a menu
 		HashMap hm = (HashMap) session.getAttribute("pHm");
 		page_name = (String) hm.get("p");
-//		myTable.setConn(conn);
-//		myTable.setSSelectWhat(" page_group_id ");
-//		myTable.setSCustomWhere(" and page_id = (select page_id from page where page_name = '"
-//				+ page_name
-//				+ "') ");
-//		
-//		drs = myTable.getAllRecordsDisconnected();
-//		while (drs.next()){
-//			page_group_id = drs.getInt(1);
-//		}
-		
+		// myTable.setConn(conn);
+		// myTable.setSSelectWhat(" page_group_id ");
+		// myTable.setSCustomWhere(" and page_id = (select page_id from page where page_name = '"
+		// + page_name
+		// + "') ");
+		//
+		// drs = myTable.getAllRecordsDisconnected();
+		// while (drs.next()){
+		// page_group_id = drs.getInt(1);
+		// }
+
 		myTable.setConn(conn);
 		myTable.setSTable("v_page_group");
 		myTable.setSSelectWhat("menu_id");
@@ -343,16 +343,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -370,16 +368,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -403,8 +399,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -425,16 +420,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -452,16 +445,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -485,8 +476,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -507,16 +497,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -534,16 +522,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -567,8 +553,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -664,11 +649,8 @@ public class GetMenu {
 									} else {
 										theAction = "#";
 									}
-									theMenu += "<li><a href=\""
-											+ theAction
-											+ "\" "
-											+ extra
-											+ ">"
+									theMenu += "<li><a href=\"" + theAction
+											+ "\" " + extra + ">"
 											+ rs.getString("component_name")
 											+ "</a>\n<ul>";
 								}
@@ -691,16 +673,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -718,16 +698,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -751,8 +729,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -773,16 +750,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -800,16 +775,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -833,8 +806,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -855,16 +827,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -882,16 +852,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -915,8 +883,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -1011,16 +978,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1038,16 +1003,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1071,8 +1034,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -1093,16 +1055,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1120,16 +1080,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1153,8 +1111,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -1175,16 +1132,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1202,16 +1157,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -1235,8 +1188,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -1258,7 +1210,7 @@ public class GetMenu {
 				// it's either a standard horizontal or vertial menu.
 				if (rs.next()) {
 					rs.previous();
-					
+
 					if ((!horizontal) && (ct_menu_type_id == 2)) {
 						theMenu += "<table class=\"menutable\">";
 					}
@@ -1287,17 +1239,14 @@ public class GetMenu {
 									if ((rs.getInt("page_id") == 0)
 											&& (rs.getInt("component_id") == 0)) {
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
-												+ rs
-														.getString("menu_item_action")
+												+ rs.getString("menu_item_action")
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -1306,17 +1255,15 @@ public class GetMenu {
 										myPageTemplate.setPage_id(rs
 												.getInt("page_id"));
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ myPageTemplate
 														.getInvocationAsString()
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -1340,8 +1287,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>";
 									}
 								} else {
@@ -1358,18 +1304,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1378,18 +1321,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1413,8 +1354,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -1430,18 +1370,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1450,18 +1387,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1485,8 +1420,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -1502,18 +1436,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1522,18 +1453,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -1557,8 +1486,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -1848,16 +1776,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -1875,16 +1801,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -1908,8 +1832,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -1930,16 +1853,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -1957,16 +1878,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -1990,8 +1909,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -2012,16 +1930,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -2039,16 +1955,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -2072,8 +1986,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -2169,11 +2082,8 @@ public class GetMenu {
 									} else {
 										theAction = "#";
 									}
-									theMenu += "<li><a href=\""
-											+ theAction
-											+ "\" "
-											+ extra
-											+ ">"
+									theMenu += "<li><a href=\"" + theAction
+											+ "\" " + extra + ">"
 											+ rs.getString("component_name")
 											+ "</a>\n<ul>";
 								}
@@ -2196,16 +2106,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2223,16 +2131,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2256,8 +2162,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -2278,16 +2183,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2305,16 +2208,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2338,8 +2239,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -2360,16 +2260,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2387,16 +2285,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -2420,8 +2316,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -2516,16 +2411,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2543,16 +2436,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2576,8 +2467,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -2598,16 +2488,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2625,16 +2513,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2658,8 +2544,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -2680,16 +2565,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2707,16 +2590,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -2740,8 +2621,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -2793,17 +2673,14 @@ public class GetMenu {
 									if ((rs.getInt("page_id") == 0)
 											&& (rs.getInt("component_id") == 0)) {
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
-												+ rs
-														.getString("menu_item_action")
+												+ rs.getString("menu_item_action")
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -2812,17 +2689,15 @@ public class GetMenu {
 										myPageTemplate.setPage_id(rs
 												.getInt("page_id"));
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ myPageTemplate
 														.getInvocationAsString()
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -2846,8 +2721,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>";
 									}
 								} else {
@@ -2864,18 +2738,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -2884,18 +2755,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -2919,8 +2788,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -2936,18 +2804,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -2956,18 +2821,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -2991,8 +2854,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -3008,18 +2870,15 @@ public class GetMenu {
 										if ((rs.getInt("page_id") == 0)
 												&& (rs.getInt("component_id") == 0)) {
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
-													+ rs
-															.getString("menu_item_action")
+													+ rs.getString("menu_item_action")
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -3028,18 +2887,16 @@ public class GetMenu {
 											myPageTemplate.setPage_id(rs
 													.getInt("page_id"));
 											theMenu += "<a title=\""
-													+ rs
-															.getString(
-																	"menu_item_detail_tooltip")
+													+ rs.getString(
+															"menu_item_detail_tooltip")
 															.replaceAll("&",
 																	"and")
 													+ "\" href=\""
 													+ myPageTemplate
 															.getInvocationAsString()
 													+ "\">"
-													+ rs
-															.getString(
-																	"menu_item_detail_name")
+													+ rs.getString(
+															"menu_item_detail_name")
 															.replaceAll("&",
 																	"&amp;")
 													+ "</a>";
@@ -3063,8 +2920,7 @@ public class GetMenu {
 													+ "\" "
 													+ extra
 													+ ">"
-													+ rs
-															.getString("component_name")
+													+ rs.getString("component_name")
 													+ "</a>";
 										}
 									} else {
@@ -3339,16 +3195,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3366,16 +3220,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3399,8 +3251,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -3421,16 +3272,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3448,16 +3297,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3481,8 +3328,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -3503,16 +3349,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3530,16 +3374,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>";
@@ -3563,8 +3405,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>";
 									}
 								}
@@ -3660,11 +3501,8 @@ public class GetMenu {
 									} else {
 										theAction = "#";
 									}
-									theMenu += "<li><a href=\""
-											+ theAction
-											+ "\" "
-											+ extra
-											+ ">"
+									theMenu += "<li><a href=\"" + theAction
+											+ "\" " + extra + ">"
 											+ rs.getString("component_name")
 											+ "</a>\n<ul>";
 								}
@@ -3687,16 +3525,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3714,16 +3550,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3747,8 +3581,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -3769,16 +3602,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3796,16 +3627,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3829,8 +3658,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -3851,16 +3679,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3878,16 +3704,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>\n<ul>";
@@ -3911,8 +3735,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>\n<ul>";
 									}
 								}
@@ -4007,16 +3830,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4034,16 +3855,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4067,8 +3886,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -4089,16 +3907,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4116,16 +3932,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4149,8 +3963,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -4171,16 +3984,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4198,16 +4009,14 @@ public class GetMenu {
 											theAction = "#";
 										}
 										theMenu += "<li><a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ theAction
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a></li>\n";
@@ -4231,8 +4040,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a></li>\n";
 									}
 								}
@@ -4342,17 +4150,14 @@ public class GetMenu {
 									if ((rs.getInt("page_id") == 0)
 											&& (rs.getInt("component_id") == 0)) {
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
-												+ rs
-														.getString("menu_item_action")
+												+ rs.getString("menu_item_action")
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4361,17 +4166,15 @@ public class GetMenu {
 										myPageTemplate.setPage_id(rs
 												.getInt("page_id"));
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ myPageTemplate
 														.getInvocationAsString()
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4395,8 +4198,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>";
 									}
 								} else {
@@ -4412,17 +4214,14 @@ public class GetMenu {
 									if ((rs.getInt("page_id") == 0)
 											&& (rs.getInt("component_id") == 0)) {
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
-												+ rs
-														.getString("menu_item_action")
+												+ rs.getString("menu_item_action")
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4431,17 +4230,15 @@ public class GetMenu {
 										myPageTemplate.setPage_id(rs
 												.getInt("page_id"));
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ myPageTemplate
 														.getInvocationAsString()
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4465,8 +4262,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>";
 									}
 								} else {
@@ -4482,17 +4278,14 @@ public class GetMenu {
 									if ((rs.getInt("page_id") == 0)
 											&& (rs.getInt("component_id") == 0)) {
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
-												+ rs
-														.getString("menu_item_action")
+												+ rs.getString("menu_item_action")
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4501,17 +4294,15 @@ public class GetMenu {
 										myPageTemplate.setPage_id(rs
 												.getInt("page_id"));
 										theMenu += "<a title=\""
-												+ rs
-														.getString(
-																"menu_item_detail_tooltip")
+												+ rs.getString(
+														"menu_item_detail_tooltip")
 														.replaceAll("&", "and")
 												+ "\" href=\""
 												+ myPageTemplate
 														.getInvocationAsString()
 												+ "\">"
-												+ rs
-														.getString(
-																"menu_item_detail_name")
+												+ rs.getString(
+														"menu_item_detail_name")
 														.replaceAll("&",
 																"&amp;")
 												+ "</a>";
@@ -4535,8 +4326,7 @@ public class GetMenu {
 												+ "\" "
 												+ extra
 												+ ">"
-												+ rs
-														.getString("component_name")
+												+ rs.getString("component_name")
 												+ "</a>";
 									}
 								} else {

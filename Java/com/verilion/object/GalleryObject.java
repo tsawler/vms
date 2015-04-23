@@ -11,7 +11,6 @@
 //------------------------------------------------------------------------------
 package com.verilion.object;
 
-
 /**
  * Populates list object using set/get for Gallery
  * 
@@ -19,25 +18,25 @@ package com.verilion.object;
  */
 public class GalleryObject {
 
-   private String Gallery = "";
+	private String Gallery = "";
 
-   public GalleryObject() {
+	public GalleryObject() {
 
-   }
+	}
 
-   /**
-    * @return Returns the row.
-    */
-   public String getGallery() {
-      return Gallery;
-   }
+	/**
+	 * @return Returns the row.
+	 */
+	public String getGallery() {
+		return Gallery;
+	}
 
-   /**
-    * @param theRow
-    *           The theRow to set.
-    */
-   public void setGallery(String Gallery) {
-      this.Gallery = Gallery;
-   }
+	/**
+	 * @param theRow
+	 *            The theRow to set.
+	 */
+	public void setGallery(String Gallery) {
+		this.Gallery = Gallery;
+	}
 
 }

@@ -21,8 +21,7 @@ import com.verilion.object.captcha.text.TextProducer;
 import com.verilion.object.captcha.text.WordRenederer;
 
 /**
- * Classes implementing this interface will be responsible 
- * for creating the base
+ * Classes implementing this interface will be responsible for creating the base
  * 
  * @author tsawler
  * 
@@ -45,7 +44,9 @@ public interface CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setBackGroundImageProducer(com.verilion.object.captcha.obscurity.BackgroundProducer)
+	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#
+	 * setBackGroundImageProducer
+	 * (com.verilion.object.captcha.obscurity.BackgroundProducer)
 	 */
 	public abstract void setBackGroundImageProducer(
 			BackgroundProducer background);
@@ -53,7 +54,8 @@ public interface CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator()
+	 * @see
+	 * com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator()
 	 */
 	public abstract void setObscurificator(GimpyEngine engine);
 

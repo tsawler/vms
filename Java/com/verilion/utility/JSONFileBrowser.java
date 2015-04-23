@@ -39,7 +39,8 @@ import org.json.simple.JSONObject;
  * Servlet implementation class for Servlet: JSONFileBrowser
  *
  */
-public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements
+		javax.servlet.Servlet {
 	/**
 	 * 
 	 */
@@ -49,49 +50,63 @@ public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements j
 	private static String[] types;
 	String extraDir;
 
-	/* (non-Java-doc)
+	/*
+	 * (non-Java-doc)
+	 * 
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
 	public JSONFileBrowser() {
 		super();
-	}   	
+	}
+
 	/**
 	 * Initialize the servlet.<br>
-	 * Retrieve from the servlet configuration the "baseDir" which is the root of the file repository:<br>
+	 * Retrieve from the servlet configuration the "baseDir" which is the root
+	 * of the file repository:<br>
 	 * If not specified the value of "/UserFiles" will be used.
 	 *
 	 */
 	public void init() throws ServletException {
-		baseDir=getInitParameter("baseDir");
-		if(baseDir==null) {
-			baseDir="/UserFiles/Image";
+		baseDir = getInitParameter("baseDir");
+		if (baseDir == null) {
+			baseDir = "/UserFiles/Image";
 		}
-		String realBaseDir=getServletContext().getRealPath(baseDir);
-		File baseFile=new File(realBaseDir);
-		if(!baseFile.exists()){
+		String realBaseDir = getServletContext().getRealPath(baseDir);
+		File baseFile = new File(realBaseDir);
+		if (!baseFile.exists()) {
 			baseFile.mkdir();
 		}
-		fileTypes=getInitParameter("fileTypes");
-		if(fileTypes==null)  {
-			fileTypes="png:jpeg:jpg:gif";
+		fileTypes = getInitParameter("fileTypes");
+		if (fileTypes == null) {
+			fileTypes = "png:jpeg:jpg:gif";
 		}
 		types = fileTypes.split(":");
 	}
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		procressRequest(request, response);
-	}  	
 
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	/*
+	 * (non-Java-doc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request,
+	 * HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		procressRequest(request, response);
-	} 
+	}
 
-	private void procressRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	/*
+	 * (non-Java-doc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request,
+	 * HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		procressRequest(request, response);
+	}
+
+	private void procressRequest(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		extraDir = request.getParameter("directory");
@@ -101,15 +116,16 @@ public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements j
 			/* add final slash */
 			extraDir = extraDir + "/";
 		}
-		String realBaseDir=getServletContext().getRealPath(baseDir + extraDir );
+		String realBaseDir = getServletContext()
+				.getRealPath(baseDir + extraDir);
 		out.println(getFiles(realBaseDir));
 		out.close();
 	}
 
-	@SuppressWarnings( "unchecked")
-	private  JSONObject getFiles(String dirItem) {
-		JSONObject return_obj=new JSONObject();
-		JSONArray preview=new JSONArray();
+	@SuppressWarnings("unchecked")
+	private JSONObject getFiles(String dirItem) {
+		JSONObject return_obj = new JSONObject();
+		JSONArray preview = new JSONArray();
 		File file;
 		String list[];
 
@@ -124,37 +140,43 @@ public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements j
 				}
 			}
 		}
-		return_obj.put("previews",preview);
+		return_obj.put("previews", preview);
 		return return_obj;
 	}
+
 	@SuppressWarnings("unchecked")
-	private JSONObject createFileObj(String fileStr){
-		JSONObject return_obj=new JSONObject();
+	private JSONObject createFileObj(String fileStr) {
+		JSONObject return_obj = new JSONObject();
 		File file;
 		File t_file;
-		file = new File(getServletContext().getRealPath(baseDir + extraDir + fileStr));
+		file = new File(getServletContext().getRealPath(
+				baseDir + extraDir + fileStr));
 		if (file.isDirectory()) {
-			return_obj.put("type","directory");
+			return_obj.put("type", "directory");
 		} else {
 			if (isFileType(fileStr)) {
-				return_obj.put("type","image");
-				t_file = new File(getServletContext().getRealPath(baseDir + extraDir + "/thumbnails/" + fileStr));
+				return_obj.put("type", "image");
+				t_file = new File(getServletContext().getRealPath(
+						baseDir + extraDir + "/thumbnails/" + fileStr));
 				if (t_file.exists()) {
-					return_obj.put("thumb","thumbnails/" + fileStr);
+					return_obj.put("thumb", "thumbnails/" + fileStr);
 				} else {
-					//if a gif file 
+					// if a gif file
 					if (fileStr.endsWith(".gif")) {
-						String pngThumbnail = fileStr.replace(".gif",".png");
-						t_file = new File(getServletContext().getRealPath(baseDir + extraDir + "/thumbnails/" + pngThumbnail));
+						String pngThumbnail = fileStr.replace(".gif", ".png");
+						t_file = new File(getServletContext().getRealPath(
+								baseDir + extraDir + "/thumbnails/"
+										+ pngThumbnail));
 						if (t_file.exists()) {
-							return_obj.put("thumb","thumbnails/" + pngThumbnail);
+							return_obj.put("thumb", "thumbnails/"
+									+ pngThumbnail);
 						}
-						
+
 					} else if (extraDir.contains("thumbnails")) {
-						//if we are in the thumbnails directory
-						return_obj.put("thumb",fileStr);
+						// if we are in the thumbnails directory
+						return_obj.put("thumb", fileStr);
 					} else {
-						return_obj.put("thumb","");
+						return_obj.put("thumb", "");
 					}
 
 				}
@@ -162,12 +184,13 @@ public class JSONFileBrowser extends javax.servlet.http.HttpServlet implements j
 				return null;
 			}
 		}
-		return_obj.put("src",fileStr);
+		return_obj.put("src", fileStr);
 
 		return return_obj;
 	}
-	private boolean isFileType(String filename){
-		for (int x=0; x<types.length; x++) {
+
+	private boolean isFileType(String filename) {
+		for (int x = 0; x < types.length; x++) {
 			if (filename.endsWith("." + types[x])) {
 				return true;
 			}

@@ -42,42 +42,40 @@ import org.apache.commons.fileupload.FileItem;
  */
 public class ImageUpload extends HttpServlet {
 
-   private static final long serialVersionUID = -7648379165311374336L;
+	private static final long serialVersionUID = -7648379165311374336L;
 
-   private String cancelPage = "";
+	private String cancelPage = "";
 
-   public void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-      HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 
-      try {
-         String isPath = "";
-         DiskFileUpload upload = new DiskFileUpload();
-         List items = upload.parseRequest(request);
-         isPath = request.getParameter("path");
-         cancelPage = request.getParameter("cancelPage");
-         Iterator itr = items.iterator();
+		try {
+			String isPath = "";
+			DiskFileUpload upload = new DiskFileUpload();
+			List items = upload.parseRequest(request);
+			isPath = request.getParameter("path");
+			cancelPage = request.getParameter("cancelPage");
+			Iterator itr = items.iterator();
 
-         while (itr.hasNext()) {
-            FileItem item = (FileItem) itr.next();
-            if (!item.isFormField()) {
-               File fullFile = new File(item.getName());
-               System.out.println("saving to "
-                     + isPath
-                     + ", file is "
-                     + fullFile.getName());
-               File f = new File(isPath, fullFile.getName());
-               item.write(f);
-            }
-         }
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if (!item.isFormField()) {
+					File fullFile = new File(item.getName());
+					System.out.println("saving to " + isPath + ", file is "
+							+ fullFile.getName());
+					File f = new File(isPath, fullFile.getName());
+					item.write(f);
+				}
+			}
 
-         session.setAttribute("Error", "Upload complete.");
-         response.sendRedirect(cancelPage);
+			session.setAttribute("Error", "Upload complete.");
+			response.sendRedirect(cancelPage);
 
-      } catch (Exception e) {
-         System.out.println(e.toString());
-         e.printStackTrace();
-      }
-   }
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+	}
 }

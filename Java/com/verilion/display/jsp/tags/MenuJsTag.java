@@ -25,35 +25,33 @@ import com.verilion.database.DbBean;
  * TagLib to create javascript for special menus, if required
  * 
  * @author tsawler
- *  
+ * 
  */
 public class MenuJsTag extends BaseTag {
 
-   private static final long serialVersionUID = 1L;
-   String menutag = "";
-   private Connection c = null;
-   private String theJavaScript = "";
-   
-   public int doStartTag() throws JspException {
-      try {
-         if (conn == null) {
-            c = DbBean.getDbConnection();
-         }
-         
-         
-         
-         //rs = myPageTemplate..
-         if (conn == null) {
-            DbBean.closeDbConnection(c);
-         }
-         
-         pc.getOut().write(theJavaScript);
+	private static final long serialVersionUID = 1L;
+	String menutag = "";
+	private Connection c = null;
+	private String theJavaScript = "";
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         System.out.println(e.toString());
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+	public int doStartTag() throws JspException {
+		try {
+			if (conn == null) {
+				c = DbBean.getDbConnection();
+			}
+
+			// rs = myPageTemplate..
+			if (conn == null) {
+				DbBean.closeDbConnection(c);
+			}
+
+			pc.getOut().write(theJavaScript);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.toString());
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 }

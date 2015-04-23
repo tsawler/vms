@@ -18,7 +18,7 @@ public class ShoutBoxModuleObject {
 	public String getMostRecentShout() {
 		return lastShout;
 	}
-	
+
 	public void setMostRecentShout(String theShout) {
 		lastShout = theShout;
 	}

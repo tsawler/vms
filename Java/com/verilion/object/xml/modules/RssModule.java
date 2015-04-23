@@ -89,162 +89,150 @@ import com.verilion.utility.TextUtils;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class RssModule extends HttpServlet {
 
-   private static final long serialVersionUID = 3256721796979177269L;
+	private static final long serialVersionUID = 3256721796979177269L;
 
-   public static SimpleDateFormat RFC822DATEFORMAT = new SimpleDateFormat(
-         "EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Locale.US);
+	public static SimpleDateFormat RFC822DATEFORMAT = new SimpleDateFormat(
+			"EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Locale.US);
 
-   public static String getDateAsRFC822String(Date date) {
-      return RFC822DATEFORMAT.format(date);
-   }
+	public static String getDateAsRFC822String(Date date) {
+		return RFC822DATEFORMAT.format(date);
+	}
 
-   public void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      this.doPost(request, response);
-   }
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doPost(request, response);
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-    *      javax.servlet.http.HttpServletResponse)
-    */
-   public void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      PrintWriter out;
-      response.setContentType("application/xml");
-      out = response.getWriter();
-      try {
-         DisplayResult(out, request, response);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      out.close();
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out;
+		response.setContentType("application/xml");
+		out = response.getWriter();
+		try {
+			DisplayResult(out, request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		out.close();
+	}
 
-   public PrintWriter DisplayResult(
-         PrintWriter out,
-         HttpServletRequest request,
-         HttpServletResponse response) throws SQLException, Exception {
-      PrintWriter PWtemp;
-      PWtemp = out;
-      String theXML = "";
-      String siteName = SingletonObjects.getInstance().getHost_name();
-      String hostName = SingletonObjects.getInstance().getHost_name();
-      String theNewsItems = "";
-      String siteDescription = SingletonObjects.getInstance()
-            .getSite_description();
-      String tempString = "";
-      NewsItem myNews = new NewsItem();
-      XDisconnectedRowSet crs = new XDisconnectedRowSet();
-      GregorianCalendar x = new GregorianCalendar();
-      Date today = new Date();
-      Connection conn = null;
-      conn = DbBean.getDbConnection();
+	public PrintWriter DisplayResult(PrintWriter out,
+			HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, Exception {
+		PrintWriter PWtemp;
+		PWtemp = out;
+		String theXML = "";
+		String siteName = SingletonObjects.getInstance().getHost_name();
+		String hostName = SingletonObjects.getInstance().getHost_name();
+		String theNewsItems = "";
+		String siteDescription = SingletonObjects.getInstance()
+				.getSite_description();
+		String tempString = "";
+		NewsItem myNews = new NewsItem();
+		XDisconnectedRowSet crs = new XDisconnectedRowSet();
+		GregorianCalendar x = new GregorianCalendar();
+		Date today = new Date();
+		Connection conn = null;
+		conn = DbBean.getDbConnection();
 
-      int year = x.get(Calendar.YEAR);
+		int year = x.get(Calendar.YEAR);
 
-      try {
-         theXML = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\" ?>\n"
-               + "<!-- vMaintain RSS Generator -->\n"
-               + "<!-- Copyright (C) 2003-"
-               + year
-               + " Verilion Inc. http://www.verilion.com -->\n"
-               + "<rss version=\"2.0\">\n"
-               + "<channel>\n"
-               + "<title>"
-               + siteName
-               + "</title>\n"
-               + "<link>"
-               + "http://"
-               + hostName
-               + "</link>\n"
-               + "<description>"
-               + siteDescription
-               + "</description>\n"
-               + "<language>en-us</language>\n"
-               + "<lastBuildDate>"
-               + RssModule.getDateAsRFC822String(today)
-               + "</lastBuildDate>\n"
-               + "<image>\n"
-               + "<title>Powered by vCMS</title>\n"
-               + "<url>"
-               + "http://"
-               + hostName
-               + "/images/vlogorss.png</url>\n"
-               + "<width>144</width>\n"
-               + "<link>http://www.verilion.com</link>\n"
-               + "</image>\n";
+		try {
+			theXML = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\" ?>\n"
+					+ "<!-- vMaintain RSS Generator -->\n"
+					+ "<!-- Copyright (C) 2003-"
+					+ year
+					+ " Verilion Inc. http://www.verilion.com -->\n"
+					+ "<rss version=\"2.0\">\n"
+					+ "<channel>\n"
+					+ "<title>"
+					+ siteName
+					+ "</title>\n"
+					+ "<link>"
+					+ "http://"
+					+ hostName
+					+ "</link>\n"
+					+ "<description>"
+					+ siteDescription
+					+ "</description>\n"
+					+ "<language>en-us</language>\n"
+					+ "<lastBuildDate>"
+					+ RssModule.getDateAsRFC822String(today)
+					+ "</lastBuildDate>\n"
+					+ "<image>\n"
+					+ "<title>Powered by vCMS</title>\n"
+					+ "<url>"
+					+ "http://"
+					+ hostName
+					+ "/images/vlogorss.png</url>\n"
+					+ "<width>144</width>\n"
+					+ "<link>http://www.verilion.com</link>\n" + "</image>\n";
 
-         myNews.setConn(conn);
-         crs = myNews.getNewsHeadlinesForRss();
-         theNewsItems = "";
+			myNews.setConn(conn);
+			crs = myNews.getNewsHeadlinesForRss();
+			theNewsItems = "";
 
-         while (crs.next()) {
-        	 String tempTitle = crs.getString("news_title");
-        	 tempTitle = tempTitle.replaceAll("\n", " ");
-        	 tempTitle = tempTitle.replaceAll("\r", " ");
-        	 tempTitle = tempTitle.replaceAll("\'", "&#8217;");
-        	 tempTitle = tempTitle.replaceAll("&", "&amp;");
-            theNewsItems += "<item>\n"
-                  + "<title>"
-                  + tempTitle
-                  + "</title>\n"
-                  + "<link>"
-                  + "http://"
-                  + hostName
-                  + "/News/newsitem/1/id/"
-                  + crs.getInt("news_id")
-                  + "/content.do</link>\n"
-                  + "<guid>"
-                  + "http://"
-                  + hostName
-                  + "/News/newsitem/1/id/"
-                  + crs.getInt("news_id")
-                  + "/content.do</guid>\n"
-                  + "<description>";
-            tempString = TextUtils.StripHtml(crs.getString("news_teaser_text"));
-            tempString = tempString.replaceAll("\n", " ");
-            tempString = tempString.replaceAll("\r", " ");
-            tempString = tempString.replaceAll("\'", "&#8217;");
-            tempString = tempString.replaceAll("&", "&amp;");
-            theNewsItems += tempString;
-            Date d = new Date();
-            d = crs.getDate("news_start_date");
-            theNewsItems += "...</description>\n"
-                  + "<pubDate>"
-                  + RssModule.getDateAsRFC822String(d)
-                  + "</pubDate>\n"
-                  + "</item>\n";
-         }
+			while (crs.next()) {
+				String tempTitle = crs.getString("news_title");
+				tempTitle = tempTitle.replaceAll("\n", " ");
+				tempTitle = tempTitle.replaceAll("\r", " ");
+				tempTitle = tempTitle.replaceAll("\'", "&#8217;");
+				tempTitle = tempTitle.replaceAll("&", "&amp;");
+				theNewsItems += "<item>\n" + "<title>" + tempTitle
+						+ "</title>\n" + "<link>" + "http://" + hostName
+						+ "/News/newsitem/1/id/" + crs.getInt("news_id")
+						+ "/content.do</link>\n" + "<guid>" + "http://"
+						+ hostName + "/News/newsitem/1/id/"
+						+ crs.getInt("news_id") + "/content.do</guid>\n"
+						+ "<description>";
+				tempString = TextUtils.StripHtml(crs
+						.getString("news_teaser_text"));
+				tempString = tempString.replaceAll("\n", " ");
+				tempString = tempString.replaceAll("\r", " ");
+				tempString = tempString.replaceAll("\'", "&#8217;");
+				tempString = tempString.replaceAll("&", "&amp;");
+				theNewsItems += tempString;
+				Date d = new Date();
+				d = crs.getDate("news_start_date");
+				theNewsItems += "...</description>\n" + "<pubDate>"
+						+ RssModule.getDateAsRFC822String(d) + "</pubDate>\n"
+						+ "</item>\n";
+			}
 
-         theXML = theXML + theNewsItems + "</channel>\n</rss>";
-         crs.close();
-         crs = null;
-         conn.close();
-         conn = null;
+			theXML = theXML + theNewsItems + "</channel>\n</rss>";
+			crs.close();
+			crs = null;
+			conn.close();
+			conn = null;
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         Errors.addError("RssModule.getXMLOutput:Exception:" + e.toString());
-      } finally {
-         if (crs != null) {
-            crs.close();
-            crs = null;
-         }
-         if (conn != null) {
-            conn.close();
-            conn = null;
-         }
-      }
+		} catch (Exception e) {
+			e.printStackTrace();
+			Errors.addError("RssModule.getXMLOutput:Exception:" + e.toString());
+		} finally {
+			if (crs != null) {
+				crs.close();
+				crs = null;
+			}
+			if (conn != null) {
+				conn.close();
+				conn = null;
+			}
+		}
 
-      out.print(theXML);
-      return PWtemp;
-   }
+		out.print(theXML);
+		return PWtemp;
+	}
 }

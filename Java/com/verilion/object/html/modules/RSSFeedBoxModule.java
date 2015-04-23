@@ -49,47 +49,48 @@ import com.verilion.object.Errors;
  */
 public class RSSFeedBoxModule implements ModuleInterface {
 
-   /**
-    * Builds an html table with rss news feed
-    * 
-    * @return String - fully formatted quote as html
-    * @throws Exception
-    */
-   public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request)
-         throws Exception {
+	/**
+	 * Builds an html table with rss news feed
+	 * 
+	 * @return String - fully formatted quote as html
+	 * @throws Exception
+	 */
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception {
 
-      String theFormattedQuote = "";
+		String theFormattedQuote = "";
 
-      try {
+		try {
 
-      } catch (Exception e) {
-         Errors.addError("RSSFeedBoxModule.getHtmlOutput:Exception:" + e.toString());
-      }
-      return theFormattedQuote;
-   }
+		} catch (Exception e) {
+			Errors.addError("RSSFeedBoxModule.getHtmlOutput:Exception:"
+					+ e.toString());
+		}
+		return theFormattedQuote;
+	}
 
-   /**
-    * Parse news feed passed as url string
-    * 
-    * @param psUrl
-    */
-   public static final void ParseFeed(String psUrl) {
+	/**
+	 * Parse news feed passed as url string
+	 * 
+	 * @param psUrl
+	 */
+	public static final void ParseFeed(String psUrl) {
 
-      try {
-         SAXParserFactory factory = SAXParserFactory.newInstance();
-         factory.setValidating(true);
-         factory.setNamespaceAware(true);
-         SAXParser parser = factory.newSAXParser();
-         URL myUrl = new URL(psUrl);
-         BufferedInputStream inStream = new BufferedInputStream(myUrl
-               .openStream());
+		try {
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setValidating(true);
+			factory.setNamespaceAware(true);
+			SAXParser parser = factory.newSAXParser();
+			URL myUrl = new URL(psUrl);
+			BufferedInputStream inStream = new BufferedInputStream(
+					myUrl.openStream());
 
-         // create a validating digester
-         //Digester vDigester = new Digester();
-         parser.parse(inStream, new ParseXMLErrorHandler());
+			// create a validating digester
+			// Digester vDigester = new Digester();
+			parser.parse(inStream, new ParseXMLErrorHandler());
 
-      } catch (Exception e) {
+		} catch (Exception e) {
 
-      }
-   }
+		}
+	}
 }

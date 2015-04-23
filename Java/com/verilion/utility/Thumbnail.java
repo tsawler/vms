@@ -152,8 +152,8 @@ public class Thumbnail {
 									(int) scaledH, BufferedImage.TYPE_INT_RGB);
 							g2d = outImage.createGraphics();
 							g2d.setBackground(Color.WHITE);
-							g2d.clearRect(0, 0, outImage.getWidth(), outImage
-									.getHeight());
+							g2d.clearRect(0, 0, outImage.getWidth(),
+									outImage.getHeight());
 							g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
 									RenderingHints.VALUE_RENDER_QUALITY);
 							tx = new AffineTransform();
@@ -171,8 +171,8 @@ public class Thumbnail {
 								BufferedImage.TYPE_INT_RGB);
 						g2d = outImage.createGraphics();
 						g2d.setBackground(Color.WHITE);
-						g2d.clearRect(0, 0, outImage.getWidth(), outImage
-								.getHeight());
+						g2d.clearRect(0, 0, outImage.getWidth(),
+								outImage.getHeight());
 						tx = new AffineTransform();
 						tx.setToIdentity(); // use identity matrix so image is
 											// copied
@@ -210,11 +210,9 @@ public class Thumbnail {
 			String path = SingletonObjects.getInstance().getSystem_path();
 			System.out.println("executing: \n" + path + "../bin/jpgtn -S -s "
 					+ largestDimension + " '" + inFilename + "' > '"
-					+ outFilename + "'"
-					);
-			myEx.CmdExec(path + "../bin/jpgtn -S -s "
-					+ largestDimension + " '" + inFilename + "' > '"
 					+ outFilename + "'");
+			myEx.CmdExec(path + "../bin/jpgtn -S -s " + largestDimension + " '"
+					+ inFilename + "' > '" + outFilename + "'");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -231,21 +229,17 @@ public class Thumbnail {
 		}
 		return ""; // success
 	}
-	
+
 	public String createThumbnailUsingJpgtn(String inFilename,
 			String outFilename, int largestDimension, String whichDimension) {
 		try {
 			ExecuteExternal myEx = new ExecuteExternal();
 			String path = SingletonObjects.getInstance().getSystem_path();
 			System.out.println("executing: \n" + path + "../bin/jpgtn -S -s "
-					+ largestDimension 
-					+ " -" + whichDimension.toUpperCase()
-					+ " '" + inFilename + "' > '"
-					+ outFilename + "'"
-					);
-			myEx.CmdExec(path + "../bin/jpgtn -S -s "
-					+ largestDimension + " '" + inFilename + "' > '"
-					+ outFilename + "'");
+					+ largestDimension + " -" + whichDimension.toUpperCase()
+					+ " '" + inFilename + "' > '" + outFilename + "'");
+			myEx.CmdExec(path + "../bin/jpgtn -S -s " + largestDimension + " '"
+					+ inFilename + "' > '" + outFilename + "'");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

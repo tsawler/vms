@@ -80,12 +80,13 @@ public class MenuTag extends BaseTag {
 				} else {
 
 				}
-				
+
 			} else if (pagegroup.length() != 0) {
 				theMenu = GetMenu.getHTMLPageGroupMenu(pagegroup,
-						ct_language_id, "n", (HttpServletRequest) pc
-								.getRequest(), (HttpServletResponse) pc
-								.getResponse(), (HttpSession) pc.getSession());
+						ct_language_id, "n",
+						(HttpServletRequest) pc.getRequest(),
+						(HttpServletResponse) pc.getResponse(),
+						(HttpSession) pc.getSession());
 
 			} else {
 				if (style.length() == 0) {

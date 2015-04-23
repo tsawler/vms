@@ -23,87 +23,88 @@ import javax.servlet.jsp.JspTagException;
 import com.verilion.object.html.Years;
 
 /**
- * TagLib to display ddlb of years. Allows form element name,
- * start year, end year and selected year to be specified
+ * TagLib to display ddlb of years. Allows form element name, start year, end
+ * year and selected year to be specified
  * 
  * @author tsawler
  *
  */
 public class YearsDDLB extends BaseTag {
 
-   private static final long serialVersionUID = -2838775803313629647L;
-   private String selectName = "year";
-   private int selectedValue = 0;
-   private int startYear = 0;
-   private int endYear = 0;
+	private static final long serialVersionUID = -2838775803313629647L;
+	private String selectName = "year";
+	private int selectedValue = 0;
+	private int startYear = 0;
+	private int endYear = 0;
 
-   public int doStartTag() throws JspException {
-      try {
-         String theMenu = Years.makeDropDownListYears(selectName, selectedValue, startYear, endYear);
-         pc.getOut().write(theMenu);
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
-   
-   /**
-    * @return Returns the endYear.
-    */
-   public int getEndYear() {
-      return endYear;
-   }
+	public int doStartTag() throws JspException {
+		try {
+			String theMenu = Years.makeDropDownListYears(selectName,
+					selectedValue, startYear, endYear);
+			pc.getOut().write(theMenu);
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
-   /**
-    * @param endYear
-    *           The endYear to set.
-    */
-   public void setEndYear(int endYear) {
-      this.endYear = endYear;
-   }
+	/**
+	 * @return Returns the endYear.
+	 */
+	public int getEndYear() {
+		return endYear;
+	}
 
-   /**
-    * @return Returns the selectedValue.
-    */
-   public int getSelectedValue() {
-      return selectedValue;
-   }
+	/**
+	 * @param endYear
+	 *            The endYear to set.
+	 */
+	public void setEndYear(int endYear) {
+		this.endYear = endYear;
+	}
 
-   /**
-    * @param selectedValue
-    *           The selectedValue to set.
-    */
-   public void setSelectedValue(int selectedValue) {
-      this.selectedValue = selectedValue;
-   }
+	/**
+	 * @return Returns the selectedValue.
+	 */
+	public int getSelectedValue() {
+		return selectedValue;
+	}
 
-   /**
-    * @return Returns the selectName.
-    */
-   public String getSelectName() {
-      return selectName;
-   }
+	/**
+	 * @param selectedValue
+	 *            The selectedValue to set.
+	 */
+	public void setSelectedValue(int selectedValue) {
+		this.selectedValue = selectedValue;
+	}
 
-   /**
-    * @param selectName
-    *           The selectName to set.
-    */
-   public void setSelectName(String selectName) {
-      this.selectName = selectName;
-   }
+	/**
+	 * @return Returns the selectName.
+	 */
+	public String getSelectName() {
+		return selectName;
+	}
 
-   /**
-    * @return Returns the startYear.
-    */
-   public int getStartYear() {
-      return startYear;
-   }
+	/**
+	 * @param selectName
+	 *            The selectName to set.
+	 */
+	public void setSelectName(String selectName) {
+		this.selectName = selectName;
+	}
 
-   /**
-    * @param startYear
-    *           The startYear to set.
-    */
-   public void setStartYear(int startYear) {
-      this.startYear = startYear;
-   }
+	/**
+	 * @return Returns the startYear.
+	 */
+	public int getStartYear() {
+		return startYear;
+	}
+
+	/**
+	 * @param startYear
+	 *            The startYear to set.
+	 */
+	public void setStartYear(int startYear) {
+		this.startYear = startYear;
+	}
 }

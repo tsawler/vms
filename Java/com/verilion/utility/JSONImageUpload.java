@@ -14,7 +14,6 @@
 //Revision 1.1.2.1  2007/06/26 18:39:30  susan
 //Added File Filetering, Image Upload, thumbnail creation
 
-
 //Based on com.verilion.object.ImageUpload
 //------------------------------------------------------------------------------
 package com.verilion.utility;
@@ -29,7 +28,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import com.oreilly.servlet.MultipartRequest;
 
 /**
@@ -43,7 +41,6 @@ import com.oreilly.servlet.MultipartRequest;
  */
 public class JSONImageUpload extends HttpServlet {
 
-
 	/**
 	 * 
 	 */
@@ -54,34 +51,37 @@ public class JSONImageUpload extends HttpServlet {
 
 	/**
 	 * Initialize the servlet.<br>
-	 * Retrieve from the servlet configuration the "baseDir" which is the root of the file repository:<br>
+	 * Retrieve from the servlet configuration the "baseDir" which is the root
+	 * of the file repository:<br>
 	 * If not specified the value of "/UserFiles" will be used.
 	 *
 	 */
 	public void init() throws ServletException {
-		baseDir=getInitParameter("baseDir");
-		if(baseDir==null) {
-			baseDir="/UserFiles/Image";
+		baseDir = getInitParameter("baseDir");
+		if (baseDir == null) {
+			baseDir = "/UserFiles/Image";
 		}
-		String realBaseDir=getServletContext().getRealPath(baseDir);
-		File baseFile=new File(realBaseDir);
-		if(!baseFile.exists()){
+		String realBaseDir = getServletContext().getRealPath(baseDir);
+		File baseFile = new File(realBaseDir);
+		if (!baseFile.exists()) {
 			baseFile.mkdir();
 		}
-		fileTypes=getInitParameter("fileTypes");
-		if(fileTypes==null)  {
-			fileTypes="png:jpeg:jpg:gif";
+		fileTypes = getInitParameter("fileTypes");
+		if (fileTypes == null) {
+			fileTypes = "png:jpeg:jpg:gif";
 		}
 		types = fileTypes.split(":");
 	}
 
-
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	/*
+	 * (non-Java-doc)
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request,
+	 * HttpServletResponse response)
 	 */
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException {
+			throws ServletException, IOException {
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
 
@@ -89,55 +89,54 @@ public class JSONImageUpload extends HttpServlet {
 
 			String isPath = "";
 			isPath = req.getParameter("path");
-			if (isPath==null) {
-				isPath ="/";
+			if (isPath == null) {
+				isPath = "/";
 			}
 
 			String filePath = getServletContext().getRealPath(baseDir + isPath);
-			MultipartRequest multi =
-				new MultipartRequest(req, filePath , 100 *1024 * 1024);
+			MultipartRequest multi = new MultipartRequest(req, filePath,
+					100 * 1024 * 1024);
 
-
-//			Show which files we received
+			// Show which files we received
 			Enumeration files = multi.getFileNames();
 			while (files.hasMoreElements()) {
-				String name = (String)files.nextElement();
+				String name = (String) files.nextElement();
 				File f = multi.getFile(name);
 				String little = "";
 				// Only want images
 				if (!isFileType(f.getName())) {
 					f.delete();
 				} else {
-					//only make thumbnail in non thumbnail driectory
+					// only make thumbnail in non thumbnail driectory
 					if (!isPath.endsWith("thumbnails")) {
-						little = getServletContext().getRealPath(baseDir + isPath + "/thumbnails/"+ f.getName());
+						little = getServletContext()
+								.getRealPath(
+										baseDir + isPath + "/thumbnails/"
+												+ f.getName());
 						if (little.endsWith("gif")) {
 							little = little.replace(".gif", ".png");
 						}
-						//making the thumbnail
-						String realThumbDir=getServletContext().getRealPath(baseDir + isPath + "/thumbnails");
-						File thumbDir=new File(realThumbDir);
-						if(!thumbDir.exists()){
+						// making the thumbnail
+						String realThumbDir = getServletContext().getRealPath(
+								baseDir + isPath + "/thumbnails");
+						File thumbDir = new File(realThumbDir);
+						if (!thumbDir.exists()) {
 							thumbDir.mkdir();
 						}
 						Thumbnail t = new Thumbnail();
-						t.createThumbnail(
-								f.getAbsolutePath(),
-								little,
-								100);
+						t.createThumbnail(f.getAbsolutePath(), little, 100);
 					}
 				}
-				
+
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		out.println("Upload Complete");
 	}
 
-	private boolean isFileType(String filename){
-		for (int x=0; x<types.length; x++) {
+	private boolean isFileType(String filename) {
+		for (int x = 0; x < types.length; x++) {
 			if (filename.endsWith("." + types[x])) {
 				return true;
 			}

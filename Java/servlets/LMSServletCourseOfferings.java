@@ -93,12 +93,15 @@ public class LMSServletCourseOfferings extends HttpServlet {
 			try {
 				action = (String) request.getParameter("action");
 				try {
-					course_section_detail_id = Integer.parseInt((String) request
-							.getParameter("cid"));
-					course_offering_id = Integer.parseInt((String) request.getParameter("coid"));
+					course_section_detail_id = Integer
+							.parseInt((String) request.getParameter("cid"));
+					course_offering_id = Integer.parseInt((String) request
+							.getParameter("coid"));
 				} catch (Exception e) {
-					course_section_detail_id = Integer.parseInt((String) request.getParameter("id"));
-					course_offering_id = Integer.parseInt((String) request.getParameter("coid"));
+					course_section_detail_id = Integer
+							.parseInt((String) request.getParameter("id"));
+					course_offering_id = Integer.parseInt((String) request
+							.getParameter("coid"));
 				}
 
 				// get info from bean
@@ -121,8 +124,8 @@ public class LMSServletCourseOfferings extends HttpServlet {
 					testCal.add(Calendar.MINUTE, DELTA_MINUTES);
 					Date testCalDate = testCal.getTime();
 
-					Timestamp testTimeStamp = new Timestamp(testCalDate
-							.getTime());
+					Timestamp testTimeStamp = new Timestamp(
+							testCalDate.getTime());
 
 					query = "select * from course_student_progress where "
 							+ "customer_id = ? "

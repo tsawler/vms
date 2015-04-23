@@ -41,34 +41,33 @@ import javax.servlet.jsp.JspTagException;
  * TagLib to display message in session on page.
  * 
  * @author tsawler
- *  
+ * 
  */
 public class DisplayMessageTag extends BaseTag {
 
-   private static final long serialVersionUID = 4439755924834265887L;
+	private static final long serialVersionUID = 4439755924834265887L;
 
-   public int doStartTag() throws JspException {
-      HashMap hm = (HashMap) pc.getSession().getAttribute("pHm");
-      try {
-         if (hm.get("PRESERVEMSG") == null) {
-            if (pc.getSession().getAttribute("Error") != null) {
-               String theMessage = pc.getSession().getAttribute("Error")
-                     .toString();
-               pc.getOut().write(
-                     "<div class=\"caution\" style=\"text-align: center\">"
-                           + theMessage
-                           + "</div><br />");
-               pc.getSession().removeAttribute("Error");
-            } else if (pc.getRequest().getParameter("msg") != null) {
-               pc.getOut().write(
-                     "<div class=\"caution\">"
-                           + pc.getRequest().getParameter("msg")
-                           + "</div><br />");
-            }
-         }
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+	public int doStartTag() throws JspException {
+		HashMap hm = (HashMap) pc.getSession().getAttribute("pHm");
+		try {
+			if (hm.get("PRESERVEMSG") == null) {
+				if (pc.getSession().getAttribute("Error") != null) {
+					String theMessage = pc.getSession().getAttribute("Error")
+							.toString();
+					pc.getOut().write(
+							"<div class=\"caution\" style=\"text-align: center\">"
+									+ theMessage + "</div><br />");
+					pc.getSession().removeAttribute("Error");
+				} else if (pc.getRequest().getParameter("msg") != null) {
+					pc.getOut().write(
+							"<div class=\"caution\">"
+									+ pc.getRequest().getParameter("msg")
+									+ "</div><br />");
+				}
+			}
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 }

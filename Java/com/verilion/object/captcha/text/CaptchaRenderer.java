@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
  *
  */
 public interface CaptchaRenderer {
-	
-	public BufferedImage renderCaptcha (String word, int width, int height) ;
+
+	public BufferedImage renderCaptcha(String word, int width, int height);
 
 }

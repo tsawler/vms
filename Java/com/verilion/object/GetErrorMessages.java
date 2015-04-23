@@ -28,8 +28,9 @@ import com.verilion.database.SystemMessages;
  * <P>
  * Dec 04, 2003
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class GetErrorMessages {
 
@@ -46,13 +47,9 @@ public class GetErrorMessages {
 	 * @return String
 	 * @throws Exception
 	 */
-	public static String getErrorMessage(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		HttpSession session,
-		String messageName, 
-		String targetUrl)
-		throws Exception {
+	public static String getErrorMessage(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			String messageName, String targetUrl) throws Exception {
 
 		try {
 			// open database connection for database object
@@ -64,9 +61,8 @@ public class GetErrorMessages {
 			// if it's not there, assume English (1st entry in code
 			// table)
 			if (session.getAttribute("languageId") != null) {
-				myMessage.setCt_language_id(
-					Integer.parseInt(
-						(String) session.getAttribute("languageId")));
+				myMessage.setCt_language_id(Integer.parseInt((String) session
+						.getAttribute("languageId")));
 			} else {
 				myMessage.setCt_language_id(1);
 			}
@@ -75,24 +71,21 @@ public class GetErrorMessages {
 			// name
 			myMessage.setSystem_message_name(messageName);
 			theMessage = myMessage.getSystemMessageByNameAndLanguageId();
-			
+
 			// now redirect where you want the user to go
 			response.sendRedirect(targetUrl);
 			DbBean.closeDbConnection(conn);
 
 		} catch (Exception e) {
-			Errors.addError(
-				"GetErrorMessages.getErrorMessage:Exception:"
+			Errors.addError("GetErrorMessages.getErrorMessage:Exception:"
 					+ e.toString());
 		}
 		// return the message
 		return theMessage;
 	}
 
-	public static String getErrorMessage(
-		HttpSession session,
-		String messageName)
-		throws Exception {
+	public static String getErrorMessage(HttpSession session, String messageName)
+			throws Exception {
 		try {
 			// open database connection for database object
 			conn = DbBean.getDbConnection();
@@ -103,9 +96,8 @@ public class GetErrorMessages {
 			// if it's not there, assume English (1st entry in code
 			// table)
 			if (session.getAttribute("languageId") != null) {
-				myMessage.setCt_language_id(
-					Integer.parseInt(
-						(String) session.getAttribute("languageId")));
+				myMessage.setCt_language_id(Integer.parseInt((String) session
+						.getAttribute("languageId")));
 			} else {
 				myMessage.setCt_language_id(1);
 			}
@@ -117,8 +109,7 @@ public class GetErrorMessages {
 			DbBean.closeDbConnection(conn);
 
 		} catch (Exception e) {
-			Errors.addError(
-				"GetErrorMessages.getErrorMessage:Exception:"
+			Errors.addError("GetErrorMessages.getErrorMessage:Exception:"
 					+ e.toString());
 		}
 		// return the message

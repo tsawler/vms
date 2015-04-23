@@ -1054,8 +1054,7 @@ public class FiveLetterFirstNameTextCreator extends DefaultTextCreator
 			"zofia", "zofka", "zohra", "zoila", "zoilo", "zolly", "zonia",
 			"zoran", "zorba", "zorie", "zorna", "zorya", "zouri", "zoyya",
 			"zsolt", "zubah", "zubin", "zulay", "zulma", "zurab", "zuria",
-			"zviad", "zylla"
-	};
+			"zviad", "zylla" };
 
 	public String getText() {
 		int car = firstNames.length - 1;

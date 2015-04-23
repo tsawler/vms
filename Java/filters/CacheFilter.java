@@ -48,124 +48,127 @@ import com.verilion.database.SingletonObjects;
 
 import filters.cachewrappers.CacheResponseWrapper;
 
-
 /**
- * Servlet filter to cache pages. Pages that do have 'nocache' in the 
- * request URI are skipped.
+ * Servlet filter to cache pages. Pages that do have 'nocache' in the request
+ * URI are skipped.
  * 
  * @author Trevor
  *
  */
 public class CacheFilter implements Filter {
 
-   ServletContext sc;
-   FilterConfig fc;
-   public long cacheTimeout = 15 * 60 * 1000;
+	ServletContext sc;
+	FilterConfig fc;
+	public long cacheTimeout = 15 * 60 * 1000;
 
-   public void doFilter(
-         ServletRequest req,
-         ServletResponse res,
-         FilterChain chain) throws IOException, ServletException {
-      HttpServletRequest request = (HttpServletRequest) req;
-      HttpServletResponse response = (HttpServletResponse) res;
+	public void doFilter(ServletRequest req, ServletResponse res,
+			FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
 
-      // check uri
-      String uri = request.getRequestURI();
-      if (uri == null || uri.equals("") || uri.equals("/")) {
-         chain.doFilter(request, response);
-         return;
-      }
-      // check if was a resource that shouldn't be cached.
-      String r = sc.getRealPath("");
-      String path = fc.getInitParameter(uri);
-      if (path != null && path.equals("nocache")) {
-         chain.doFilter(request, response);
-         return;
-      }
-      path = r + path;
+		// check uri
+		String uri = request.getRequestURI();
+		if (uri == null || uri.equals("") || uri.equals("/")) {
+			chain.doFilter(request, response);
+			return;
+		}
+		// check if was a resource that shouldn't be cached.
+		String r = sc.getRealPath("");
+		String path = fc.getInitParameter(uri);
+		if (path != null && path.equals("nocache")) {
+			chain.doFilter(request, response);
+			return;
+		}
+		path = r + path;
 
-      // customize to match parameters
-      String id = request.getRequestURI() + request.getQueryString();
-      
-      // optionally append i18n sensitivity
-      String localeSensitive = fc.getInitParameter("locale-sensitive");
-      if (localeSensitive != null) {
-         StringWriter ldata = new StringWriter();
-         Enumeration locales = request.getLocales();
-         while (locales.hasMoreElements()) {
-            Locale locale = (Locale) locales.nextElement();
-            ldata.write(locale.getISO3Language());
-         }
-         id = id + ldata.toString();
-      }
-      File tempDir = (File) sc.getAttribute("javax.servlet.context.tempdir");
+		// customize to match parameters
+		String id = request.getRequestURI() + request.getQueryString();
 
-      // get possible cache
-      String temp = tempDir.getAbsolutePath();
-      File file = new File(temp + id);
+		// optionally append i18n sensitivity
+		String localeSensitive = fc.getInitParameter("locale-sensitive");
+		if (localeSensitive != null) {
+			StringWriter ldata = new StringWriter();
+			Enumeration locales = request.getLocales();
+			while (locales.hasMoreElements()) {
+				Locale locale = (Locale) locales.nextElement();
+				ldata.write(locale.getISO3Language());
+			}
+			id = id + ldata.toString();
+		}
+		File tempDir = (File) sc.getAttribute("javax.servlet.context.tempdir");
 
-      // get current resource
-      if (path == null) {
-         path = sc.getRealPath(request.getRequestURI());
-      }
-      File current = new File(path);
+		// get possible cache
+		String temp = tempDir.getAbsolutePath();
+		File file = new File(temp + id);
 
-      try {
-         long now = Calendar.getInstance().getTimeInMillis();
+		// get current resource
+		if (path == null) {
+			path = sc.getRealPath(request.getRequestURI());
+		}
+		File current = new File(path);
 
-         //set timestamp check
-         if (!file.exists()
-               || (file.exists() && current.lastModified() > file
-                     .lastModified())
-               || cacheTimeout < now - file.lastModified()) {
-            String name = file.getAbsolutePath();
+		try {
+			long now = Calendar.getInstance().getTimeInMillis();
 
-            name = name.substring(
-                  0,
-                  name.lastIndexOf(File.separatorChar) == -1 ? 0 : name
-                        .lastIndexOf(File.separatorChar));
-            new File(name).mkdirs();
+			// set timestamp check
+			if (!file.exists()
+					|| (file.exists() && current.lastModified() > file
+							.lastModified())
+					|| cacheTimeout < now - file.lastModified()) {
+				String name = file.getAbsolutePath();
 
-            FileOutputStream fos = new FileOutputStream(file);
-            CacheResponseWrapper wrappedResponse = new CacheResponseWrapper(
-                  response, fos);
-            chain.doFilter(req, wrappedResponse);
+				name = name.substring(
+						0,
+						name.lastIndexOf(File.separatorChar) == -1 ? 0 : name
+								.lastIndexOf(File.separatorChar));
+				new File(name).mkdirs();
 
-            fos.flush();
-            fos.close();
-         }
-      } catch (ServletException e) {
-         if (!file.exists()) {
-            throw new ServletException(e);
-         }
-      } catch (IOException e) {
-         if (!file.exists()) {
-            throw e;
-         }
-      }
+				FileOutputStream fos = new FileOutputStream(file);
+				CacheResponseWrapper wrappedResponse = new CacheResponseWrapper(
+						response, fos);
+				chain.doFilter(req, wrappedResponse);
 
-      FileInputStream fis = new FileInputStream(file);
-      String mt = sc.getMimeType(request.getRequestURI());
-      response.setContentType(mt);
-      ServletOutputStream sos = res.getOutputStream();
-      for (int i = fis.read(); i != -1; i = fis.read()) {
-         sos.write((byte) i);
-      }
-   }
+				fos.flush();
+				fos.close();
+			}
+		} catch (ServletException e) {
+			if (!file.exists()) {
+				throw new ServletException(e);
+			}
+		} catch (IOException e) {
+			if (!file.exists()) {
+				throw e;
+			}
+		}
 
-   public void init(FilterConfig filterConfig) {
-      this.fc = filterConfig;
-      // set the inital timeout
-      String ct = SingletonObjects.getInstance().getCacheTimeout() + "";
-      if (ct != null) {
-         cacheTimeout = 60 * 1000 * Long.parseLong(ct);
-      }
-      // set reference to servlet context
-      this.sc = filterConfig.getServletContext();
-   }
+		FileInputStream fis = new FileInputStream(file);
+		String mt = sc.getMimeType(request.getRequestURI());
+		response.setContentType(mt);
+		ServletOutputStream sos = res.getOutputStream();
+		for (int i = fis.read(); i != -1; i = fis.read()) {
+			sos.write((byte) i);
+		}
+	}
 
-   public void destroy() {
-      this.sc = null;
-      this.fc = null;
-   }
+	/* (non-Javadoc)
+	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+	 */
+	public void init(FilterConfig filterConfig) {
+		this.fc = filterConfig;
+		// set the initial timeout
+		String ct = SingletonObjects.getInstance().getCacheTimeout() + "";
+		if (ct != null) {
+			cacheTimeout = 60 * 1000 * Long.parseLong(ct);
+		}
+		// set reference to servlet context
+		this.sc = filterConfig.getServletContext();
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.Filter#destroy()
+	 */
+	public void destroy() {
+		this.sc = null;
+		this.fc = null;
+	}
 }

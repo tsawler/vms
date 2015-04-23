@@ -26,35 +26,37 @@ import com.verilion.object.Errors;
  * <P>
  * Dec 19, 2003
  * <P>
+ * 
  * @author tsawler
  */
 public class DaysOfMonth {
-   
-   public DaysOfMonth() {
-      
-   }
+
+	public DaysOfMonth() {
+
+	}
 
 	/**
-	 * Builds drop down list of days of month, and selects the one passed as selectedValue,
-	 * for inclusion on html page. Does not put form tags or submit button on menu.
+	 * Builds drop down list of days of month, and selects the one passed as
+	 * selectedValue, for inclusion on html page. Does not put form tags or
+	 * submit button on menu.
 	 * 
-	 * @param selectName string The name of the form to be created
-	 * @param selectedValue int the selected day of the month
+	 * @param selectName
+	 *            string The name of the form to be created
+	 * @param selectedValue
+	 *            int the selected day of the month
 	 * @return String formatted select list of days of month
 	 * @throws Exception
 	 */
-	public static String makeDropDownListDaysOfMonth(
-		String selectName,
-		int selectedValue)
-		throws Exception {
+	public static String makeDropDownListDaysOfMonth(String selectName,
+			int selectedValue) throws Exception {
 
 		String theMenu = "";
 
 		try {
 			// build our menu
-			theMenu =  "<select class=\"inputbox\" name=\"" + selectName + "\">";
+			theMenu = "<select class=\"inputbox\" name=\"" + selectName + "\">";
 
-			for (int i=1; i < 32; i++){
+			for (int i = 1; i < 32; i++) {
 				theMenu += "<option value=\"";
 				theMenu += i;
 				theMenu += "\"";
@@ -68,10 +70,8 @@ public class DaysOfMonth {
 
 			theMenu += "</select>";
 
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"DaysOfMonth.makeDropDownListDaysOfMonth:Exception:"
+		} catch (Exception e) {
+			Errors.addError("DaysOfMonth.makeDropDownListDaysOfMonth:Exception:"
 					+ e.toString());
 		}
 		// return the complete menu

@@ -18,36 +18,35 @@ import java.util.TimerTask;
 
 import com.verilion.components.Chat;
 
-
 /**
  * Schedule a task that executes at regular intervals.
  */
 
 public class ClearChatScheduler {
-   Toolkit toolkit;
-   Timer timer;
+	Toolkit toolkit;
+	Timer timer;
 
-   public ClearChatScheduler() {
-      toolkit = Toolkit.getDefaultToolkit();
-      timer = new Timer(true);
-      timer.schedule(new RemindTask(), 0, // initial delay
-            1000 * 60 * 3); // subsequent rate every 10 min
-   }
-   
-   public void Stop() {
-      if (timer != null) {
-         timer.cancel();
-      }
-   }
+	public ClearChatScheduler() {
+		toolkit = Toolkit.getDefaultToolkit();
+		timer = new Timer(true);
+		timer.schedule(new RemindTask(), 0, // initial delay
+				1000 * 60 * 3); // subsequent rate every 10 min
+	}
 
-   class RemindTask extends TimerTask {
-      public void run() {
-    	  Chat myChat = new Chat();
-    	  myChat.removeInactiveUsers();
-      }
-   }
+	public void Stop() {
+		if (timer != null) {
+			timer.cancel();
+		}
+	}
 
-   public static void main() {
-      new ClearChatScheduler();
-   }
+	class RemindTask extends TimerTask {
+		public void run() {
+			Chat myChat = new Chat();
+			myChat.removeInactiveUsers();
+		}
+	}
+
+	public static void main() {
+		new ClearChatScheduler();
+	}
 }

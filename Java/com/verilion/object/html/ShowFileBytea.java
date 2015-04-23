@@ -50,61 +50,59 @@ import com.verilion.database.DbBean;
  */
 public class ShowFileBytea extends HttpServlet {
 
-   private static final long serialVersionUID = 3906646392938968115L;
-   private int theId = 0;
-   private ResultSet rs = null;
-   private Connection conn = null;
-   Statement st = null;
+	private static final long serialVersionUID = 3906646392938968115L;
+	private int theId = 0;
+	private ResultSet rs = null;
+	private Connection conn = null;
+	Statement st = null;
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-      String sqlQuery = "";
-      theId = Integer.parseInt((String) request.getParameter("id"));
+		String sqlQuery = "";
+		theId = Integer.parseInt((String) request.getParameter("id"));
 
-      // get file data and write it to the browser
-      try {
-         conn = DbBean.getDbConnection();
+		// get file data and write it to the browser
+		try {
+			conn = DbBean.getDbConnection();
 
-         sqlQuery = "select document_data, document_name, document_mime_type "
-               + "from documents "
-               + "where document_id = ?";
-         PreparedStatement pst = conn.prepareStatement(sqlQuery);
-         pst.setInt(1, theId);
-         rs = pst.executeQuery();
+			sqlQuery = "select document_data, document_name, document_mime_type "
+					+ "from documents " + "where document_id = ?";
+			PreparedStatement pst = conn.prepareStatement(sqlQuery);
+			pst.setInt(1, theId);
+			rs = pst.executeQuery();
 
-         if (rs != null) {
-            while (rs.next()) {
-               byte[] theFileData = rs.getBytes(1);
-               response.setHeader("Content-Disposition", "attachment;"
-                     + " filename="
-                     + rs.getString("document_name"));
-               response.setContentType("application/x-octet-stream");
-               ServletOutputStream out = response.getOutputStream();
-               out.write(theFileData);
-               out.close();
-            }
-         }
-         rs.close();
-         rs = null;
-         pst.close();
-         pst = null;
-         DbBean.closeDbConnection(conn);
+			if (rs != null) {
+				while (rs.next()) {
+					byte[] theFileData = rs.getBytes(1);
+					response.setHeader("Content-Disposition", "attachment;"
+							+ " filename=" + rs.getString("document_name"));
+					response.setContentType("application/x-octet-stream");
+					ServletOutputStream out = response.getOutputStream();
+					out.write(theFileData);
+					out.close();
+				}
+			}
+			rs.close();
+			rs = null;
+			pst.close();
+			pst = null;
+			DbBean.closeDbConnection(conn);
 
-      } catch (SQLException e) {
-         throw new ServletException("ShowFileBytea:SQLException");
-      } catch (Exception e) {
-         System.out.println("Error in show image" + e.toString());
-         e.printStackTrace();
-      } finally {
-         if (rs != null) {
-            try {
-               rs.close();
-            } catch (SQLException e1) {
+		} catch (SQLException e) {
+			throw new ServletException("ShowFileBytea:SQLException");
+		} catch (Exception e) {
+			System.out.println("Error in show image" + e.toString());
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e1) {
 
-            }
-            rs = null;
-         }
-      }
-   }
+				}
+				rs = null;
+			}
+		}
+	}
 }

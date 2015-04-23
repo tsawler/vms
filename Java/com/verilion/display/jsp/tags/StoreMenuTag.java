@@ -27,31 +27,31 @@ import com.verilion.object.html.store.Store;
  */
 public class StoreMenuTag extends BaseTag {
 
-   private static final long serialVersionUID = -5747633735610809237L;
-   private int mid = 0;
+	private static final long serialVersionUID = -5747633735610809237L;
+	private int mid = 0;
 
-   public int doStartTag() throws JspException {
-      try {
-         String theMenu = Store.MakeMenuHtml(conn, mid, pc.getSession());
-         pc.getOut().write(theMenu);
-      } catch (Exception e) {
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+	public int doStartTag() throws JspException {
+		try {
+			String theMenu = Store.MakeMenuHtml(conn, mid, pc.getSession());
+			pc.getOut().write(theMenu);
+		} catch (Exception e) {
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
-   /**
-    * @return Returns the position.
-    */
-   public int getMid() {
-      return mid;
-   }
+	/**
+	 * @return Returns the position.
+	 */
+	public int getMid() {
+		return mid;
+	}
 
-   /**
-    * @param mid
-    *           The position to set.
-    */
-   public void setMid(int mid) {
-      this.mid = mid;
-   }
+	/**
+	 * @param mid
+	 *            The position to set.
+	 */
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
 }

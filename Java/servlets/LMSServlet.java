@@ -92,10 +92,11 @@ public class LMSServlet extends HttpServlet {
 			try {
 				action = (String) request.getParameter("action");
 				try {
-					course_section_detail_id = Integer.parseInt((String) request
-							.getParameter("cid"));
+					course_section_detail_id = Integer
+							.parseInt((String) request.getParameter("cid"));
 				} catch (Exception e) {
-					course_section_detail_id = Integer.parseInt((String) request.getParameter("id"));
+					course_section_detail_id = Integer
+							.parseInt((String) request.getParameter("id"));
 				}
 
 				// get info from bean
@@ -118,8 +119,8 @@ public class LMSServlet extends HttpServlet {
 					testCal.add(Calendar.MINUTE, DELTA_MINUTES);
 					Date testCalDate = testCal.getTime();
 
-					Timestamp testTimeStamp = new Timestamp(testCalDate
-							.getTime());
+					Timestamp testTimeStamp = new Timestamp(
+							testCalDate.getTime());
 
 					query = "select * from course_student_progress where "
 							+ "customer_id = ? "
@@ -157,8 +158,8 @@ public class LMSServlet extends HttpServlet {
 						// starting a course section, so insert record
 						try {
 							long entryDate = System.currentTimeMillis();
-					        Timestamp original = new Timestamp(entryDate);
-					        
+							Timestamp original = new Timestamp(entryDate);
+
 							query = "insert into course_student_progress (customer_id, course_section_id, start_date_time_access) "
 									+ "values (?, ?, ?)";
 							pst = conn.prepareStatement(query);
@@ -172,8 +173,9 @@ public class LMSServlet extends HttpServlet {
 							e.printStackTrace();
 							theResponse = "Failed: " + e.toString();
 						}
-						
-						if ((course_section_detail_id > 614) && (course_section_detail_id < 664)){
+
+						if ((course_section_detail_id > 614)
+								&& (course_section_detail_id < 664)) {
 							try {
 								int cspid = 0;
 								query = "select id from course_student_progress where customer_id = ? "
@@ -188,24 +190,25 @@ public class LMSServlet extends HttpServlet {
 								rs = null;
 								pst.close();
 								pst = null;
-								
+
 								long retryDate = System.currentTimeMillis();
 
-						        int sec = 25;
+								int sec = 25;
 
-						        Timestamp original = new Timestamp(retryDate);
-						        Calendar cal = Calendar.getInstance();
-						        cal.setTimeInMillis(original.getTime());
-						        cal.add(Calendar.SECOND, sec);
-						        Timestamp later = new Timestamp(cal.getTime().getTime());
-						        
+								Timestamp original = new Timestamp(retryDate);
+								Calendar cal = Calendar.getInstance();
+								cal.setTimeInMillis(original.getTime());
+								cal.add(Calendar.SECOND, sec);
+								Timestamp later = new Timestamp(cal.getTime()
+										.getTime());
+
 								while (drs.next()) {
 									cspid = drs.getInt("id");
 									query = "update course_student_progress set end_date_time_access = ? where id = ?";
 									pst = conn.prepareStatement(query);
 									pst.setTimestamp(1, later);
 									pst.setInt(2, cspid);
-									
+
 									pst.executeUpdate();
 									pst.close();
 									pst = null;
@@ -214,7 +217,7 @@ public class LMSServlet extends HttpServlet {
 								e.printStackTrace();
 								theResponse = "Failed: " + e.toString();
 							}
-							
+
 						}
 
 					} else {
@@ -234,8 +237,8 @@ public class LMSServlet extends HttpServlet {
 							pst.close();
 							pst = null;
 							long entryDate = System.currentTimeMillis();
-					        Timestamp original = new Timestamp(entryDate);
-							
+							Timestamp original = new Timestamp(entryDate);
+
 							while (drs.next()) {
 								cspid = drs.getInt("id");
 								query = "update course_student_progress set end_date_time_access = ? where id = ?";

@@ -46,100 +46,97 @@ import com.verilion.database.Banners;
  */
 public class BannerTag extends BaseTag {
 
-   private static final long serialVersionUID = 1L;
-   private XDisconnectedRowSet drs = new XDisconnectedRowSet();
-   private String theHTML = "";
-   int banner_id = 0;
-   String banner_file = "";
-   String url = "";
-   Connection c = null;
-   int ct_language_id = 1;
-   String alt_tag = "";
+	private static final long serialVersionUID = 1L;
+	private XDisconnectedRowSet drs = new XDisconnectedRowSet();
+	private String theHTML = "";
+	int banner_id = 0;
+	String banner_file = "";
+	String url = "";
+	Connection c = null;
+	int ct_language_id = 1;
+	String alt_tag = "";
 
-   private int numberOfBanners = 0;
-   private int position_id = 0;
+	private int numberOfBanners = 0;
+	private int position_id = 0;
 
-   public int doStartTag() throws JspException {
+	public int doStartTag() throws JspException {
 
-      try {
-    	 try {
-    		 ct_language_id = Integer.parseInt((String)pc.getSession().getAttribute("lang"));
-    	 } catch (Exception e) {
-    		 ct_language_id = 1;
-    	 }
-         Banners myBanner = new Banners();
-         myBanner.setConn(conn);
-         if (numberOfBanners < 2) {
-            drs = myBanner.getRandomBannerForPositionId(position_id, ct_language_id);
-         } else {
-            drs = myBanner.getRandomBannersForPositionId(
-                  position_id,
-                  numberOfBanners,
-                  ct_language_id);
-         }
-         if (drs.next()) {
-            drs.previous();
-            theHTML = "<div id=\"";
-            if (drs.getInt("ct_banner_position_id") == 1) {
-               theHTML += "topbanner\">";
-            } else if (drs.getInt("ct_banner_position_id") == 2) {
-               theHTML += "rightbanner\">";
-            } else if (drs.getInt("ct_banner_position_id") == 3) {
-               theHTML += "leftbanner\">";
-            } else if (drs.getInt("ct_banner_position_id") == 4) {
-               theHTML += "bottombanner\">";
-            } else {
-               theHTML += "banner\">";
-            }
-            while (drs.next()) {
-               String myUrl = drs.getString("url");
-               if (!myUrl.startsWith("http://"))
-                  myUrl = "http://" + myUrl;
+		try {
+			try {
+				ct_language_id = Integer.parseInt((String) pc.getSession()
+						.getAttribute("lang"));
+			} catch (Exception e) {
+				ct_language_id = 1;
+			}
+			Banners myBanner = new Banners();
+			myBanner.setConn(conn);
+			if (numberOfBanners < 2) {
+				drs = myBanner.getRandomBannerForPositionId(position_id,
+						ct_language_id);
+			} else {
+				drs = myBanner.getRandomBannersForPositionId(position_id,
+						numberOfBanners, ct_language_id);
+			}
+			if (drs.next()) {
+				drs.previous();
+				theHTML = "<div id=\"";
+				if (drs.getInt("ct_banner_position_id") == 1) {
+					theHTML += "topbanner\">";
+				} else if (drs.getInt("ct_banner_position_id") == 2) {
+					theHTML += "rightbanner\">";
+				} else if (drs.getInt("ct_banner_position_id") == 3) {
+					theHTML += "leftbanner\">";
+				} else if (drs.getInt("ct_banner_position_id") == 4) {
+					theHTML += "bottombanner\">";
+				} else {
+					theHTML += "banner\">";
+				}
+				while (drs.next()) {
+					String myUrl = drs.getString("url");
+					if (!myUrl.startsWith("http://"))
+						myUrl = "http://" + myUrl;
 
-               theHTML += "<a target=\"_blank\" href=\"/bannerclick?id="
-                     + drs.getInt("banner_id")
-                     + "&amp;url="
-                     + myUrl
-                     + "\"><img src=\"/banners/"
-                     + drs.getString("banner_file")
-                     + "\" height=\""
-                     + drs.getString("height")
-                     + "\" width=\""
-                     + drs.getString("width")
-                     + "\" style=\"border: 0;\" alt=\"" + drs.getString("alt_text") +"\" /></a>";
-               myBanner.addOneToImpressions(drs.getInt("banner_id"));
-               myBanner.addImpressionDetail(drs.getInt("banner_id"), pc
-                     .getRequest().getRemoteHost().toString());
-               if (drs.next()){
-                  drs.previous();
-                  theHTML += "<div>&nbsp;</div>";
-               }
-            }
-            theHTML += "</div>";
-         } else {
-            theHTML = "";
-         }
-         pc.getOut().write(theHTML);
-      } catch (Exception e) {
-         e.printStackTrace();
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+					theHTML += "<a target=\"_blank\" href=\"/bannerclick?id="
+							+ drs.getInt("banner_id") + "&amp;url=" + myUrl
+							+ "\"><img src=\"/banners/"
+							+ drs.getString("banner_file") + "\" height=\""
+							+ drs.getString("height") + "\" width=\""
+							+ drs.getString("width")
+							+ "\" style=\"border: 0;\" alt=\""
+							+ drs.getString("alt_text") + "\" /></a>";
+					myBanner.addOneToImpressions(drs.getInt("banner_id"));
+					myBanner.addImpressionDetail(drs.getInt("banner_id"), pc
+							.getRequest().getRemoteHost().toString());
+					if (drs.next()) {
+						drs.previous();
+						theHTML += "<div>&nbsp;</div>";
+					}
+				}
+				theHTML += "</div>";
+			} else {
+				theHTML = "";
+			}
+			pc.getOut().write(theHTML);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
-   public int getPosition_id() {
-      return position_id;
-   }
+	public int getPosition_id() {
+		return position_id;
+	}
 
-   public void setPosition_id(int position_id) {
-      this.position_id = position_id;
-   }
+	public void setPosition_id(int position_id) {
+		this.position_id = position_id;
+	}
 
-   public int getNumberOfBanners() {
-      return numberOfBanners;
-   }
+	public int getNumberOfBanners() {
+		return numberOfBanners;
+	}
 
-   public void setNumberOfBanners(int numberfBanners) {
-      this.numberOfBanners = numberfBanners;
-   }
+	public void setNumberOfBanners(int numberfBanners) {
+		this.numberOfBanners = numberfBanners;
+	}
 }

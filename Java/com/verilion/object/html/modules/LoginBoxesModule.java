@@ -62,58 +62,62 @@ import com.verilion.object.Errors;
  */
 public class LoginBoxesModule implements ModuleInterface {
 
-   /**
-    * displays login boxes or logged in messages/menu
-    * 
-    * @return String - login box as html
-    * @throws Exception
-    */
-   public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request)
-			throws Exception {
+	/**
+	 * displays login boxes or logged in messages/menu
+	 * 
+	 * @return String - login box as html
+	 * @throws Exception
+	 */
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception {
 
 		String theLoginText = "";
 		StringBuffer sb;
 		int msgCount = 0;
 		String originalUrl = "";
-		
+
 		try {
 			SystemPages.setConn(conn);
 			HashMap hm = (HashMap) session.getAttribute("pHm");
 			originalUrl = (String) hm.get("original_url");
-			
+
 			if (session.getAttribute("user") == null) {
 				theLoginText = (SystemPages.GetSystemPageByName("LoginBoxes"));
-				//theLoginText = theLoginText.replaceAll("<!--url-->", request.getRequestURI());
-				theLoginText = theLoginText.replaceAll("<!--url-->", originalUrl);
+				// theLoginText = theLoginText.replaceAll("<!--url-->",
+				// request.getRequestURI());
+				theLoginText = theLoginText.replaceAll("<!--url-->",
+						originalUrl);
 			} else {
 				String myText = SystemPages
-						.GetSystemPageByNameAndAccessLevelId(
-								"Logged In",
+						.GetSystemPageByNameAndAccessLevelId("Logged In",
 								Integer.parseInt((String) session
 										.getAttribute("customer_access_level")));
 				HTMLTemplateDb myTemplate = new HTMLTemplateDb(myText);
 				String userName = "";
-                try {
-                   userName = (String) session.getAttribute("username");
-                } catch (Exception e){
-                   int pos = ((String) session.getAttribute("user")).indexOf("@");
-                   userName = ((String) session.getAttribute("user")).substring(
-                        0,
-                        pos);
-                }
+				try {
+					userName = (String) session.getAttribute("username");
+				} catch (Exception e) {
+					int pos = ((String) session.getAttribute("user"))
+							.indexOf("@");
+					userName = ((String) session.getAttribute("user"))
+							.substring(0, pos);
+				}
 				GenericTable myTable = new GenericTable("customer_messages");
-                myTable.setSSelectWhat("count(customer_message_id) as msgCount");
-                myTable.setSCustomWhere("and is_read_yn = 'n' and to_user_id = " + session.getAttribute("customer_id"));
-                myTable.setConn(conn);
-                XDisconnectedRowSet drs = new XDisconnectedRowSet();
-                drs = myTable.getAllRecordsDisconnected();
-                while (drs.next()) {
-                   msgCount = drs.getInt("msgCount");
-                }
-                drs.close();
-                drs = null;
-                myTemplate.searchReplace("$PM$", msgCount + "");
-				myTemplate.searchReplace("$USER$", "<div style=\"text-align: center;\">Hi, " + userName + "</div>");
+				myTable.setSSelectWhat("count(customer_message_id) as msgCount");
+				myTable.setSCustomWhere("and is_read_yn = 'n' and to_user_id = "
+						+ session.getAttribute("customer_id"));
+				myTable.setConn(conn);
+				XDisconnectedRowSet drs = new XDisconnectedRowSet();
+				drs = myTable.getAllRecordsDisconnected();
+				while (drs.next()) {
+					msgCount = drs.getInt("msgCount");
+				}
+				drs.close();
+				drs = null;
+				myTemplate.searchReplace("$PM$", msgCount + "");
+				myTemplate.searchReplace("$USER$",
+						"<div style=\"text-align: center;\">Hi, " + userName
+								+ "</div>");
 				sb = myTemplate.getSb();
 				theLoginText = sb.toString();
 			}

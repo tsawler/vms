@@ -30,52 +30,52 @@ import com.verilion.database.SingletonObjects;
  */
 public class MessageHandler {
 
-   private static String To = "";
-   private static String From = "";
-   private static String MailHost = "localhost";
-   private static String Subject = "";
-   private static String message = "";
+	private static String To = "";
+	private static String From = "";
+	private static String MailHost = "localhost";
+	private static String Subject = "";
+	private static String message = "";
 
-   /**
-    * Constructor
-    */
-   public MessageHandler() {
+	/**
+	 * Constructor
+	 */
+	public MessageHandler() {
 
-   }
+	}
 
-   /**
-    * Sends an Internet email message.
-    */
-   public void SendMessagesInQueue() throws Exception {
+	/**
+	 * Sends an Internet email message.
+	 */
+	public void SendMessagesInQueue() throws Exception {
 
-      Connection conn = DbBean.getDbConnection();
-      MessageQueue myHandler = new MessageQueue();
-      myHandler.setConn(conn);
-      XDisconnectedRowSet drs = new XDisconnectedRowSet();
-      drs = myHandler.GetAllUnsentMessages();
+		Connection conn = DbBean.getDbConnection();
+		MessageQueue myHandler = new MessageQueue();
+		myHandler.setConn(conn);
+		XDisconnectedRowSet drs = new XDisconnectedRowSet();
+		drs = myHandler.GetAllUnsentMessages();
 
-      while (drs.next()) {
-         To = drs.getString("message_queue_to");
-         From = drs.getString("message_queue_from");
-         Subject = drs.getString("message_queue_subject");
-         message = drs.getString("message_queue_message");
-         MailHost = SingletonObjects.getInstance().getMailhost();
-         try {
-            SendMessage.setTo(To);
-            SendMessage.setFrom(From);
-            SendMessage.setMailHost(MailHost);
-            SendMessage.setMessage(message);
-            SendMessage.setSubject(Subject);
-            SendMessage.SendHtmlEmail();
-         } catch (Exception e) {
-            System.out.println("Error sending email : " + e.toString());
-         }
-         MessageQueue myQueue = new MessageQueue();
-         myQueue.setConn(conn);
-         myQueue.setMessage_queue_id(drs.getInt("message_queue_id"));
-         myQueue.MarkMessageSent();
-      }
-      DbBean.closeDbConnection(conn);
-   }
+		while (drs.next()) {
+			To = drs.getString("message_queue_to");
+			From = drs.getString("message_queue_from");
+			Subject = drs.getString("message_queue_subject");
+			message = drs.getString("message_queue_message");
+			MailHost = SingletonObjects.getInstance().getMailhost();
+			try {
+				SendMessage.setTo(To);
+				SendMessage.setFrom(From);
+				SendMessage.setMailHost(MailHost);
+				SendMessage.setMessage(message);
+				SendMessage.setSubject(Subject);
+				SendMessage.SendHtmlEmail();
+			} catch (Exception e) {
+				System.out.println("Error sending email : " + e.toString());
+			}
+			MessageQueue myQueue = new MessageQueue();
+			myQueue.setConn(conn);
+			myQueue.setMessage_queue_id(drs.getInt("message_queue_id"));
+			myQueue.MarkMessageSent();
+		}
+		DbBean.closeDbConnection(conn);
+	}
 
 }

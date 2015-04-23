@@ -95,14 +95,14 @@ import com.verilion.object.Errors;
 import com.verilion.utility.TextUtils;
 
 /**
-* Gets news headlines and items for inclusion on html page
-* <P>
-* Jun 3, 2004
-* <P>
-* 
-* @author tsawler
-*  
-*/
+ * Gets news headlines and items for inclusion on html page
+ * <P>
+ * Jun 3, 2004
+ * <P>
+ * 
+ * @author tsawler
+ * 
+ */
 public class NewsModule implements ModuleInterface {
 
 	/**
@@ -111,17 +111,17 @@ public class NewsModule implements ModuleInterface {
 	 * @return String - fully formatted news headlines as html
 	 * @throws Exception
 	 */
-	public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request) throws Exception {
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception {
 
 		String theNewsItems = "";
 		NewsItem myNews = new NewsItem();
 		XDisconnectedRowSet crs = new XDisconnectedRowSet();
-		
-		try {	
+
+		try {
 			theNewsItems = "<div class=\"vmodule\">\n"
-			    + "<div class=\"vmoduleheading\">Latest News</div>\n"
-                + "<div class=\"vmodulebody\">\n"
-                + "<ul>\n";
+					+ "<div class=\"vmoduleheading\">Latest News</div>\n"
+					+ "<div class=\"vmodulebody\">\n" + "<ul>\n";
 
 			myNews.setConn(conn);
 			crs = myNews.getNewsHeadlines();
@@ -130,29 +130,26 @@ public class NewsModule implements ModuleInterface {
 				crs.previous();
 				while (crs.next()) {
 					// read in the news items
-				   String theTitleText = TextUtils.StripHtml(crs.getString("news_teaser_text"));
-				   if (theTitleText.length() > 100) {
-				      theTitleText = theTitleText.substring(0, 99);
-				   }
-					theNewsItems +="<li>"
-					    + "<a title=\""
-					    + theTitleText
-					    + "..."
-					    + "\" href=\"/public/jpage/1/p/News/a/newsitem/id/"
-				    	+ crs.getInt("news_id")
-						+ "/content.do\">"
-						+ crs.getString("news_title")
-						+ "</a></li>\n";
-					    
+					String theTitleText = TextUtils.StripHtml(crs
+							.getString("news_teaser_text"));
+					if (theTitleText.length() > 100) {
+						theTitleText = theTitleText.substring(0, 99);
+					}
+					theNewsItems += "<li>" + "<a title=\"" + theTitleText
+							+ "..."
+							+ "\" href=\"/public/jpage/1/p/News/a/newsitem/id/"
+							+ crs.getInt("news_id") + "/content.do\">"
+							+ crs.getString("news_title") + "</a></li>\n";
+
 				}
 			} else {
 				// No news items to display
 				theNewsItems += "<li>Currently unavailable</li>\n";
 			}
 			theNewsItems += "</ul>\n<div style=\"text-align: center\"><a href=\"/newsfeed.doxml\">"
-			   + "<img src=\"/images/rss.png\" height=\"14\" "
-			   + "width=\"36\" style=\"border: 0\" alt=\"rss\""
-			   + " title=\"Subscribe to our RSS news feed\" /></a>\n</div>\n</div>\n</div>\n";
+					+ "<img src=\"/images/rss.png\" height=\"14\" "
+					+ "width=\"36\" style=\"border: 0\" alt=\"rss\""
+					+ " title=\"Subscribe to our RSS news feed\" /></a>\n</div>\n</div>\n</div>\n";
 
 			crs.close();
 			crs = null;
@@ -160,10 +157,10 @@ public class NewsModule implements ModuleInterface {
 			Errors.addError("NewsModule.getNewsHeadlines:Exception:"
 					+ e.toString());
 		} finally {
-		    if (crs != null) {
-		        crs.close();
-		        crs = null;
-		    }
+			if (crs != null) {
+				crs.close();
+				crs = null;
+			}
 		}
 		return theNewsItems;
 	}

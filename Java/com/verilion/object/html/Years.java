@@ -35,32 +35,30 @@ public class Years {
 	 * Makes a drop down list box of years from StartYear to EndYear, and with
 	 * selectedValue preselected.
 	 * 
-	 * @param selectName -
-	 *            the name of this form element
-	 * @param selectedValue -
-	 *            the year to preselect when the form is drawn
-	 * @param StartYear -
-	 *            where to start the list
-	 * @param EndYear -
-	 *            where to end the lst
+	 * @param selectName
+	 *            - the name of this form element
+	 * @param selectedValue
+	 *            - the year to preselect when the form is drawn
+	 * @param StartYear
+	 *            - where to start the list
+	 * @param EndYear
+	 *            - where to end the lst
 	 * @return String - the html menu
 	 * @throws Exception
 	 */
-	public static String makeDropDownListYears(
-		String selectName,
-		int selectedValue,
-		int StartYear,
-		int EndYear)
-		throws Exception {
+	public static String makeDropDownListYears(String selectName,
+			int selectedValue, int StartYear, int EndYear) throws Exception {
 
 		String theMenu = "";
 
 		try {
 			// build our menu
-			if (selectedValue == 0){
-				theMenu = "<select class=\"inputbox\" selected name=\"" + selectName + "\">";
+			if (selectedValue == 0) {
+				theMenu = "<select class=\"inputbox\" selected name=\""
+						+ selectName + "\">";
 			} else {
-				theMenu = "<select class=\"inputbox\" name=\"" + selectName + "\">";
+				theMenu = "<select class=\"inputbox\" name=\"" + selectName
+						+ "\">";
 			}
 			theMenu += "<option value='0'>&nbsp;</option>";
 			for (int i = StartYear; i < EndYear + 1; i++) {
@@ -77,10 +75,9 @@ public class Years {
 
 			theMenu += "</select>";
 
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"Years.makeDropDownListYears:Exception:" + e.toString());
+		} catch (Exception e) {
+			Errors.addError("Years.makeDropDownListYears:Exception:"
+					+ e.toString());
 		}
 		// return the complete menu
 		return theMenu;

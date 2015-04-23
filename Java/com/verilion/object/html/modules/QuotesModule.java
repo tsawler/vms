@@ -42,56 +42,55 @@ import com.verilion.object.Errors;
  */
 public class QuotesModule implements ModuleInterface {
 
-   public String title = "Quote";
-   public String url = "";
+	public String title = "Quote";
+	public String url = "";
 
-   /**
-    * Builds an html table with a random quote
-    * 
-    * @return String - fully formatted quote as html
-    * @throws Exception
-    */
-   public String getHtmlOutput(Connection conn, HttpSession session, HttpServletRequest request)
-         throws Exception {
+	/**
+	 * Builds an html table with a random quote
+	 * 
+	 * @return String - fully formatted quote as html
+	 * @throws Exception
+	 */
+	public String getHtmlOutput(Connection conn, HttpSession session,
+			HttpServletRequest request) throws Exception {
 
-      String theFormattedQuote = "";
-      Quotes myQuote = new Quotes();
-      myQuote.setConn(conn);
+		String theFormattedQuote = "";
+		Quotes myQuote = new Quotes();
+		myQuote.setConn(conn);
 
-      try {
-         if (url.length() > 0) {
-            theFormattedQuote = "<a href=\"" + url + "\">";
-         }
-         theFormattedQuote += "<div class=\"vmodule\">\n"
-               + "<div class=\"vmoduleheading\">"
-               + title
-               + "</div>\n"
-               + "<div class=\"vmodulebody\">\n";
-         myQuote.setConn(conn);
-         theFormattedQuote += myQuote.getRandomQuote();
-         theFormattedQuote += "</div></div>";
-         if (url.length() > 0) {
-            theFormattedQuote += "</a>";
-         }
-      } catch (Exception e) {
-         Errors.addError("QuoteModule.getHtmlOutput:Exception:" + e.toString());
-      }
-      return theFormattedQuote;
-   }
+		try {
+			if (url.length() > 0) {
+				theFormattedQuote = "<a href=\"" + url + "\">";
+			}
+			theFormattedQuote += "<div class=\"vmodule\">\n"
+					+ "<div class=\"vmoduleheading\">" + title + "</div>\n"
+					+ "<div class=\"vmodulebody\">\n";
+			myQuote.setConn(conn);
+			theFormattedQuote += myQuote.getRandomQuote();
+			theFormattedQuote += "</div></div>";
+			if (url.length() > 0) {
+				theFormattedQuote += "</a>";
+			}
+		} catch (Exception e) {
+			Errors.addError("QuoteModule.getHtmlOutput:Exception:"
+					+ e.toString());
+		}
+		return theFormattedQuote;
+	}
 
-   public String getTitle() {
-      return title;
-   }
+	public String getTitle() {
+		return title;
+	}
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-   public String getUrl() {
-      return url;
-   }
+	public String getUrl() {
+		return url;
+	}
 
-   public void setUrl(String url) {
-      this.url = url;
-   }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

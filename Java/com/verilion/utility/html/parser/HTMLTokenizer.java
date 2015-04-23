@@ -40,222 +40,231 @@ import java.util.Vector;
  */
 public class HTMLTokenizer {
 
-   private final int BUF_LEN = 256; // Maximum length of read buffer.
-   private Vector tokens; // Store for finished tokens.
+	private final int BUF_LEN = 256; // Maximum length of read buffer.
+	private Vector tokens; // Store for finished tokens.
 
-   private char separator; // Stores the current separator character.
-   private int start; // Index of the start of the next token.
+	private char separator; // Stores the current separator character.
+	private int start; // Index of the start of the next token.
 
-   /**
-    * Constructs a new HTMLTokenizer using the given filename to create the
-    * input stream.
-    * 
-    * @param file the name of the file to open.
-    */
-   public HTMLTokenizer(String file) {
+	/**
+	 * Constructs a new HTMLTokenizer using the given filename to create the
+	 * input stream.
+	 * 
+	 * @param file
+	 *            the name of the file to open.
+	 */
+	public HTMLTokenizer(String file) {
 
-      InputStream is; // The new input stream.
+		InputStream is; // The new input stream.
 
-      // Initialise the variables.
-      tokens = new Vector();
+		// Initialise the variables.
+		tokens = new Vector();
 
-      try {
-         // Open an input stream using the file name.
-         is = new FileInputStream(file);
+		try {
+			// Open an input stream using the file name.
+			is = new FileInputStream(file);
 
-         // Parse the input stream.
-         parseInputStream(is);
-      } catch (IOException ioe) {
-         return;
-      }
-   }
-   
-   /**
-    * Constructs a new HTMLTokenizer using a supplied string to create the
-    * input stream.
-    * 
-    * @param psStringToParse the string to parse
-    * @param bFile
-    */
-   public HTMLTokenizer(String psStringToParse, boolean bFile) {
+			// Parse the input stream.
+			parseInputStream(is);
+		} catch (IOException ioe) {
+			return;
+		}
+	}
 
-      InputStream is; // The new input stream.
+	/**
+	 * Constructs a new HTMLTokenizer using a supplied string to create the
+	 * input stream.
+	 * 
+	 * @param psStringToParse
+	 *            the string to parse
+	 * @param bFile
+	 */
+	public HTMLTokenizer(String psStringToParse, boolean bFile) {
 
-      // Initialise the variables.
-      tokens = new Vector();
+		InputStream is; // The new input stream.
 
-      try {
-         // Open an input stream using the file name.
-         is = new ByteArrayInputStream(psStringToParse.getBytes());
+		// Initialise the variables.
+		tokens = new Vector();
 
-         // Parse the input stream.
-         parseInputStream(is);
-      } catch (IOException ioe) {
-         return;
-      }
-   }
-   
+		try {
+			// Open an input stream using the file name.
+			is = new ByteArrayInputStream(psStringToParse.getBytes());
 
-   /**
-    * Returns an enumeration of the tokens which have been created by the
-    * HTMLTokenizer.
-    */
-   public Enumeration getTokens() {
-      return tokens.elements();
-   }
+			// Parse the input stream.
+			parseInputStream(is);
+		} catch (IOException ioe) {
+			return;
+		}
+	}
 
-   /**
-    * Returns the vector in which the tokens are stored.
-    */
-   public Vector getTokenVector() {
-      return tokens;
-   }
+	/**
+	 * Returns an enumeration of the tokens which have been created by the
+	 * HTMLTokenizer.
+	 */
+	public Enumeration getTokens() {
+		return tokens.elements();
+	}
 
-   /**
-    * Parses the input stream given into tokens.
-    * 
-    * @param is the input stream to parse.
-    */
-   private void parseInputStream(InputStream is) throws IOException {
+	/**
+	 * Returns the vector in which the tokens are stored.
+	 */
+	public Vector getTokenVector() {
+		return tokens;
+	}
 
-      byte[] readbuf; // Refers to the read buffer.
-      char[] charbuf; // Read buffer converted to characters.
-      StringBuffer unused; // Characters still to be processed.
-      int length; // Length of last chunk of read data.
-      int i; // Loop variable.
+	/**
+	 * Parses the input stream given into tokens.
+	 * 
+	 * @param is
+	 *            the input stream to parse.
+	 */
+	private void parseInputStream(InputStream is) throws IOException {
 
-      // Create new buffers.
-      readbuf = new byte[BUF_LEN];
-      charbuf = new char[BUF_LEN];
-      unused = null;
+		byte[] readbuf; // Refers to the read buffer.
+		char[] charbuf; // Read buffer converted to characters.
+		StringBuffer unused; // Characters still to be processed.
+		int length; // Length of last chunk of read data.
+		int i; // Loop variable.
 
-      // Set the separator initially.
-      separator = '<';
+		// Create new buffers.
+		readbuf = new byte[BUF_LEN];
+		charbuf = new char[BUF_LEN];
+		unused = null;
 
-      // Loop round while the end-of-file has not been reached.
-      while (true) {
+		// Set the separator initially.
+		separator = '<';
 
-         // Read in the first chunk of data.
-         length = is.read(readbuf);
+		// Loop round while the end-of-file has not been reached.
+		while (true) {
 
-         // Check for end-of-file.
-         if (length < 0)
-            break;
+			// Read in the first chunk of data.
+			length = is.read(readbuf);
 
-         // Convert the byte array to characters.
-         for (i = 0; i < length; i++)
-            charbuf[i] = (char) readbuf[i];
+			// Check for end-of-file.
+			if (length < 0)
+				break;
 
-         // Process it.
-         unused = processBuffer(charbuf, unused, length);
-      }
-   }
+			// Convert the byte array to characters.
+			for (i = 0; i < length; i++)
+				charbuf[i] = (char) readbuf[i];
 
-   /**
-    * Processes the given character array. The token buffer will be updated to
-    * start with the contents of the given StringBuffer. Any leftover parts of
-    * the buffer that have not been processed are returned in a StringBuffer.
-    * The next call to processBuffer will start where the last one left off by
-    * putting the returned StringBuffer in the argument list of the next call.
-    * 
-    * @param charbuf the character array to be processed.
-    * @param old the leftovers from the last call.
-    * @param len the maximum length of the array to process.
-    */
-   @SuppressWarnings("unchecked")
-private StringBuffer processBuffer(char[] charbuf, StringBuffer old, int len) {
+			// Process it.
+			unused = processBuffer(charbuf, unused, length);
+		}
+	}
 
-      StringBuffer data; // Stores current token's data.
-      int idx; // The index of the next separator.
+	/**
+	 * Processes the given character array. The token buffer will be updated to
+	 * start with the contents of the given StringBuffer. Any leftover parts of
+	 * the buffer that have not been processed are returned in a StringBuffer.
+	 * The next call to processBuffer will start where the last one left off by
+	 * putting the returned StringBuffer in the argument list of the next call.
+	 * 
+	 * @param charbuf
+	 *            the character array to be processed.
+	 * @param old
+	 *            the leftovers from the last call.
+	 * @param len
+	 *            the maximum length of the array to process.
+	 */
+	@SuppressWarnings("unchecked")
+	private StringBuffer processBuffer(char[] charbuf, StringBuffer old, int len) {
 
-      // Get a buffer for the current token.
-      if (old != null)
-         data = old;
-      else
-         data = new StringBuffer(80);
+		StringBuffer data; // Stores current token's data.
+		int idx; // The index of the next separator.
 
-      // Make sure the start index is initialized properly.
-      start = 0;
-      idx = -1;
+		// Get a buffer for the current token.
+		if (old != null)
+			data = old;
+		else
+			data = new StringBuffer(80);
 
-      while (true) {
+		// Make sure the start index is initialized properly.
+		start = 0;
+		idx = -1;
 
-         // Set the new start index.
-         start = idx + 1;
+		while (true) {
 
-         // Get the index of the separator.
-         idx = indexOf(separator, charbuf, start, len);
+			// Set the new start index.
+			start = idx + 1;
 
-         // Check if the separator appears or not.
-         if (idx < 0) {
+			// Get the index of the separator.
+			idx = indexOf(separator, charbuf, start, len);
 
-            // Update the data buffer.
-            if (len - start > 0)
-               data.append(charbuf, start, len - start);
+			// Check if the separator appears or not.
+			if (idx < 0) {
 
-            // If there is data in the buffer, return it.
-            if (data.length() > 0)
-               return data;
-            else
-               return null;
-         }
+				// Update the data buffer.
+				if (len - start > 0)
+					data.append(charbuf, start, len - start);
 
-         // Append the start of the read buffer onto the
-         // data buffer.
-         data.append(charbuf, start, idx - start);
+				// If there is data in the buffer, return it.
+				if (data.length() > 0)
+					return data;
+				else
+					return null;
+			}
 
-         // Check if we should create text or a tag.
-         if (separator == '<') {
+			// Append the start of the read buffer onto the
+			// data buffer.
+			data.append(charbuf, start, idx - start);
 
-            // Check if there is any content to store.
-            if (data.length() > 0) {
+			// Check if we should create text or a tag.
+			if (separator == '<') {
 
-               // Create a new TextToken.
-               TextToken tt = new TextToken();
+				// Check if there is any content to store.
+				if (data.length() > 0) {
 
-               // Put the data into the token.
-               tt.setText(data);
+					// Create a new TextToken.
+					TextToken tt = new TextToken();
 
-               // Store the new TextToken.
-               tokens.addElement(tt);
-            }
-         } else {
+					// Put the data into the token.
+					tt.setText(data);
 
-            // Convert the data to a string.
-            String s = data.toString();
+					// Store the new TextToken.
+					tokens.addElement(tt);
+				}
+			} else {
 
-            // Create a new TagToken with it.
-            TagToken tt = new TagToken(s);
+				// Convert the data to a string.
+				String s = data.toString();
 
-            // Store the new TagToken.
-            tokens.addElement(tt);
-         }
+				// Create a new TagToken with it.
+				TagToken tt = new TagToken(s);
 
-         // Create a new, empty data buffer.
-         data = new StringBuffer(BUF_LEN);
+				// Store the new TagToken.
+				tokens.addElement(tt);
+			}
 
-         // Swap the separator character.
-         if (separator == '<')
-            separator = '>';
-         else
-            separator = '<';
-      }
-   }
+			// Create a new, empty data buffer.
+			data = new StringBuffer(BUF_LEN);
 
-   /**
-    * Returns the index of the given character in the given byte array or -1 if
-    * the character does not appear there.
-    * 
-    * @param c the test character.
-    * @param array the byte array to search.
-    * @param start the first index to search.
-    * @param len the maximum length to search.
-    */
-   private int indexOf(char c, char[] array, int start, int len) {
-      for (int i = start; i < len; i++)
-         if (array[i] == c)
-            return i;
+			// Swap the separator character.
+			if (separator == '<')
+				separator = '>';
+			else
+				separator = '<';
+		}
+	}
 
-      return -1;
-   }
+	/**
+	 * Returns the index of the given character in the given byte array or -1 if
+	 * the character does not appear there.
+	 * 
+	 * @param c
+	 *            the test character.
+	 * @param array
+	 *            the byte array to search.
+	 * @param start
+	 *            the first index to search.
+	 * @param len
+	 *            the maximum length to search.
+	 */
+	private int indexOf(char c, char[] array, int start, int len) {
+		for (int i = start; i < len; i++)
+			if (array[i] == c)
+				return i;
+
+		return -1;
+	}
 }

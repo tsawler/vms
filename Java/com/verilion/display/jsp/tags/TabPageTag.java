@@ -19,30 +19,29 @@ import javax.servlet.jsp.PageContext;
  * Top level tab page tag
  * 
  * @author tsawler
- *  
+ * 
  */
 public class TabPageTag extends BaseTag {
 
-   private static final long serialVersionUID = 5706910740179264083L;
+	private static final long serialVersionUID = 5706910740179264083L;
 
-   public void setPageContext(PageContext p) {
-      pc = p;
-   }
-   
-   /**
-    * TODO
-    * this is in progress
-    */
-   public int doStartTag() throws JspException {
-      try {
-         pc.getOut().write("<script type=\"text/javascript\" src=\"tabjs.js\"></script>");
+	public void setPageContext(PageContext p) {
+		pc = p;
+	}
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
-   
-   
+	/**
+	 * TODO this is in progress
+	 */
+	public int doStartTag() throws JspException {
+		try {
+			pc.getOut()
+					.write("<script type=\"text/javascript\" src=\"tabjs.js\"></script>");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
+
 }

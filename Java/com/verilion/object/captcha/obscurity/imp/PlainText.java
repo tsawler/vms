@@ -24,35 +24,38 @@ import com.verilion.object.captcha.obscurity.GimpyEngine;
  */
 public class PlainText implements GimpyEngine {
 
-    @SuppressWarnings("unused")
-   private Properties props = null;
+	@SuppressWarnings("unused")
+	private Properties props = null;
 
-    public PlainText(Properties props) {
-        this.props = props;
-    }
+	public PlainText(Properties props) {
+		this.props = props;
+	}
 
-    public PlainText() {
+	public PlainText() {
 
-    }
+	}
 
-    /**
-     * Display undistorted text
-     * 
-     * @param image the image to be display
-     * @return the distort image
-     */
-    public BufferedImage getDistortedImage(BufferedImage image) {
-        return image;
-    }
+	/**
+	 * Display undistorted text
+	 * 
+	 * @param image
+	 *            the image to be display
+	 * @return the distort image
+	 */
+	public BufferedImage getDistortedImage(BufferedImage image) {
+		return image;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
-     */
-    public void setProperties(Properties props) {
-        this.props = props;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.verilion.object.captcha.obscurity.GimpyEngine#setProperties(java.
+	 * util.Properties)
+	 */
+	public void setProperties(Properties props) {
+		this.props = props;
 
-    }
+	}
 
 }

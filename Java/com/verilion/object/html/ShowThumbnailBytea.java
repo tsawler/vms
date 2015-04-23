@@ -44,11 +44,9 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * Apr 26, 2004
  * 
  * @author tsawler
- *  
+ * 
  */
-public class ShowThumbnailBytea
-		extends
-		HttpServlet {
+public class ShowThumbnailBytea extends HttpServlet {
 
 	private static final long serialVersionUID = 3618141156060772662L;
 
@@ -56,14 +54,14 @@ public class ShowThumbnailBytea
 		// No initialization necessary
 	}
 
-	public final void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public final void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// No difference to us if it's a get or a post.
 		this.doPost(request, response);
 	}
 
-	public final void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public final void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			int targetWidth = 0;
 			int targetHeight = 0;
@@ -79,10 +77,8 @@ public class ShowThumbnailBytea
 			targetWidth = (int) (sourceImage.getWidth(null) * scale);
 			targetHeight = (int) (sourceImage.getHeight(null) * scale);
 
-			BufferedImage resizedImage = this.scaleImage(
-					sourceImage,
-					targetWidth,
-					targetHeight);
+			BufferedImage resizedImage = this.scaleImage(sourceImage,
+					targetWidth, targetHeight);
 
 			// Output the finished image straight to the response as a JPEG!
 			response.setContentType("image/jpeg");
@@ -104,8 +100,8 @@ public class ShowThumbnailBytea
 	 */
 	private BufferedImage scaleImage(Image sourceImage, int width, int height) {
 		ImageFilter filter = new ReplicateScaleFilter(width, height);
-		ImageProducer producer = new FilteredImageSource(sourceImage
-				.getSource(), filter);
+		ImageProducer producer = new FilteredImageSource(
+				sourceImage.getSource(), filter);
 		Image resizedImage = Toolkit.getDefaultToolkit().createImage(producer);
 
 		return this.toBufferedImage(resizedImage);

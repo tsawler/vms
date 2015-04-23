@@ -25,35 +25,35 @@ import javax.servlet.jsp.JspTagException;
  */
 public class ActiveUserCountTag extends BaseTag {
 
-   private static final long serialVersionUID = 1L;
-   private String theHTML = "";
-   Statement st = null;
-   ResultSet rs = null;
-   String query = "";
-   int sessionCount = 0;
+	private static final long serialVersionUID = 1L;
+	private String theHTML = "";
+	Statement st = null;
+	ResultSet rs = null;
+	String query = "";
+	int sessionCount = 0;
 
-   public int doStartTag() throws JspException {
-      try {
-         st = conn.createStatement();
-         query = "select sessions from sessions";
-         rs = st.executeQuery(query);
-         while (rs.next()) {
-            sessionCount = rs.getInt(1);
-         }
-         if (sessionCount < 1)
-            sessionCount = 1;
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-         theHTML = sessionCount + " active users";
+	public int doStartTag() throws JspException {
+		try {
+			st = conn.createStatement();
+			query = "select sessions from sessions";
+			rs = st.executeQuery(query);
+			while (rs.next()) {
+				sessionCount = rs.getInt(1);
+			}
+			if (sessionCount < 1)
+				sessionCount = 1;
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+			theHTML = sessionCount + " active users";
 
-         pc.getOut().write(theHTML);
-      } catch (Exception e) {
-         e.printStackTrace();
-         throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+			pc.getOut().write(theHTML);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
 }

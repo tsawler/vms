@@ -51,90 +51,90 @@ import com.verilion.database.DbBean;
  */
 public class ShowImage extends HttpServlet {
 
-   private static final long serialVersionUID = 3258133552829837618L;
-   private int theId = 0;
-   private ResultSet rs = null;
-   private Connection conn = null;
-   PreparedStatement pst = null;
+	private static final long serialVersionUID = 3258133552829837618L;
+	private int theId = 0;
+	private ResultSet rs = null;
+	private Connection conn = null;
+	PreparedStatement pst = null;
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-      String sqlQuery = "";
-      String mime_type = "";
-      theId = Integer.parseInt((String) request.getParameter("id"));
+		String sqlQuery = "";
+		String mime_type = "";
+		theId = Integer.parseInt((String) request.getParameter("id"));
 
-      sqlQuery = "select image_data, file_type from images where image_id = ?";
+		sqlQuery = "select image_data, file_type from images where image_id = ?";
 
-      // Get a connection
-      try {
-         conn = DbBean.getDbConnection();
-      } catch (Exception e) {
-         System.err
-               .println("com.verilion.images.ShowImage:DbBean:getDbConnection:Exception "
-                     + e.getMessage());
-      }
+		// Get a connection
+		try {
+			conn = DbBean.getDbConnection();
+		} catch (Exception e) {
+			System.err
+					.println("com.verilion.images.ShowImage:DbBean:getDbConnection:Exception "
+							+ e.getMessage());
+		}
 
-      // get image data and write it to the browser
-      try {
-         pst = conn.prepareStatement(sqlQuery);
-         pst.setInt(1, theId);
-         rs = pst.executeQuery();
-         if (rs.next()) {
-            mime_type = rs.getString("file_type");
-            byte[] theImage = rs.getBytes(1);
-            response.setContentType(mime_type);
-            response.setHeader("Cache-Control", "no-cache");
-            response.setHeader("pragma", "no-cache");
-            response.setDateHeader("Expires", 0);
-            ServletOutputStream out = response.getOutputStream();
-            out.write(theImage);
-            out.close();
-         } else {
-            // there is no image, so show the "no image" image.
-            sqlQuery = "select image_data, file_type from images where customer_id = 0";
-            rs = pst.executeQuery();
-            if (rs.next()) {
-               mime_type = rs.getString("file_type");
-               byte[] theImage = rs.getBytes(1);
-               response.setContentType(mime_type);
-               response.setHeader("Cache-Control", "no-cache"); // HTTP
-               response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-               response.setDateHeader("Expires", 0);
-               ServletOutputStream out = response.getOutputStream();
-               out.write(theImage);
-               out.close();
-            }
+		// get image data and write it to the browser
+		try {
+			pst = conn.prepareStatement(sqlQuery);
+			pst.setInt(1, theId);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				mime_type = rs.getString("file_type");
+				byte[] theImage = rs.getBytes(1);
+				response.setContentType(mime_type);
+				response.setHeader("Cache-Control", "no-cache");
+				response.setHeader("pragma", "no-cache");
+				response.setDateHeader("Expires", 0);
+				ServletOutputStream out = response.getOutputStream();
+				out.write(theImage);
+				out.close();
+			} else {
+				// there is no image, so show the "no image" image.
+				sqlQuery = "select image_data, file_type from images where customer_id = 0";
+				rs = pst.executeQuery();
+				if (rs.next()) {
+					mime_type = rs.getString("file_type");
+					byte[] theImage = rs.getBytes(1);
+					response.setContentType(mime_type);
+					response.setHeader("Cache-Control", "no-cache"); // HTTP
+					response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+					response.setDateHeader("Expires", 0);
+					ServletOutputStream out = response.getOutputStream();
+					out.write(theImage);
+					out.close();
+				}
 
-         }
-         rs.close();
-         rs = null;
-         pst.close();
-         pst = null;
-         try {
-            DbBean.closeDbConnection(conn);
-         } catch (Exception e1) {
+			}
+			rs.close();
+			rs = null;
+			pst.close();
+			pst = null;
+			try {
+				DbBean.closeDbConnection(conn);
+			} catch (Exception e1) {
 
-         }
-      } catch (SQLException e) {
-         throw new ServletException("ImageServlet:SQLException");
-      } finally {
-         if (rs != null) {
-            try {
-               rs.close();
-            } catch (SQLException e1) {
+			}
+		} catch (SQLException e) {
+			throw new ServletException("ImageServlet:SQLException");
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e1) {
 
-            }
-            rs = null;
-         }
-         if (pst != null) {
-            try {
-               pst.close();
-            } catch (SQLException e1) {
-               e1.printStackTrace();
-            }
-            pst = null;
-         }
-      }
-   }
+				}
+				rs = null;
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				pst = null;
+			}
+		}
+	}
 }

@@ -51,6 +51,7 @@ import com.verilion.object.Errors;
  * <P>
  * Nov 21, 2003
  * <P>
+ * 
  * @author tsawler
  * 
  */
@@ -61,12 +62,12 @@ public class SendMessage {
 	private static String MailHost = "localhost";
 	private static String Subject = "";
 	private static String message = "";
-	
+
 	/**
 	 * Constructor
 	 */
 	public SendMessage() {
-		
+
 	}
 
 	/**
@@ -79,12 +80,12 @@ public class SendMessage {
 		props.put("mail.smtp.host", MailHost);
 		props.put("mail.smtp.localhost", MailHost);
 		Session MySession = Session.getDefaultInstance(props, null);
-		
+
 		try {
 			Message msg = new MimeMessage(MySession);
-            Calendar cal = Calendar.getInstance();
-            Date d = cal.getTime();
-            msg.setSentDate(d);
+			Calendar cal = Calendar.getInstance();
+			Date d = cal.getTime();
+			msg.setSentDate(d);
 			InternetAddress from = new InternetAddress(From);
 			msg.setFrom(from);
 			InternetAddress address = new InternetAddress(To);
@@ -95,13 +96,14 @@ public class SendMessage {
 			Transport.send(msg);
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
-			Errors.addError("sendMessage:SendEmail:MessagingException:" + mex.toString());
+			Errors.addError("sendMessage:SendEmail:MessagingException:"
+					+ mex.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Errors.addError("sendMessage:SendEmail:Exception:" + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Sends an html formatted Internet email message.
 	 */
@@ -112,12 +114,12 @@ public class SendMessage {
 		props.put("mail.smtp.host", MailHost);
 		props.put("mail.smtp.localhost", MailHost);
 		Session MySession = Session.getDefaultInstance(props, null);
-		
+
 		try {
 			Message msg = new MimeMessage(MySession);
-            Calendar cal = Calendar.getInstance();
-            Date d = cal.getTime();
-            msg.setSentDate(d);
+			Calendar cal = Calendar.getInstance();
+			Date d = cal.getTime();
+			msg.setSentDate(d);
 			InternetAddress from = new InternetAddress(From);
 			msg.setFrom(from);
 			InternetAddress address = new InternetAddress(To);
@@ -128,46 +130,49 @@ public class SendMessage {
 			Transport.send(msg);
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
-			Errors.addError("sendMessage:SendEmail:MessagingException:" + mex.toString());
+			Errors.addError("sendMessage:SendEmail:MessagingException:"
+					+ mex.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Errors.addError("sendMessage:SendEmail:Exception:" + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Sends an email message with an attachment
 	 * 
-	 * @param pathName - path to file (includes trailing slash)
-	 * @param fileName - the file name
+	 * @param pathName
+	 *            - path to file (includes trailing slash)
+	 * @param fileName
+	 *            - the file name
 	 * @throws MessagingException
 	 * @throws Exception
 	 */
-	public static void SendEmailWithAttachment(String pathName, 
-	        String fileName) throws MessagingException, Exception {
+	public static void SendEmailWithAttachment(String pathName, String fileName)
+			throws MessagingException, Exception {
 		String msgText = message;
 		Properties props = new Properties();
 		MailHost = SingletonObjects.getInstance().getMailhost();
 		props.put("mail.smtp.host", MailHost);
 		props.put("mail.smtp.localhost", MailHost);
 		Session MySession = Session.getDefaultInstance(props, null);
-		
+
 		try {
 			Message msg = new MimeMessage(MySession);
-            Calendar cal = Calendar.getInstance();
-            Date d = cal.getTime();
-            msg.setSentDate(d);
+			Calendar cal = Calendar.getInstance();
+			Date d = cal.getTime();
+			msg.setSentDate(d);
 			InternetAddress from = new InternetAddress(From);
 			msg.setFrom(from);
 			InternetAddress address = new InternetAddress(To);
 			msg.setRecipient(javax.mail.Message.RecipientType.TO, address);
 			msg.setSubject(Subject);
-			
+
 			// set the message text
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(msgText);
 			Multipart multiPart = new MimeMultipart();
-			
+
 			// now do the attachment
 			multiPart.addBodyPart(messageBodyPart);
 			messageBodyPart = new MimeBodyPart();
@@ -175,13 +180,13 @@ public class SendMessage {
 			messageBodyPart.setDataHandler(new DataHandler(source));
 			messageBodyPart.setFileName(fileName);
 			multiPart.addBodyPart(messageBodyPart);
-			
+
 			// put the message together
 			msg.setContent(multiPart);
-			
+
 			// send the message
 			Transport.send(msg);
-			
+
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		} catch (Exception e) {
@@ -197,7 +202,8 @@ public class SendMessage {
 	}
 
 	/**
-	 * @param from The from to set.
+	 * @param from
+	 *            The from to set.
 	 */
 	public static void setFrom(String from) {
 		From = from;
@@ -211,7 +217,8 @@ public class SendMessage {
 	}
 
 	/**
-	 * @param mailHost The mailHost to set.
+	 * @param mailHost
+	 *            The mailHost to set.
 	 */
 	public static void setMailHost(String mailHost) {
 		MailHost = mailHost;
@@ -225,7 +232,8 @@ public class SendMessage {
 	}
 
 	/**
-	 * @param message The message to set.
+	 * @param message
+	 *            The message to set.
 	 */
 	public static void setMessage(String message) {
 		SendMessage.message = message;
@@ -239,7 +247,8 @@ public class SendMessage {
 	}
 
 	/**
-	 * @param subject The subject to set.
+	 * @param subject
+	 *            The subject to set.
 	 */
 	public static void setSubject(String subject) {
 		Subject = subject;
@@ -253,7 +262,8 @@ public class SendMessage {
 	}
 
 	/**
-	 * @param to The to to set.
+	 * @param to
+	 *            The to to set.
 	 */
 	public static void setTo(String to) {
 		To = to;

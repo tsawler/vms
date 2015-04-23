@@ -215,7 +215,9 @@ public class DefaultCaptchaIml implements CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setBackGroundImageProducer(com.verilion.object.captcha.obscurity.BackgroundProducer)
+	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#
+	 * setBackGroundImageProducer
+	 * (com.verilion.object.captcha.obscurity.BackgroundProducer)
 	 */
 	public void setBackGroundImageProducer(BackgroundProducer background) {
 		// TODO Auto-generated method stub
@@ -225,7 +227,8 @@ public class DefaultCaptchaIml implements CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator()
+	 * @see
+	 * com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator()
 	 */
 	public void setObscurificator() {
 		// TODO Auto-generated method stub
@@ -249,7 +252,9 @@ public class DefaultCaptchaIml implements CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator(com.verilion.object.captcha.obscurity.GimpyEngine)
+	 * @see
+	 * com.verilion.object.captcha.servlet.CaptchaProducer#setObscurificator
+	 * (com.verilion.object.captcha.obscurity.GimpyEngine)
 	 */
 	public void setObscurificator(GimpyEngine engine) {
 		this.gimpy = engine;
@@ -259,7 +264,9 @@ public class DefaultCaptchaIml implements CaptchaProducer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.object.captcha.servlet.CaptchaProducer#setTextProducer(com.verilion.object.captcha.text.TextProducer)
+	 * @see
+	 * com.verilion.object.captcha.servlet.CaptchaProducer#setTextProducer(com
+	 * .verilion.object.captcha.text.TextProducer)
 	 */
 	public void setTextProducer(TextProducer textP) {
 		// TODO Auto-generated method stub

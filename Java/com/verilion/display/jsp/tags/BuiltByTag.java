@@ -27,23 +27,24 @@ import javax.servlet.jsp.JspTagException;
  * Builds generated comment tag
  * 
  * @author tsawler
- *  
+ * 
  */
 public class BuiltByTag extends BaseTag {
 
-   private static final long serialVersionUID = -3419589131660336867L;
+	private static final long serialVersionUID = -3419589131660336867L;
 
-   public int doStartTag() throws JspException {
-      try {
-         if (pc.getSession().getAttribute("gMsg") != null) {
-            String theMessage = pc.getSession().getAttribute("gMsg").toString();
-            pc.getOut().write(theMessage);
-            pc.getSession().removeAttribute("gMsg");
-         }
-      } catch (Exception e) {
-         //throw new JspTagException("An IOException occurred.");
-      }
-      return SKIP_BODY;
-   }
+	public int doStartTag() throws JspException {
+		try {
+			if (pc.getSession().getAttribute("gMsg") != null) {
+				String theMessage = pc.getSession().getAttribute("gMsg")
+						.toString();
+				pc.getOut().write(theMessage);
+				pc.getSession().removeAttribute("gMsg");
+			}
+		} catch (Exception e) {
+			// throw new JspTagException("An IOException occurred.");
+		}
+		return SKIP_BODY;
+	}
 
 }

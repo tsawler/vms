@@ -76,12 +76,11 @@ public class PDFServlet extends HttpServlet {
 		String thePDF = "";
 		int course_type_id = 0;
 
-		
 		Date dttNow = new Date();
 		DateFormat MyDateFormatInstance = DateFormat.getDateTimeInstance(
 				DateFormat.LONG, DateFormat.SHORT);
 		theDate = MyDateFormatInstance.format(dttNow);
-		
+
 		// get the course id (as parameter)
 		try {
 			course_id = Integer.parseInt((String) request.getParameter("cid"));
@@ -97,38 +96,41 @@ public class PDFServlet extends HttpServlet {
 			last_name = myStudent.getLast_name();
 			cme = myStudent.getCme();
 			cmetype = myStudent.getCmetype();
-			thePDF = "certificate_" + last_name + "_" + System.currentTimeMillis()+ ".pdf";
+			thePDF = "certificate_" + last_name + "_"
+					+ System.currentTimeMillis() + ".pdf";
 		} else {
 			// they are not logged in
 			response.sendRedirect("/");
 		}
-		
+
 		try {
 			// Get a connection
 			conn = DbBean.getDbConnection();
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
+
 		// look up customer info to see if course completed
 		if (customer_id > 0) {
 			myGt.setConn(conn);
 			myGt.setSTable("course_students");
 			myGt.setSSelectWhat("*");
-			myGt.setSCustomWhere("and course_id = " + course_id + " and customer_id = " + customer_id);
+			myGt.setSCustomWhere("and course_id = " + course_id
+					+ " and customer_id = " + customer_id);
 			drs = myGt.getAllRecordsDisconnected();
 			while (drs.next()) {
 				course_completed_yn = drs.getString("course_completed_yn");
 			}
 			drs.close();
 			drs = null;
-			System.out.println("cid: " + customer_id + " & cid = " + course_id + " & comp = " + course_completed_yn);
+			System.out.println("cid: " + customer_id + " & cid = " + course_id
+					+ " & comp = " + course_completed_yn);
 			if (course_completed_yn.equalsIgnoreCase("n")) {
 				theErrorMessage = "You have not completed this course!";
 				okay_to_do_cert = false;
 			}
 		}
-		
+
 		if (course_completed_yn.equalsIgnoreCase("y")) {
 			// look up course info
 			myGt.setConn(conn);
@@ -174,191 +176,203 @@ public class PDFServlet extends HttpServlet {
 			}
 
 			// debug
-			
+
 			if (okay_to_do_cert) {
 
 				if (cert_type.equalsIgnoreCase("m")) {
 					// doing a mainpro cert
 					PdfReader reader;
-	
+
 					reader = new PdfReader(
 							"/home/httpd/grandroundsnow.com/http/mainpro.pdf");
-					PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(
-							"/home/httpd/grandroundsnow.com/http/certs/" + thePDF));
-	
+					PdfStamper stamp = new PdfStamper(reader,
+							new FileOutputStream(
+									"/home/httpd/grandroundsnow.com/http/certs/"
+											+ thePDF));
+
 					PdfContentByte cb;
 					cb = stamp.getOverContent(1);
-	
+
 					// we tell the ContentByte we're ready to draw text
 					cb.beginText();
-	
+
 					BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD,
 							BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 					cb.setFontAndSize(bf, 18);
-	
+
 					// we draw some text on a certain position
-					// position is x,y where x is horizontal (from left) and y is
+					// position is x,y where x is horizontal (from left) and y
+					// is
 					// vertical (from bottom)
-	
+
 					// student name
 					cb.setFontAndSize(bf, 18);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, first_name
 							+ " " + last_name, 400, 315, 0);
-	
+
 					// course name
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, course_name,
-							400, 240, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER,
+							course_name, 400, 240, 0);
+
 					// hours course is worth
 					cb.setFontAndSize(bf, 12);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, hours, 543,
 							208, 0);
-	
+
 					// date of course
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate, 205,
-							115, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate,
+							205, 115, 0);
+
 					// finished drawing text
 					cb.endText();
-	
+
 					stamp.close();
 				} else if (cert_type.equalsIgnoreCase("r")) {
 					// royal college
 					PdfReader reader;
-					
+
 					reader = new PdfReader(
 							"/home/httpd/grandroundsnow.com/http/royalcollege.pdf");
-					PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(
-							"/home/httpd/grandroundsnow.com/http/certs/" + thePDF));
-	
+					PdfStamper stamp = new PdfStamper(reader,
+							new FileOutputStream(
+									"/home/httpd/grandroundsnow.com/http/certs/"
+											+ thePDF));
+
 					PdfContentByte cb;
 					cb = stamp.getOverContent(1);
-	
+
 					// we tell the ContentByte we're ready to draw text
 					cb.beginText();
-	
+
 					BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD,
 							BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 					cb.setFontAndSize(bf, 18);
-	
+
 					// we draw some text on a certain position
-					// position is x,y where x is horizontal (from left) and y is
+					// position is x,y where x is horizontal (from left) and y
+					// is
 					// vertical (from bottom)
-	
+
 					// student name
 					cb.setFontAndSize(bf, 18);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, first_name
 							+ " " + last_name, 400, 315, 0);
-	
+
 					// course name
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, course_name,
-							400, 243, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER,
+							course_name, 400, 243, 0);
+
 					// hours course is worth
 					cb.setFontAndSize(bf, 12);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, hours, 543,
 							208, 0);
-	
+
 					// date of course
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate, 205,
-							115, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate,
+							205, 115, 0);
+
 					// finished drawing text
 					cb.endText();
-	
+
 					stamp.close();
 				} else if (cert_type.equalsIgnoreCase("d")) {
 					// doing a mainpro cert for DAL
 					PdfReader reader;
-	
+
 					reader = new PdfReader(
 							"/home/httpd/grandroundsnow.com/http/mainprodal.pdf");
-					PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(
-							"/home/httpd/grandroundsnow.com/http/certs/" + thePDF));
-	
+					PdfStamper stamp = new PdfStamper(reader,
+							new FileOutputStream(
+									"/home/httpd/grandroundsnow.com/http/certs/"
+											+ thePDF));
+
 					PdfContentByte cb;
 					cb = stamp.getOverContent(1);
-	
+
 					// we tell the ContentByte we're ready to draw text
 					cb.beginText();
-	
+
 					BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD,
 							BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 					cb.setFontAndSize(bf, 18);
-	
+
 					// we draw some text on a certain position
-					// position is x,y where x is horizontal (from left) and y is
+					// position is x,y where x is horizontal (from left) and y
+					// is
 					// vertical (from bottom)
-	
+
 					// student name
 					cb.setFontAndSize(bf, 18);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, first_name
 							+ " " + last_name, 400, 315, 0);
-	
+
 					// course name
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, course_name,
-							400, 240, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER,
+							course_name, 400, 240, 0);
+
 					// hours course is worth
 					cb.setFontAndSize(bf, 12);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, hours, 350,
 							190, 0);
-	
+
 					// date of course
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate, 205,
-							115, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate,
+							205, 115, 0);
+
 					// finished drawing text
 					cb.endText();
-	
+
 					stamp.close();
 				} else {
 					// participation
 					PdfReader reader;
-					
+
 					reader = new PdfReader(
 							"/home/httpd/grandroundsnow.com/http/participation.pdf");
-					PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(
-							"/home/httpd/grandroundsnow.com/http/certs/" + thePDF));
-	
+					PdfStamper stamp = new PdfStamper(reader,
+							new FileOutputStream(
+									"/home/httpd/grandroundsnow.com/http/certs/"
+											+ thePDF));
+
 					PdfContentByte cb;
 					cb = stamp.getOverContent(1);
-	
+
 					// we tell the ContentByte we're ready to draw text
 					cb.beginText();
-	
+
 					BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD,
 							BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 					cb.setFontAndSize(bf, 18);
-	
+
 					// we draw some text on a certain position
-					// position is x,y where x is horizontal (from left) and y is
+					// position is x,y where x is horizontal (from left) and y
+					// is
 					// vertical (from bottom)
-	
+
 					// student name
 					cb.setFontAndSize(bf, 18);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, first_name
 							+ " " + last_name, 400, 315, 0);
-	
+
 					// course name
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, course_name,
-							400, 213, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER,
+							course_name, 400, 213, 0);
 
 					// date of course
 					cb.setFontAndSize(bf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate, 205,
-							115, 0);
-	
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, theDate,
+							205, 115, 0);
+
 					// finished drawing text
 					cb.endText();
-	
+
 					stamp.close();
 				}
 			}
@@ -371,13 +385,14 @@ public class PDFServlet extends HttpServlet {
 		}
 		conn = null;
 		PrintWriter out = response.getWriter();
-		if (theErrorMessage.length() == 0){
-			out.println("<a href=\"/certs/" + thePDF + "\">Click here to download your certificate</a>"
-					+ "<br /><br />Please take a moment to complete the <a target\"_blank\" href=\"/survey.jsp?course=" 
+		if (theErrorMessage.length() == 0) {
+			out.println("<a href=\"/certs/"
+					+ thePDF
+					+ "\">Click here to download your certificate</a>"
+					+ "<br /><br />Please take a moment to complete the <a target\"_blank\" href=\"/survey.jsp?course="
 					+ course_name
-					+ "\">course evaluation</a>. <strong><br />(CME Credits are only valid if one submits a course evaluation).</strong>"
-			);
-			
+					+ "\">course evaluation</a>. <strong><br />(CME Credits are only valid if one submits a course evaluation).</strong>");
+
 			// email the student a cert
 			String email = myStudent.getEmail_address();
 			String subject = "Your Certificate from grandroundsnow.com";
@@ -387,16 +402,16 @@ public class PDFServlet extends HttpServlet {
 			SendMessage.setFrom(from);
 			SendMessage.setSubject(subject);
 			SendMessage.setMessage(theText);
-			SendMessage.SendEmailWithAttachment("/home/httpd/grandroundsnow.com/http/certs/", thePDF);
+			SendMessage.SendEmailWithAttachment(
+					"/home/httpd/grandroundsnow.com/http/certs/", thePDF);
 			System.out.println("Sent email to " + email);
-			
+
 		} else {
 			out.println(theErrorMessage);
 		}
 		out.close();
-		
-	}
 
+	}
 
 	/**
 	 * Handles the HTTP <code>GET</code> method.
