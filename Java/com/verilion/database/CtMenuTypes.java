@@ -34,8 +34,9 @@ import com.verilion.object.Errors;
  * <P>
  * package com.verilion.database
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class CtMenuTypes {
 
@@ -59,32 +60,25 @@ public class CtMenuTypes {
 	 */
 	public void updateCtMenuTypes() throws SQLException, Exception {
 		try {
-			String Update =
-				"UPDATE ct_menu_types SET "
-					+ "ct_menu_name = '"
-					+ ct_menu_type_name
-					+ "' "
-					+ "WHERE ct_menu_type_id = '"
-					+ ct_menu_type_id
-					+ "'";
+			String Update = "UPDATE ct_menu_types SET " + "ct_menu_name = '"
+					+ ct_menu_type_name + "' " + "WHERE ct_menu_type_id = '"
+					+ ct_menu_type_id + "'";
 
 			pst = conn.prepareStatement(Update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuTypes:updateCtMenuTypes:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuTypes:updateCtMenuTypes:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuTypes:updateCtMenuTypes:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuTypes:updateCtMenuTypes:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -96,28 +90,23 @@ public class CtMenuTypes {
 	 */
 	public void addCtMenuType() throws SQLException, Exception {
 		try {
-			String save =
-				"INSERT INTO ct_menu_type ("
-					+ "ct_menu_type_name) "
-					+ "VALUES("
-					+ "'', "
-					+ ct_menu_type_name
-					+ "')";
+			String save = "INSERT INTO ct_menu_type (" + "ct_menu_type_name) "
+					+ "VALUES(" + "'', " + ct_menu_type_name + "')";
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError("CtMenuTypes:addCtMenuType:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError("CtMenuTypes:addCtMenuType:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuTypes:addCtMenuType:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuTypes:addCtMenuType:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -128,10 +117,10 @@ public class CtMenuTypes {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static XDisconnectedRowSet getCtMenuTypes() throws SQLException, Exception {
+	public static XDisconnectedRowSet getCtMenuTypes() throws SQLException,
+			Exception {
 		try {
-			String query =
-				"select * from ct_menu_types";
+			String query = "select * from ct_menu_types";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
@@ -140,23 +129,21 @@ public class CtMenuTypes {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuTypes:getCtMenuTypes:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuTypes:getCtMenuTypes:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuTypes:getCtMenuTypes:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuTypes:getCtMenuTypes:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -168,12 +155,11 @@ public class CtMenuTypes {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getCtMenuTypeName() throws SQLException, Exception {
+	public XDisconnectedRowSet getCtMenuTypeName() throws SQLException,
+			Exception {
 		try {
-			String query =
-				"select * from ct_menu_types where ct_menu_type_id = '"
-					+ ct_menu_type_id
-					+ "'";
+			String query = "select * from ct_menu_types where ct_menu_type_id = '"
+					+ ct_menu_type_id + "'";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
@@ -182,23 +168,21 @@ public class CtMenuTypes {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuTypes:getCtMenuTypeName:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuTypes:getCtMenuTypeName:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuTypes:getCtMenuTypeName:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuTypes:getCtMenuTypeName:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -211,7 +195,8 @@ public class CtMenuTypes {
 	}
 
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public static void setConn(Connection conn) {
 		CtMenuTypes.conn = conn;
@@ -225,7 +210,8 @@ public class CtMenuTypes {
 	}
 
 	/**
-	 * @param ct_menu_type_id The ct_menu_type_id to set.
+	 * @param ct_menu_type_id
+	 *            The ct_menu_type_id to set.
 	 */
 	public void setCt_menu_type_id(int ct_menu_type_id) {
 		this.ct_menu_type_id = ct_menu_type_id;
@@ -239,7 +225,8 @@ public class CtMenuTypes {
 	}
 
 	/**
-	 * @param ct_menu_type_name The ct_menu_type_name to set.
+	 * @param ct_menu_type_name
+	 *            The ct_menu_type_name to set.
 	 */
 	public void setCt_menu_type_name(String ct_menu_type_name) {
 		this.ct_menu_type_name = ct_menu_type_name;

@@ -30,457 +30,453 @@ import com.verilion.object.Errors;
  */
 public class Components implements DatabaseInterface {
 
-   private int component_id = 0;
-   private String component_name = "";
-   private String url = "";
-   private String component_active_yn = "";
-   private int iOffset = 0;
-   private int iLimit = 0;
-   private String sCustomWhere = "";
-   private ResultSet rs = null;
-   private XDisconnectedRowSet crs = new XDisconnectedRowSet();
-   private Connection conn;
-   private PreparedStatement pst = null;
-   private Statement st = null;
+	private int component_id = 0;
+	private String component_name = "";
+	private String url = "";
+	private String component_active_yn = "";
+	private int iOffset = 0;
+	private int iLimit = 0;
+	private String sCustomWhere = "";
+	private ResultSet rs = null;
+	private XDisconnectedRowSet crs = new XDisconnectedRowSet();
+	private Connection conn;
+	private PreparedStatement pst = null;
+	private Statement st = null;
 
-   DBUtils myDbUtil = new DBUtils();
+	DBUtils myDbUtil = new DBUtils();
 
-   public Components() {
-      super();
-   }
+	public Components() {
+		super();
+	}
 
-   /**
-    * Update method.
-    * 
-    * @throws Exception
-    */
-   public void updateComponent() throws SQLException, Exception {
-      try {
-         String update = "UPDATE components SET "
-               + "component_name = '"
-               + myDbUtil.fixSqlFieldValue(component_name)
-               + "', "
-               + "component_active_yn = '"
-               + component_active_yn
-               + "' "
-               + "WHERE component_id = '"
-               + component_id
-               + "'";
+	/**
+	 * Update method.
+	 * 
+	 * @throws Exception
+	 */
+	public void updateComponent() throws SQLException, Exception {
+		try {
+			String update = "UPDATE components SET " + "component_name = '"
+					+ myDbUtil.fixSqlFieldValue(component_name) + "', "
+					+ "component_active_yn = '" + component_active_yn + "' "
+					+ "WHERE component_id = '" + component_id + "'";
 
-         pst = conn.prepareStatement(update);
-         pst.executeUpdate();
-         pst.close();
-         pst = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:updateComponent:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("Components:updateComponent:Exception:" + e.toString());
-      } finally {
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
-   }
+			pst = conn.prepareStatement(update);
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:updateComponent:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:updateComponent:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
-   /**
-    * Insert method.
-    * 
-    * @throws Exception
-    */
-   public int addComponent() throws SQLException, Exception {
+	/**
+	 * Insert method.
+	 * 
+	 * @throws Exception
+	 */
+	public int addComponent() throws SQLException, Exception {
 
-      int new_story_id = 0;
+		int new_story_id = 0;
 
-      try {
-         String save = "INSERT INTO components ("
-               + "component_name, "
-               + "url, "
-               + "component_active_yn) "
-               + "VALUES("
-               + "'"
-               + myDbUtil.fixSqlFieldValue(component_name)
-               + "', "
-               + myDbUtil.fixSqlFieldValue(url)
-               + "', "
-               + "'"
-               + component_active_yn
-               + "')";
+		try {
+			String save = "INSERT INTO components (" + "component_name, "
+					+ "url, " + "component_active_yn) " + "VALUES(" + "'"
+					+ myDbUtil.fixSqlFieldValue(component_name) + "', "
+					+ myDbUtil.fixSqlFieldValue(url) + "', " + "'"
+					+ component_active_yn + "')";
 
-         pst = conn.prepareStatement(save);
-         pst.executeUpdate();
+			pst = conn.prepareStatement(save);
+			pst.executeUpdate();
 
-         String getLast = "select currval('components_component_id_seq')";
+			String getLast = "select currval('components_component_id_seq')";
 
-         st = conn.createStatement();
-         rs = st.executeQuery(getLast);
+			st = conn.createStatement();
+			rs = st.executeQuery(getLast);
 
-         if (rs.next()) {
-            new_story_id = rs.getInt(1);
-         }
+			if (rs.next()) {
+				new_story_id = rs.getInt(1);
+			}
 
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-         pst.close();
-         pst = null;
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+			pst.close();
+			pst = null;
 
-      } catch (SQLException e) {
-         Errors.addError("Components:addComponent:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("Components:addComponent:Exception:" + e.toString());
-      } finally {
-         if (rs != null) {
-            rs.close();
-            rs = null;
-         }
-         if (st != null) {
-            st.close();
-            st = null;
-         }
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
+		} catch (SQLException e) {
+			Errors.addError("Components:addComponent:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:addComponent:Exception:" + e.toString());
+		} finally {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
 
-      return new_story_id;
-   }
+		return new_story_id;
+	}
 
-   /**
-    * Returns component for supplied id
-    * 
-    * @return ResultSet
-    * @throws Exception
-    */
-   public XDisconnectedRowSet getComponentById() throws SQLException, Exception {
-      try {
-         String getId = "select * from components where component_id = '"
-               + component_id
-               + "'";
-         st = conn.createStatement();
-         rs = st.executeQuery(getId);
-         crs.populate(rs);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:getComponentById:SQLException:" + e.toString());
-         e.printStackTrace();
-      } catch (Exception e) {
-         Errors.addError("Components:getComponentById:Exception:" + e.toString());
-      } finally {
-         if (rs != null) {
-            rs.close();
-            rs = null;
-         }
-         if (st != null) {
-            st.close();
-            st = null;
-         }
-      }
-      return crs;
-   }
-   
-   public String getComponentUrlById(int inId) throws SQLException, Exception {
-      
-      String theUrl = "";
-      
-      try {
-         String getId = "select url from components where component_id = '"
-               + component_id
-               + "'";
-         st = conn.createStatement();
-         rs = st.executeQuery(getId);
-         while (rs.next()){
-            theUrl = rs.getString(1);
-         }
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:getComponentUrlById:SQLException:" + e.toString());
-         e.printStackTrace();
-      } catch (Exception e) {
-         Errors.addError("Components:getComponentUrlById:Exception:" + e.toString());
-      } finally {
-         if (rs != null) {
-            rs.close();
-            rs = null;
-         }
-         if (st != null) {
-            st.close();
-            st = null;
-         }
-      }
-      
-      return theUrl;
-   }
+	/**
+	 * Returns component for supplied id
+	 * 
+	 * @return ResultSet
+	 * @throws Exception
+	 */
+	public XDisconnectedRowSet getComponentById() throws SQLException,
+			Exception {
+		try {
+			String getId = "select * from components where component_id = '"
+					+ component_id + "'";
+			st = conn.createStatement();
+			rs = st.executeQuery(getId);
+			crs.populate(rs);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:getComponentById:SQLException:"
+					+ e.toString());
+			e.printStackTrace();
+		} catch (Exception e) {
+			Errors.addError("Components:getComponentById:Exception:"
+					+ e.toString());
+		} finally {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
+		}
+		return crs;
+	}
 
-   /**
-    * Returns all items
-    * 
-    * @return XDisconnectedRowSet
-    * @throws Exception
-    */
-   public XDisconnectedRowSet getAllComponents() throws SQLException, Exception {
-      try {
-         String query = "select * from components ";
-         if (sCustomWhere.length() > 6) {
-            query += " " + sCustomWhere;
-         }
+	public String getComponentUrlById(int inId) throws SQLException, Exception {
 
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         crs.populate(rs);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:getAllComponents:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("Components:getAllComponents:Exception:" + e.toString());
-      }
-      return crs;
-   }
+		String theUrl = "";
 
+		try {
+			String getId = "select url from components where component_id = '"
+					+ component_id + "'";
+			st = conn.createStatement();
+			rs = st.executeQuery(getId);
+			while (rs.next()) {
+				theUrl = rs.getString(1);
+			}
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:getComponentUrlById:SQLException:"
+					+ e.toString());
+			e.printStackTrace();
+		} catch (Exception e) {
+			Errors.addError("Components:getComponentUrlById:Exception:"
+					+ e.toString());
+		} finally {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
+		}
 
-   public RowSetDynaClass getAllComponentsynaBean() throws SQLException,
-         Exception {
+		return theUrl;
+	}
 
-      RowSetDynaClass resultset = null;
+	/**
+	 * Returns all items
+	 * 
+	 * @return XDisconnectedRowSet
+	 * @throws Exception
+	 */
+	public XDisconnectedRowSet getAllComponents() throws SQLException,
+			Exception {
+		try {
+			String query = "select * from components ";
+			if (sCustomWhere.length() > 6) {
+				query += " " + sCustomWhere;
+			}
 
-      try {
-         String query = "select components.*, "
-               + "case when component_active_yn = 'y' then '<span style=\"color: green\">active</span>' "
-               + "when component_active_yn = 'p' then '<span style=\"color: orange\">pending</span>' "
-               + "else '<span style=\"color: red;\">inactive</a>' end as component_active_status "
-               + "from components ";
-         if (sCustomWhere.length() > 6) {
-            query += " " + sCustomWhere;
-         }
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			crs.populate(rs);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:getAllComponents:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:getAllComponents:Exception:"
+					+ e.toString());
+		}
+		return crs;
+	}
 
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         resultset = new RowSetDynaClass(rs, false);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:getAllComponentsynaBean:SQLException:"
-               + e.toString());
-      } catch (Exception e) {
-         Errors.addError("Components:getAllComponentsynaBean:Exception:"
-               + e.toString());
-      }
-      return resultset;
-   }
+	public RowSetDynaClass getAllComponentsynaBean() throws SQLException,
+			Exception {
 
-   /**
-    * Change active status of a component
-    * 
-    * @throws Exception
-    */
-   public void changeActiveStatus() throws SQLException, Exception {
-      try {
-         String query = "update components set component_active_yn = '"
-               + component_active_yn
-               + "' where comment_id = '"
-               + component_id
-               + "'";
-         pst = conn.prepareStatement(query);
-         pst.executeUpdate();
-         pst.close();
-         pst = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:changeActiveStatus:SQLException:"
-               + e.toString());
-      } catch (Exception e) {
-         Errors
-               .addError("Components:changeActiveStatus:Exception:" + e.toString());
-      } finally {
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
-   }
+		RowSetDynaClass resultset = null;
 
-   /**
-    * Delete a component by id
-    * 
-    * @throws Exception
-    */
-   public void deleteComponent() throws SQLException, Exception {
-      try {
-         String query = "delete from components where component_id = '"
-               + component_id
-               + "'";
-         pst = conn.prepareStatement(query);
-         pst.executeUpdate();
-         pst.close();
-         pst = null;
-      } catch (SQLException e) {
-         Errors.addError("Components:deleteComponent:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("Components:deleteComponent:Exception:" + e.toString());
-      } finally {
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
-   }
+		try {
+			String query = "select components.*, "
+					+ "case when component_active_yn = 'y' then '<span style=\"color: green\">active</span>' "
+					+ "when component_active_yn = 'p' then '<span style=\"color: orange\">pending</span>' "
+					+ "else '<span style=\"color: red;\">inactive</a>' end as component_active_status "
+					+ "from components ";
+			if (sCustomWhere.length() > 6) {
+				query += " " + sCustomWhere;
+			}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#createCustomWhere(java.lang.String)
-    */
-   public void createCustomWhere(String psCustomWhere) {
-      this.sCustomWhere = psCustomWhere;
-   }
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			resultset = new RowSetDynaClass(rs, false);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:getAllComponentsynaBean:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:getAllComponentsynaBean:Exception:"
+					+ e.toString());
+		}
+		return resultset;
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#setLimit(int)
-    */
-   public void setLimit(int pLimit) {
-      this.iLimit = pLimit;
-   }
+	/**
+	 * Change active status of a component
+	 * 
+	 * @throws Exception
+	 */
+	public void changeActiveStatus() throws SQLException, Exception {
+		try {
+			String query = "update components set component_active_yn = '"
+					+ component_active_yn + "' where comment_id = '"
+					+ component_id + "'";
+			pst = conn.prepareStatement(query);
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:changeActiveStatus:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:changeActiveStatus:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#setOffset(int)
-    */
-   public void setOffset(int pOffset) {
-      this.iOffset = pOffset;
-   }
+	/**
+	 * Delete a component by id
+	 * 
+	 * @throws Exception
+	 */
+	public void deleteComponent() throws SQLException, Exception {
+		try {
+			String query = "delete from components where component_id = '"
+					+ component_id + "'";
+			pst = conn.prepareStatement(query);
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			Errors.addError("Components:deleteComponent:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("Components:deleteComponent:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#setPrimaryKey(java.lang.String)
-    */
-   public void setPrimaryKey(String theKey) {
-      this.setComponent_id(Integer.parseInt(theKey));
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.verilion.database.DatabaseInterface#createCustomWhere(java.lang.String
+	 * )
+	 */
+	public void createCustomWhere(String psCustomWhere) {
+		this.sCustomWhere = psCustomWhere;
+	}
 
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.verilion.database.DatabaseInterface#setLimit(int)
+	 */
+	public void setLimit(int pLimit) {
+		this.iLimit = pLimit;
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#deleteRecord()
-    */
-   public void deleteRecord() throws SQLException, Exception {
-      this.deleteComponent();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.verilion.database.DatabaseInterface#setOffset(int)
+	 */
+	public void setOffset(int pOffset) {
+		this.iOffset = pOffset;
+	}
 
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.verilion.database.DatabaseInterface#setPrimaryKey(java.lang.String)
+	 */
+	public void setPrimaryKey(String theKey) {
+		this.setComponent_id(Integer.parseInt(theKey));
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.verilion.database.DatabaseInterface#changeActiveStatus(java.lang.String)
-    */
-   public void changeActiveStatus(String psStatus) throws SQLException,
-         Exception {
-      this.setComponent_active_yn(psStatus);
-      this.changeActiveStatus();
+	}
 
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.verilion.database.DatabaseInterface#deleteRecord()
+	 */
+	public void deleteRecord() throws SQLException, Exception {
+		this.deleteComponent();
 
-   /**
-    * @return Returns the iLimit.
-    */
-   public int getILimit() {
-      return iLimit;
-   }
+	}
 
-   /**
-    * @param limit
-    *           The iLimit to set.
-    */
-   public void setILimit(int limit) {
-      iLimit = limit;
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.verilion.database.DatabaseInterface#changeActiveStatus(java.lang.
+	 * String)
+	 */
+	public void changeActiveStatus(String psStatus) throws SQLException,
+			Exception {
+		this.setComponent_active_yn(psStatus);
+		this.changeActiveStatus();
 
-   /**
-    * @return Returns the iOffset.
-    */
-   public int getIOffset() {
-      return iOffset;
-   }
+	}
 
-   /**
-    * @param offset
-    *           The iOffset to set.
-    */
-   public void setIOffset(int offset) {
-      iOffset = offset;
-   }
+	/**
+	 * @return Returns the iLimit.
+	 */
+	public int getILimit() {
+		return iLimit;
+	}
 
-   /**
-    * @return Returns the sCustomWhere.
-    */
-   public String getSCustomWhere() {
-      return sCustomWhere;
-   }
+	/**
+	 * @param limit
+	 *            The iLimit to set.
+	 */
+	public void setILimit(int limit) {
+		iLimit = limit;
+	}
 
-   /**
-    * @param customWhere
-    *           The sCustomWhere to set.
-    */
-   public void setSCustomWhere(String customWhere) {
-      sCustomWhere = customWhere;
-   }
+	/**
+	 * @return Returns the iOffset.
+	 */
+	public int getIOffset() {
+		return iOffset;
+	}
 
-   public String getComponent_active_yn() {
-      return component_active_yn;
-   }
+	/**
+	 * @param offset
+	 *            The iOffset to set.
+	 */
+	public void setIOffset(int offset) {
+		iOffset = offset;
+	}
 
-   public void setComponent_active_yn(String component_active_yn) {
-      this.component_active_yn = component_active_yn;
-   }
+	/**
+	 * @return Returns the sCustomWhere.
+	 */
+	public String getSCustomWhere() {
+		return sCustomWhere;
+	}
 
-   public int getComponent_id() {
-      return component_id;
-   }
+	/**
+	 * @param customWhere
+	 *            The sCustomWhere to set.
+	 */
+	public void setSCustomWhere(String customWhere) {
+		sCustomWhere = customWhere;
+	}
 
-   public void setComponent_id(int component_id) {
-      this.component_id = component_id;
-   }
+	public String getComponent_active_yn() {
+		return component_active_yn;
+	}
 
-   public String getComponent_name() {
-      return component_name;
-   }
+	public void setComponent_active_yn(String component_active_yn) {
+		this.component_active_yn = component_active_yn;
+	}
 
-   public void setComponent_name(String component_name) {
-      this.component_name = component_name;
-   }
+	public int getComponent_id() {
+		return component_id;
+	}
 
-   public Connection getConn() {
-      return conn;
-   }
+	public void setComponent_id(int component_id) {
+		this.component_id = component_id;
+	}
 
-   public void setConn(Connection conn) {
-      this.conn = conn;
-   }
+	public String getComponent_name() {
+		return component_name;
+	}
 
-   public String getUrl() {
-      return url;
-   }
+	public void setComponent_name(String component_name) {
+		this.component_name = component_name;
+	}
 
-   public void setUrl(String url) {
-      this.url = url;
-   }
+	public Connection getConn() {
+		return conn;
+	}
 
-  
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 }

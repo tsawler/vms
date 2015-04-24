@@ -32,8 +32,9 @@ import com.verilion.object.Errors;
  * <P>
  * Dec 08, 2003
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class CtMenuAlignmentTypes {
 
@@ -57,32 +58,27 @@ public class CtMenuAlignmentTypes {
 	 */
 	public void updateCtMenuAlignmentTypes() throws SQLException, Exception {
 		try {
-			String Update =
-				"UPDATE ct_menu_aligment_types SET "
+			String Update = "UPDATE ct_menu_aligment_types SET "
 					+ "ct_menu_alignment_type_name = '"
-					+ ct_menu_alignment_type_name
-					+ "' "
+					+ ct_menu_alignment_type_name + "' "
 					+ "WHERE ct_menu_alignment_type_id = '"
-					+ ct_menu_alignment_type_id
-					+ "'";
+					+ ct_menu_alignment_type_id + "'";
 
 			pst = conn.prepareStatement(Update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:updateCtMenuAlignmentTypes:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:updateCtMenuAlignmentTypes:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuAlignmentTypes:updateCtMenuAlignmentTypes:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuAlignmentTypes:updateCtMenuAlignmentTypes:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -94,28 +90,24 @@ public class CtMenuAlignmentTypes {
 	 */
 	public void addCtMenuAlignmentType() throws SQLException, Exception {
 		try {
-			String save =
-				"INSERT INTO ct_menu_alignment_types ("
-					+ "ct_menu_alignment_type_name) "
-					+ "VALUES("
-					+ "'', "
-					+ ct_menu_alignment_type_name
-					+ "')";
+			String save = "INSERT INTO ct_menu_alignment_types ("
+					+ "ct_menu_alignment_type_name) " + "VALUES(" + "'', "
+					+ ct_menu_alignment_type_name + "')";
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError("CtMenuAlignmentTypes:addCtMenuAlignmentType:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError("CtMenuAlignmentTypes:addCtMenuAlignmentType:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuAlignmentTypes:addCtMenuAlignmentType:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuAlignmentTypes:addCtMenuAlignmentType:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -126,10 +118,10 @@ public class CtMenuAlignmentTypes {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getCtMenuAlignmentTypes() throws SQLException, Exception {
+	public XDisconnectedRowSet getCtMenuAlignmentTypes() throws SQLException,
+			Exception {
 		try {
-			String query =
-				"select * from ct_menu_alignment_types order by ct_menu_alignment_type_name";
+			String query = "select * from ct_menu_alignment_types order by ct_menu_alignment_type_name";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
@@ -138,23 +130,21 @@ public class CtMenuAlignmentTypes {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:getCtMenuAlignmentTypes:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:getCtMenuAlignmentTypes:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuAlignmentTypes:getCtMenuAlignmentTypes:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuAlignmentTypes:getCtMenuAlignmentTypes:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -166,12 +156,11 @@ public class CtMenuAlignmentTypes {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getCtMenuAlignmentTypeName() throws SQLException, Exception {
+	public XDisconnectedRowSet getCtMenuAlignmentTypeName()
+			throws SQLException, Exception {
 		try {
-			String query =
-				"select * from ct_menu_alignment_types where ct_menu_alignment_type_id = '"
-					+ ct_menu_alignment_type_id
-					+ "'";
+			String query = "select * from ct_menu_alignment_types where ct_menu_alignment_type_id = '"
+					+ ct_menu_alignment_type_id + "'";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
@@ -180,27 +169,24 @@ public class CtMenuAlignmentTypes {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:getCtMenuAlignmentTypeName:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"CtMenuAlignmentTypes:getCtMenuAlignmentTypeName:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtMenuAlignmentTypes:getCtMenuAlignmentTypeName:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtMenuAlignmentTypes:getCtMenuAlignmentTypeName:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
-
 
 	/**
 	 * @return Returns the ct_menu_alignment_type_id.
@@ -210,7 +196,8 @@ public class CtMenuAlignmentTypes {
 	}
 
 	/**
-	 * @param ct_menu_alignment_type_id The ct_menu_alignment_type_id to set.
+	 * @param ct_menu_alignment_type_id
+	 *            The ct_menu_alignment_type_id to set.
 	 */
 	public void setCt_menu_alignment_type_id(int ct_menu_alignment_type_id) {
 		this.ct_menu_alignment_type_id = ct_menu_alignment_type_id;
@@ -224,9 +211,11 @@ public class CtMenuAlignmentTypes {
 	}
 
 	/**
-	 * @param ct_menu_alignment_type_name The ct_menu_alignment_type_name to set.
+	 * @param ct_menu_alignment_type_name
+	 *            The ct_menu_alignment_type_name to set.
 	 */
-	public void setCt_menu_alignment_type_name(String ct_menu_alignment_type_name) {
+	public void setCt_menu_alignment_type_name(
+			String ct_menu_alignment_type_name) {
 		this.ct_menu_alignment_type_name = ct_menu_alignment_type_name;
 	}
 
@@ -236,8 +225,10 @@ public class CtMenuAlignmentTypes {
 	public Connection getConn() {
 		return conn;
 	}
+
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;

@@ -179,9 +179,11 @@ public class Chat {
 		try {
 			int index = 0;
 			while (index < listOfUsers.size()) {
-				System.out.println("post time for index " + index + " is " + listOfUsers.element().getId());
-				if (listOfUsers.element().getId() > (System.currentTimeMillis() + (1000 * 3))){
-					System.out.println("Timer class is removing user at index " + index);
+				System.out.println("post time for index " + index + " is "
+						+ listOfUsers.element().getId());
+				if (listOfUsers.element().getId() > (System.currentTimeMillis() + (1000 * 3))) {
+					System.out.println("Timer class is removing user at index "
+							+ index);
 					listOfUsers.remove(index);
 				}
 				index++;
@@ -210,10 +212,11 @@ public class Chat {
 	 * The current list of users
 	 */
 	private static LinkedList<ChatUsers> listOfUsers = new LinkedList<ChatUsers>();
-	
+
 	public LinkedList<ChatUsers> getListOfUsers() {
 		return listOfUsers;
 	}
+
 	/**
 	 * The log stream
 	 */

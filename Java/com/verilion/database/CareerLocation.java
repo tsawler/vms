@@ -23,7 +23,7 @@ import java.sql.Statement;
  */
 public class CareerLocation implements DatabaseInterface {
 
-	//private ResultSet rs = null;
+	// private ResultSet rs = null;
 
 	private Connection conn;
 

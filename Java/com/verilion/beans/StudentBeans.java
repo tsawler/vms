@@ -19,7 +19,7 @@ public class StudentBeans {
 	protected int ct_country_id = 0;
 	protected String other_subspeciality = "";
 	protected String notify_grandrounds_yn = "";
-	protected String notify_webbased_yn= "";
+	protected String notify_webbased_yn = "";
 	protected int current_course_id = 0;
 	protected String current_course_completed_yn = "n";
 
@@ -179,7 +179,8 @@ public class StudentBeans {
 		return current_course_completed_yn;
 	}
 
-	public void setCurrent_course_completed_yn(String current_course_completed_yn) {
+	public void setCurrent_course_completed_yn(
+			String current_course_completed_yn) {
 		this.current_course_completed_yn = current_course_completed_yn;
 	}
 }

@@ -20,40 +20,40 @@ import org.directwebremoting.Security;
  *
  */
 public class ChatUsers {
-   /**
-    * @param newUser
-    *           the new message text
-    */
-   public ChatUsers(String newUser) {
-      text = newUser;
+	/**
+	 * @param newUser
+	 *            the new message text
+	 */
+	public ChatUsers(String newUser) {
+		text = newUser;
 
-      if (text.length() > 256) {
-         text = text.substring(0, 256);
-      }
-      text = Security.replaceXmlCharacters(text);
-   }
+		if (text.length() > 256) {
+			text = text.substring(0, 256);
+		}
+		text = Security.replaceXmlCharacters(text);
+	}
 
-   /**
-    * @return the message id
-    */
-   public long getId() {
-      return id;
-   }
+	/**
+	 * @return the message id
+	 */
+	public long getId() {
+		return id;
+	}
 
-   /**
-    * @return the message itself
-    */
-   public String getText() {
-      return text;
-   }
+	/**
+	 * @return the message itself
+	 */
+	public String getText() {
+		return text;
+	}
 
-   /**
-    * When the message was created
-    */
-   private long id = System.currentTimeMillis();
+	/**
+	 * When the message was created
+	 */
+	private long id = System.currentTimeMillis();
 
-   /**
-    * The text of the message
-    */
-   private String text;
+	/**
+	 * The text of the message
+	 */
+	private String text;
 }

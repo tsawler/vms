@@ -171,9 +171,7 @@ public class Banners implements DatabaseInterface {
 			pst = null;
 
 		} catch (SQLException e) {
-			Errors
-					.addError("Banners:deleteRecord:SQLException:"
-							+ e.toString());
+			Errors.addError("Banners:deleteRecord:SQLException:" + e.toString());
 		} catch (Exception e) {
 			Errors.addError("Banners:deleteRecord:Exception:" + e.toString());
 		} finally {
@@ -214,9 +212,7 @@ public class Banners implements DatabaseInterface {
 			pst = null;
 
 		} catch (SQLException e) {
-			Errors
-					.addError("Banners:updateBanner:SQLException:"
-							+ e.toString());
+			Errors.addError("Banners:updateBanner:SQLException:" + e.toString());
 		} catch (Exception e) {
 			Errors.addError("Banners:updateBanner:Exception:" + e.toString());
 		} finally {
@@ -332,9 +328,7 @@ public class Banners implements DatabaseInterface {
 				myGt.addUpdateFieldNameValuePair("banner_clicks", "0", "int");
 				myGt.addUpdateFieldNameValuePair("click_month", month + "",
 						"int");
-				myGt
-						.addUpdateFieldNameValuePair("click_year", year + "",
-								"int");
+				myGt.addUpdateFieldNameValuePair("click_year", year + "", "int");
 				myGt.insertRecord();
 				myGt.clearUpdateVectors();
 				myGt.setSSequence("banner_banner_clicks_by_month_id_seq");
@@ -466,10 +460,8 @@ public class Banners implements DatabaseInterface {
 		StringBuffer saveBuf = new StringBuffer(
 				"SELECT b.*, bs.ct_banner_sizes_height as height, bs.ct_banner_sizes_width as width FROM ");
 		saveBuf.append(sSelectTable);
-		saveBuf
-				.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
-		saveBuf
-				.append(" where b.banner_active_yn = 'y' and b.ct_banner_position_id = ");
+		saveBuf.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
+		saveBuf.append(" where b.banner_active_yn = 'y' and b.ct_banner_position_id = ");
 		saveBuf.append(inId);
 		saveBuf.append(" order by RANDOM() LIMIT " + inNumber);
 		rs = st.executeQuery(saveBuf.toString());
@@ -481,17 +473,16 @@ public class Banners implements DatabaseInterface {
 
 		return crs;
 	}
-	
+
 	public XDisconnectedRowSet getRandomBannersForPositionId(int inId,
 			int inNumber, int langId) throws Exception {
 		st = conn.createStatement();
 		StringBuffer saveBuf = new StringBuffer(
 				"SELECT b.*, bs.ct_banner_sizes_height as height, bs.ct_banner_sizes_width as width FROM ");
 		saveBuf.append(sSelectTable);
-		saveBuf
-				.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
-		saveBuf
-				.append(" where b.banner_active_yn = 'y' and b.ct_language_id = " + langId + " and b.ct_banner_position_id = ");
+		saveBuf.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
+		saveBuf.append(" where b.banner_active_yn = 'y' and b.ct_language_id = "
+				+ langId + " and b.ct_banner_position_id = ");
 		saveBuf.append(inId);
 		saveBuf.append(" order by RANDOM() LIMIT " + inNumber);
 		rs = st.executeQuery(saveBuf.toString());
@@ -510,10 +501,8 @@ public class Banners implements DatabaseInterface {
 		StringBuffer saveBuf = new StringBuffer(
 				"SELECT b.*, bs.ct_banner_sizes_height as height, bs.ct_banner_sizes_width as width FROM ");
 		saveBuf.append(sSelectTable);
-		saveBuf
-				.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
-		saveBuf
-				.append(" where b.banner_active_yn = 'y' and b.ct_banner_position_id = ");
+		saveBuf.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
+		saveBuf.append(" where b.banner_active_yn = 'y' and b.ct_banner_position_id = ");
 		saveBuf.append(inId);
 		saveBuf.append(" order by RANDOM() LIMIT 1");
 		rs = st.executeQuery(saveBuf.toString());
@@ -532,10 +521,9 @@ public class Banners implements DatabaseInterface {
 		StringBuffer saveBuf = new StringBuffer(
 				"SELECT b.*, bs.ct_banner_sizes_height as height, bs.ct_banner_sizes_width as width FROM ");
 		saveBuf.append(sSelectTable);
-		saveBuf
-				.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
-		saveBuf
-				.append(" where b.banner_active_yn = 'y' and b.ct_language_id = " + langId + " and b.ct_banner_position_id = ");
+		saveBuf.append(" b left join ct_banner_sizes bs on (b.ct_banner_sizes_id = bs.ct_banner_sizes_id) ");
+		saveBuf.append(" where b.banner_active_yn = 'y' and b.ct_language_id = "
+				+ langId + " and b.ct_banner_position_id = ");
 		saveBuf.append(inId);
 		saveBuf.append(" order by RANDOM() LIMIT 1");
 		rs = st.executeQuery(saveBuf.toString());
@@ -584,8 +572,7 @@ public class Banners implements DatabaseInterface {
 		st = conn.createStatement();
 		StringBuffer queryBuf = new StringBuffer(
 				"select banner_name, banner_id, banner_active_yn, ");
-		queryBuf
-				.append("case when banner_active_yn = 'n' then '<span style=\"color: red;\">inactive</a>' else '<span style=\"color: green;\">active</a>' ");
+		queryBuf.append("case when banner_active_yn = 'n' then '<span style=\"color: red;\">inactive</a>' else '<span style=\"color: green;\">active</a>' ");
 		queryBuf.append("end as status from ");
 		queryBuf.append(sSelectTable);
 		queryBuf.append(" where true ");

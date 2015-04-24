@@ -18,23 +18,23 @@ import javax.naming.InitialContext;
  * Set up app variables from context entries
  * 
  * @author tsawler
- *  
+ * 
  */
 public class SetUpVars {
 
-   public static String InitVars() throws Exception {
+	public static String InitVars() throws Exception {
 
-      Context ctx = new InitialContext();
-      String hostName = "";
+		Context ctx = new InitialContext();
+		String hostName = "";
 
-      if (ctx == null) {
-         System.out.println("No context!");
-         throw new Exception("No context!");
-      }
+		if (ctx == null) {
+			System.out.println("No context!");
+			throw new Exception("No context!");
+		}
 
-      Context envCtx = (Context) ctx.lookup("java:comp/env");
-      hostName = (String) envCtx.lookup("host");
+		Context envCtx = (Context) ctx.lookup("java:comp/env");
+		hostName = (String) envCtx.lookup("host");
 
-      return hostName;
-   }
+		return hostName;
+	}
 }

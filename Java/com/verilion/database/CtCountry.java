@@ -34,8 +34,9 @@ import com.verilion.object.Errors;
  * <P>
  * package com.verilion.database
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class CtCountry {
 
@@ -58,23 +59,18 @@ public class CtCountry {
 	 */
 	public void updateCtCountry() throws SQLException, Exception {
 		try {
-			String update =
-				"UPDATE ct_country SET "
-					+ "ct_country_name = '"
-					+ ct_country_name
-					+ "' "
-					+ "where ct_country_id = '"
-					+ ct_country_id
-					+ "'";
+			String update = "UPDATE ct_country SET " + "ct_country_name = '"
+					+ ct_country_name + "' " + "where ct_country_id = '"
+					+ ct_country_id + "'";
 
 			pst = conn.prepareStatement(update);
 			pst.executeUpdate();
-		}
-		catch (SQLException e) {
-			Errors.addError("CtCountry:updateCtCountry:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError("CtCountry:updateCtCountry:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtCountry:updateCtCountry:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtCountry:updateCtCountry:Exception:"
+					+ e.toString());
 		}
 	}
 
@@ -85,21 +81,15 @@ public class CtCountry {
 	 */
 	public void addCtCountry() throws SQLException, Exception {
 		try {
-			String save =
-				"INSERT INTO ct_country ("
-					+ "ct_country_name) "
-					+ "VALUES("
-					+ "'"
-					+ ct_country_name
-					+ "')";
+			String save = "INSERT INTO ct_country (" + "ct_country_name) "
+					+ "VALUES(" + "'" + ct_country_name + "')";
 
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
-		}
-		catch (SQLException e) {
-			Errors.addError("CtCountry:addCtCountry:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
+		} catch (SQLException e) {
+			Errors.addError("CtCountry:addCtCountry:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
 			Errors.addError("CtCountry:addCtCountry:Exception:" + e.toString());
 		}
 	}
@@ -118,27 +108,27 @@ public class CtCountry {
 			crs.populate(rs);
 			rs.close();
 			rs = null;
-		}
-		catch (SQLException e) {
-			Errors.addError("CtCountry:getAllCountries:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError("CtCountry:getAllCountries:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtCountry:getAllCountries:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtCountry:getAllCountries:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
-	
+
 	/**
-	 * Returns country_name 
+	 * Returns country_name
 	 * 
 	 * @return String
 	 * @throws Exception
@@ -147,64 +137,70 @@ public class CtCountry {
 		String theName = "";
 		try {
 			String GetCategory = "select ct_country_name from ct_country "
-				+ "where ct_country_id = '"
-				+ ct_country_id
-				+ "'";
+					+ "where ct_country_id = '" + ct_country_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(GetCategory);
-			
+
 			if (rs.next()) {
 				theName = rs.getString("ct_country_name");
 			}
 			rs.close();
 			rs = null;
-		}
-		catch (SQLException e) {
-			Errors.addError("CtCountry:getCountryNameById:SQLException:" + e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError("CtCountry:getCountryNameById:Exception:" + e.toString());
+		} catch (SQLException e) {
+			Errors.addError("CtCountry:getCountryNameById:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CtCountry:getCountryNameById:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
 		}
 		return theName;
 	}
-	
+
 	/**
 	 * @return Returns the conn.
 	 */
 	public Connection getConn() {
 		return conn;
 	}
+
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
+
 	/**
 	 * @return Returns the ct_country_id.
 	 */
 	public int getCt_country_id() {
 		return ct_country_id;
 	}
+
 	/**
-	 * @param ct_country_id The ct_country_id to set.
+	 * @param ct_country_id
+	 *            The ct_country_id to set.
 	 */
 	public void setCt_country_id(int ct_country_id) {
 		this.ct_country_id = ct_country_id;
 	}
+
 	/**
 	 * @return Returns the ct_country_name.
 	 */
 	public String getCt_country_name() {
 		return ct_country_name;
 	}
+
 	/**
-	 * @param ct_country_name The ct_country_name to set.
+	 * @param ct_country_name
+	 *            The ct_country_name to set.
 	 */
 	public void setCt_country_name(String ct_country_name) {
 		this.ct_country_name = ct_country_name;

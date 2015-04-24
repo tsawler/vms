@@ -27,119 +27,119 @@ import com.verilion.database.DbBean;
 
 public class SessionCounter implements HttpSessionListener, Serializable {
 
-   private static final long serialVersionUID = -6099675011925232339L;
-   private static int activeSessions = 0;
-   private Statement st = null;
-   private ResultSet rs = null;
-   private Connection conn = null;
-   private String query = null;
+	private static final long serialVersionUID = -6099675011925232339L;
+	private static int activeSessions = 0;
+	private Statement st = null;
+	private ResultSet rs = null;
+	private Connection conn = null;
+	private String query = null;
 
-   public void sessionCreated(HttpSessionEvent se) {
-      
-      try {
-         conn = DbBean.getDbConnection();
-      } catch (Exception e1) {
-         e1.printStackTrace();
-      }
+	public void sessionCreated(HttpSessionEvent se) {
 
-      // get most recent session count.
-      try {
-         query = "select * from sessions";
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         if (rs.next()){
-            activeSessions = rs.getInt("sessions");
-         }
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (Exception ex) {
-         ex.printStackTrace();
-      } finally {
-         if (rs != null) {
-            try {
-               rs.close();
-            } catch (SQLException e) {
-               
-            }
-            rs = null;
-         }
-         if (st != null) {
-            try {
-               st.close();
-            } catch (SQLException e) {
+		try {
+			conn = DbBean.getDbConnection();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
-            }
-            st = null;
-         }
-      }
-      
-      activeSessions++;
-      
-      // a session was created; add one, and add to db
-      try {
-         query = "update sessions set sessions = '" + activeSessions + "'";
-         st = conn.createStatement();
-         st.executeUpdate(query);
-         st.close();
-         st = null;
+		// get most recent session count.
+		try {
+			query = "select * from sessions";
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			if (rs.next()) {
+				activeSessions = rs.getInt("sessions");
+			}
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
 
-      } catch (SQLException e) {
-         //e.printStackTrace();
-      } finally {
-         if (st != null) {
-            try {
-               st.close();
-            } catch (SQLException e) {
+				}
+				rs = null;
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
 
-            }
-            st = null;
-         }
-      }
-      
-      try {
-         DbBean.closeDbConnection(conn);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+				}
+				st = null;
+			}
+		}
 
-   public void sessionDestroyed(HttpSessionEvent se) {
-      try {
-         conn = DbBean.getDbConnection();
-      } catch (Exception e1) {
-         e1.printStackTrace();
-      }
-      if (activeSessions > 0)
-         activeSessions--;
-      // a session was dropped; remove one, and write to db
-      try {
-         query = "update sessions set sessions = '" + activeSessions + "'";
-         st = conn.createStatement();
-         st.executeUpdate(query);
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         if (st != null) {
-            try {
-               st.close();
-            } catch (SQLException e) {
+		activeSessions++;
 
-            }
-            st = null;
-         }
-      }
-      try {
-         DbBean.closeDbConnection(conn);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+		// a session was created; add one, and add to db
+		try {
+			query = "update sessions set sessions = '" + activeSessions + "'";
+			st = conn.createStatement();
+			st.executeUpdate(query);
+			st.close();
+			st = null;
 
-   public static int getActiveSessions() {
-      return activeSessions;
-   }
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		} finally {
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+
+				}
+				st = null;
+			}
+		}
+
+		try {
+			DbBean.closeDbConnection(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sessionDestroyed(HttpSessionEvent se) {
+		try {
+			conn = DbBean.getDbConnection();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		if (activeSessions > 0)
+			activeSessions--;
+		// a session was dropped; remove one, and write to db
+		try {
+			query = "update sessions set sessions = '" + activeSessions + "'";
+			st = conn.createStatement();
+			st.executeUpdate(query);
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+
+				}
+				st = null;
+			}
+		}
+		try {
+			DbBean.closeDbConnection(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static int getActiveSessions() {
+		return activeSessions;
+	}
 }

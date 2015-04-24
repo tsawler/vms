@@ -48,9 +48,7 @@ public class Careers implements DatabaseInterface {
 					+ "careers c "
 					+ "left join career_locations cl on (c.career_locations_id = cl.career_locations_id) "
 					+ "left join career_type ct on (c.career_type = ct.career_type_id) "
-					+ sCustomWhere
-					+ " "
-					+ "order by career_title";
+					+ sCustomWhere + " " + "order by career_title";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);

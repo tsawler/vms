@@ -33,14 +33,15 @@ import javax.servlet.http.HttpSession;
  * <P>
  * package com.verilion
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class DoLanguageChoice extends HttpServlet {
 
-   private static final long serialVersionUID = 4744038572672080173L;
+	private static final long serialVersionUID = 4744038572672080173L;
 
-   /*
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
@@ -52,19 +53,20 @@ public class DoLanguageChoice extends HttpServlet {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		
+			throws ServletException, IOException {
+
 		// get language choice
 		String theLanguage = (String) request.getParameter("lang");
-		
+
 		// put it in the session
 		HttpSession session = request.getSession(true);
 		session.setAttribute("languageId", theLanguage);
-		
+
 		response.sendRedirect((String) session.getAttribute("lastPage"));
 	}
 }

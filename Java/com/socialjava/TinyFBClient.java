@@ -93,8 +93,9 @@ public class TinyFBClient {
 					|| (currentValue.indexOf("}") >= 0)) { // if passing JSON
 															// Array, encode the
 															// {}
-				encodedParm = UriComponent.contextualEncode(restParms
-						.get(currentKey), UriComponent.Type.QUERY_PARAM, false);
+				encodedParm = UriComponent.contextualEncode(
+						restParms.get(currentKey),
+						UriComponent.Type.QUERY_PARAM, false);
 				ub.queryParam(currentKey, encodedParm);
 			} else {
 				ub.queryParam(currentKey, currentValue);

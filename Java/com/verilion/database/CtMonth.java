@@ -30,8 +30,7 @@ import org.sourceforge.jxutil.sql.XDisconnectedRowSet;
 import com.verilion.object.Errors;
 
 /**
- * Manipulates ct_month table in db, and related
- * operations.
+ * Manipulates ct_month table in db, and related operations.
  * <P>
  * Nov 30, 2003
  * <P>
@@ -39,7 +38,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class CtMonth {
 
@@ -60,10 +59,10 @@ public class CtMonth {
 	 * @return XDisconnectedRowSet
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getAllMonthNamesIds() throws SQLException, Exception {
+	public XDisconnectedRowSet getAllMonthNamesIds() throws SQLException,
+			Exception {
 		try {
-			String getAll =
-				"select * from ct_month";
+			String getAll = "select * from ct_month";
 			st = conn.createStatement();
 			rs = st.executeQuery(getAll);
 			crs.populate(rs);
@@ -71,29 +70,24 @@ public class CtMonth {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtMonth:getAllMonthNamesIds:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtMonth:getAllMonthNamesIds:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtMonth:getAllMonthNamesIds:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtMonth:getAllMonthNamesIds:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
-
 
 	/**
 	 * Returns month name for supplied id.
@@ -105,10 +99,8 @@ public class CtMonth {
 	public String getMonthById() throws SQLException, Exception {
 		String theMontb = "";
 		try {
-			String query =
-				"select ct_month_name from ct_month where ct_month_id = '"
-					+ ct_month_id
-					+ "'";
+			String query = "select ct_month_name from ct_month where ct_month_id = '"
+					+ ct_month_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			if (rs.next()) {
@@ -118,25 +110,21 @@ public class CtMonth {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtMonth:getMonthById:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtMonth:getMonthById:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtMonth:getMonthById:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtMonth:getMonthById:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theMontb;
 	}
@@ -147,32 +135,40 @@ public class CtMonth {
 	public Connection getConn() {
 		return conn;
 	}
+
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
+
 	/**
 	 * @return Returns the ct_month_id.
 	 */
 	public int getCt_month_id() {
 		return ct_month_id;
 	}
+
 	/**
-	 * @param ct_month_id The ct_month_id to set.
+	 * @param ct_month_id
+	 *            The ct_month_id to set.
 	 */
 	public void setCt_month_id(int ct_month_id) {
 		this.ct_month_id = ct_month_id;
 	}
+
 	/**
 	 * @return Returns the ct_month_name.
 	 */
 	public String getCt_month_name() {
 		return ct_month_name;
 	}
+
 	/**
-	 * @param ct_month_name The ct_month_name to set.
+	 * @param ct_month_name
+	 *            The ct_month_name to set.
 	 */
 	public void setCt_month_name(String ct_month_name) {
 		this.ct_month_name = ct_month_name;

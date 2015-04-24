@@ -119,252 +119,253 @@ import com.verilion.scheduler.MessageHandlerScheduler;
  * A custom listener for context events.
  */
 public class VerilionListener implements ServletContextListener,
-      ServletContextAttributeListener, HttpSessionAttributeListener,
-      HttpSessionListener {
+		ServletContextAttributeListener, HttpSessionAttributeListener,
+		HttpSessionListener {
 
-   private HashMap hmClassMap = new HashMap();
-   private String hostName = "";
+	private HashMap hmClassMap = new HashMap();
+	private String hostName = "";
 
-   @SuppressWarnings("unused")
-   public void contextInitialized(ServletContextEvent event) {
+	@SuppressWarnings("unused")
+	public void contextInitialized(ServletContextEvent event) {
 
-      Connection conn = null;
-      SystemPreferences myPrefs = new SystemPreferences();
+		Connection conn = null;
+		SystemPreferences myPrefs = new SystemPreferences();
 
-      try {
-         hostName = SetUpVars.InitVars();
-      } catch (Exception e2) {
-         e2.printStackTrace();
-      }
+		try {
+			hostName = SetUpVars.InitVars();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
 
-      System.out
-            .println("========================================================");
-      System.out.println("=  Starting vMaintain for " + hostName);
-      System.out
-            .println("========================================================");
+		System.out
+				.println("========================================================");
+		System.out.println("=  Starting vMaintain for " + hostName);
+		System.out
+				.println("========================================================");
 
-      try {
-         if ((SingletonObjects.getInstance().getHost_name() == null)
-               || (SingletonObjects.getInstance().getHost_name().equalsIgnoreCase(""))) {
-            // get a db connection (initializes connection pool
-            // and our Singleton object)
-            try {
-               conn = DbBean.getDbConnection();
-            } catch (Exception e) {
-               System.out.println("Error initing db: " + e.toString());
-               e.printStackTrace();
-               conn = null;
-            }
-            if (conn != null) {
-               System.out.println("Getting database connection "
-                     + conn.toString());
+		try {
+			if ((SingletonObjects.getInstance().getHost_name() == null)
+					|| (SingletonObjects.getInstance().getHost_name()
+							.equalsIgnoreCase(""))) {
+				// get a db connection (initializes connection pool
+				// and our Singleton object)
+				try {
+					conn = DbBean.getDbConnection();
+				} catch (Exception e) {
+					System.out.println("Error initing db: " + e.toString());
+					e.printStackTrace();
+					conn = null;
+				}
+				if (conn != null) {
+					System.out.println("Getting database connection "
+							+ conn.toString());
 
-               // start message handler
-               MessageHandlerScheduler myScheduler = new MessageHandlerScheduler();
-               System.out.println("Starting message handler...");
-               System.out.println("MessageHandler: " + myScheduler.toString());
-               
-               // start chat clear handler
-               /*
-               ClearChatScheduler myChatScheduler = new ClearChatScheduler();
-               System.out.println("Starting Chat watcher...");
-               System.out.println("ChatWathcer: " + myChatScheduler.toString());
-				*/
-               
-               // get system preferences
-               myPrefs.setConn(conn);
-               myPrefs.getSystemPreferencesByProperties();
+					// start message handler
+					MessageHandlerScheduler myScheduler = new MessageHandlerScheduler();
+					System.out.println("Starting message handler...");
+					System.out.println("MessageHandler: "
+							+ myScheduler.toString());
 
-               // get hashmap of class objects
-               ClassObjects myClassObjects = new ClassObjects();
-               myClassObjects.setConn(conn);
-               hmClassMap = myClassObjects.getAllClassObjects();
+					// start chat clear handler
+					/*
+					 * ClearChatScheduler myChatScheduler = new
+					 * ClearChatScheduler();
+					 * System.out.println("Starting Chat watcher...");
+					 * System.out.println("ChatWathcer: " +
+					 * myChatScheduler.toString());
+					 */
 
-               // init singleton values
-               SingletonObjects.getInstance().setMyScheduler(myScheduler);
-               SingletonObjects.getInstance().setUse_sef_yn(
-                     myPrefs.getUse_sef_yn());
-               SingletonObjects.getInstance().setInsecure_port(
-                     myPrefs.getInsecure_port());
-               SingletonObjects.getInstance().setSecure_port(
-                     myPrefs.getSecure_port());
-               SingletonObjects.getInstance()
-                     .setMailhost(myPrefs.getMailhost());
-               SingletonObjects.getInstance().setUpload_path(
-                     myPrefs.getUpload_path());
-               SingletonObjects.getInstance()
-                     .setDatabase(myPrefs.getDatabase());
-               SingletonObjects.getInstance().setHost_name(hostName);
-               SingletonObjects.getInstance().setHomepage_page_id(
-                     myPrefs.getHomepage_page_id());
-               SingletonObjects.getInstance().setSystem_online_yn(
-                     myPrefs.getSystem_online_yn());
-               SingletonObjects.getInstance().setSite_description(
-                     myPrefs.getSite_descripton());
-               SingletonObjects.getInstance().setMemory_threshold(
-                     myPrefs.getMemory_threshold());
-               SingletonObjects.getInstance().setAdmin_email(
-                     myPrefs.getAdmin_email());
-               SingletonObjects.getInstance().setSession_timeout(
-                     myPrefs.getSession_timeout());
-               SingletonObjects.getInstance().setCacheTimeout(
-                     myPrefs.getCache_timeout());
-               SingletonObjects.getInstance().setSystem_path(
-                     myPrefs.getSystem_path());
-               SingletonObjects.getInstance().setHmClassMap(hmClassMap);
-               SingletonObjects.getInstance().setStore_max_subcategories(
-                     myPrefs.getStore_max_subcategories());
-               SingletonObjects.getInstance()
-                     .setHomepage(myPrefs.getHomepage());
-            }
-         } else {
-            System.out.println("Application already initialized");
-         }
-         System.out.println("= Application init successful for " + hostName);
-         System.out
-               .println("========================================================");
-         DbBean.closeDbConnection(conn);
-         conn = null;
+					// get system preferences
+					myPrefs.setConn(conn);
+					myPrefs.getSystemPreferencesByProperties();
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         System.out.println("Application initialization failed for "
-               + hostName
-               + "!");
-      } finally {
-         if (conn != null) {
-            try {
-               DbBean.closeDbConnection(conn);
-            } catch (SQLException e1) {
-               ;
-            } catch (Exception e) {
-               ;
-            }
+					// get hashmap of class objects
+					ClassObjects myClassObjects = new ClassObjects();
+					myClassObjects.setConn(conn);
+					hmClassMap = myClassObjects.getAllClassObjects();
 
-         }
-      }
-   }
+					// init singleton values
+					SingletonObjects.getInstance().setMyScheduler(myScheduler);
+					SingletonObjects.getInstance().setUse_sef_yn(
+							myPrefs.getUse_sef_yn());
+					SingletonObjects.getInstance().setInsecure_port(
+							myPrefs.getInsecure_port());
+					SingletonObjects.getInstance().setSecure_port(
+							myPrefs.getSecure_port());
+					SingletonObjects.getInstance().setMailhost(
+							myPrefs.getMailhost());
+					SingletonObjects.getInstance().setUpload_path(
+							myPrefs.getUpload_path());
+					SingletonObjects.getInstance().setDatabase(
+							myPrefs.getDatabase());
+					SingletonObjects.getInstance().setHost_name(hostName);
+					SingletonObjects.getInstance().setHomepage_page_id(
+							myPrefs.getHomepage_page_id());
+					SingletonObjects.getInstance().setSystem_online_yn(
+							myPrefs.getSystem_online_yn());
+					SingletonObjects.getInstance().setSite_description(
+							myPrefs.getSite_descripton());
+					SingletonObjects.getInstance().setMemory_threshold(
+							myPrefs.getMemory_threshold());
+					SingletonObjects.getInstance().setAdmin_email(
+							myPrefs.getAdmin_email());
+					SingletonObjects.getInstance().setSession_timeout(
+							myPrefs.getSession_timeout());
+					SingletonObjects.getInstance().setCacheTimeout(
+							myPrefs.getCache_timeout());
+					SingletonObjects.getInstance().setSystem_path(
+							myPrefs.getSystem_path());
+					SingletonObjects.getInstance().setHmClassMap(hmClassMap);
+					SingletonObjects.getInstance().setStore_max_subcategories(
+							myPrefs.getStore_max_subcategories());
+					SingletonObjects.getInstance().setHomepage(
+							myPrefs.getHomepage());
+				}
+			} else {
+				System.out.println("Application already initialized");
+			}
+			System.out.println("= Application init successful for " + hostName);
+			System.out
+					.println("========================================================");
+			DbBean.closeDbConnection(conn);
+			conn = null;
 
-   public void contextDestroyed(ServletContextEvent event) {
-      SingletonObjects.getInstance().setUse_sef_yn("");
-      SingletonObjects.getInstance().setInsecure_port("");
-      SingletonObjects.getInstance().setSecure_port("");
-      SingletonObjects.getInstance().setMailhost("");
-      SingletonObjects.getInstance().setUpload_path("");
-      SingletonObjects.getInstance().setDatabase("");
-      SingletonObjects.getInstance().setHost_name("");
-      SingletonObjects.getInstance().setHomepage_page_id(0);
-      SingletonObjects.getInstance().setSystem_online_yn("");
-      SingletonObjects.getInstance().setSite_description("");
-      SingletonObjects.getInstance().setMemory_threshold(0);
-      SingletonObjects.getInstance().setAdmin_email("");
-      SingletonObjects.getInstance().setSession_timeout("");
-      SingletonObjects.getInstance().setCacheTimeout(0);
-      SingletonObjects.getInstance().setSystem_path("");
-      SingletonObjects.getInstance().setHmClassMap(null);
-      MessageHandlerScheduler myScheduler = SingletonObjects.getInstance()
-            .getMyScheduler();
-      myScheduler.Stop();
-      System.out.println("Application shut down");
-   }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Application initialization failed for "
+					+ hostName + "!");
+		} finally {
+			if (conn != null) {
+				try {
+					DbBean.closeDbConnection(conn);
+				} catch (SQLException e1) {
+					;
+				} catch (Exception e) {
+					;
+				}
 
-   public void attributeAdded(ServletContextAttributeEvent event) {
-      System.out.println("Attribute added");
+			}
+		}
+	}
 
-   }
+	public void contextDestroyed(ServletContextEvent event) {
+		SingletonObjects.getInstance().setUse_sef_yn("");
+		SingletonObjects.getInstance().setInsecure_port("");
+		SingletonObjects.getInstance().setSecure_port("");
+		SingletonObjects.getInstance().setMailhost("");
+		SingletonObjects.getInstance().setUpload_path("");
+		SingletonObjects.getInstance().setDatabase("");
+		SingletonObjects.getInstance().setHost_name("");
+		SingletonObjects.getInstance().setHomepage_page_id(0);
+		SingletonObjects.getInstance().setSystem_online_yn("");
+		SingletonObjects.getInstance().setSite_description("");
+		SingletonObjects.getInstance().setMemory_threshold(0);
+		SingletonObjects.getInstance().setAdmin_email("");
+		SingletonObjects.getInstance().setSession_timeout("");
+		SingletonObjects.getInstance().setCacheTimeout(0);
+		SingletonObjects.getInstance().setSystem_path("");
+		SingletonObjects.getInstance().setHmClassMap(null);
+		MessageHandlerScheduler myScheduler = SingletonObjects.getInstance()
+				.getMyScheduler();
+		myScheduler.Stop();
+		System.out.println("Application shut down");
+	}
 
-   public void attributeRemoved(ServletContextAttributeEvent event) {
-      System.out.println("Attribute removed");
+	public void attributeAdded(ServletContextAttributeEvent event) {
+		System.out.println("Attribute added");
 
-   }
+	}
 
-   public void attributeReplaced(ServletContextAttributeEvent event) {
-      System.out.println("Attribute replaced");
-   }
+	public void attributeRemoved(ServletContextAttributeEvent event) {
+		System.out.println("Attribute removed");
 
-   public void attributeAdded(HttpSessionBindingEvent sessionBindingEvent) {
+	}
 
-   }
+	public void attributeReplaced(ServletContextAttributeEvent event) {
+		System.out.println("Attribute replaced");
+	}
 
-   public void attributeRemoved(HttpSessionBindingEvent sessionBindingEvent) {
+	public void attributeAdded(HttpSessionBindingEvent sessionBindingEvent) {
 
-   }
+	}
 
-   public void attributeReplaced(HttpSessionBindingEvent sessionBindingEvent) {
+	public void attributeRemoved(HttpSessionBindingEvent sessionBindingEvent) {
 
-   }
+	}
 
-   public void sessionDestroyed(HttpSessionEvent sessionEvent) {
+	public void attributeReplaced(HttpSessionBindingEvent sessionBindingEvent) {
 
-      // Get the session that was invalidated
-      HttpSession session = sessionEvent.getSession();
-      Connection c = null;
-      try {
-         c = DbBean.getDbConnection();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      GenericTable myTable = new GenericTable("logged_in_users");
-      myTable.setConn(c);
-      myTable.setSSelectWhat("*");
-      myTable.setSCustomWhere(" and session_id = '" + session.getId() + "'");
-      myTable.setSCustomLimit("limit 1");
-      XDisconnectedRowSet drs = new XDisconnectedRowSet();
-      try {
-         drs = myTable.getAllRecordsDisconnected();
-         while (drs.next()) {
-            GenericTable myUpdateTable = new GenericTable();
-            myUpdateTable.setConn(c);
-            myUpdateTable.setSTable("logged_in_users");
-            myUpdateTable.setSPrimaryKey("logged_in_user_id");
-            myUpdateTable.setIPrimaryKey(drs.getInt("logged_in_user_id"));
-            try {
-               myUpdateTable.deleteRecord();
-            } catch (Exception e) {
-               e.printStackTrace();
-            }
-         }
-      } catch (SQLException e1) {
-         e1.printStackTrace();
-      } catch (Exception e1) {
-         e1.printStackTrace();
-      }
+	}
 
-      try {
-         DbBean.closeDbConnection(c);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+	public void sessionDestroyed(HttpSessionEvent sessionEvent) {
 
-   public void sessionCreated(HttpSessionEvent sessionEvent) {
+		// Get the session that was invalidated
+		HttpSession session = sessionEvent.getSession();
+		Connection c = null;
+		try {
+			c = DbBean.getDbConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		GenericTable myTable = new GenericTable("logged_in_users");
+		myTable.setConn(c);
+		myTable.setSSelectWhat("*");
+		myTable.setSCustomWhere(" and session_id = '" + session.getId() + "'");
+		myTable.setSCustomLimit("limit 1");
+		XDisconnectedRowSet drs = new XDisconnectedRowSet();
+		try {
+			drs = myTable.getAllRecordsDisconnected();
+			while (drs.next()) {
+				GenericTable myUpdateTable = new GenericTable();
+				myUpdateTable.setConn(c);
+				myUpdateTable.setSTable("logged_in_users");
+				myUpdateTable.setSPrimaryKey("logged_in_user_id");
+				myUpdateTable.setIPrimaryKey(drs.getInt("logged_in_user_id"));
+				try {
+					myUpdateTable.deleteRecord();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
-      HttpSession session = sessionEvent.getSession();
-      GenericTable myTable = new GenericTable("logged_in_users");
-      Connection c = null;
-      try {
-         c = DbBean.getDbConnection();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      myTable.setConn(c);
-      myTable.setSTable("logged_in_users");
-      myTable.addUpdateFieldNameValuePair(
-            "session_id",
-            session.getId(),
-            "string");
-      try {
-         myTable.insertRecord();
-      } catch (Exception e) {
+		try {
+			DbBean.closeDbConnection(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-      }
+	public void sessionCreated(HttpSessionEvent sessionEvent) {
 
-      try {
-         DbBean.closeDbConnection(c);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+		HttpSession session = sessionEvent.getSession();
+		GenericTable myTable = new GenericTable("logged_in_users");
+		Connection c = null;
+		try {
+			c = DbBean.getDbConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		myTable.setConn(c);
+		myTable.setSTable("logged_in_users");
+		myTable.addUpdateFieldNameValuePair("session_id", session.getId(),
+				"string");
+		try {
+			myTable.insertRecord();
+		} catch (Exception e) {
 
-   }
+		}
+
+		try {
+			DbBean.closeDbConnection(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }

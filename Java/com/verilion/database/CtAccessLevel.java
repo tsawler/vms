@@ -31,8 +31,7 @@ import com.verilion.object.Errors;
 import org.sourceforge.jxutil.sql.XDisconnectedRowSet;
 
 /**
- * Manipulates ct_access_level code table in db, and related
- * operations.
+ * Manipulates ct_access_level code table in db, and related operations.
  * <P>
  * Nov 28, 2003
  * <P>
@@ -40,7 +39,7 @@ import org.sourceforge.jxutil.sql.XDisconnectedRowSet;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class CtAccessLevel {
 
@@ -65,37 +64,26 @@ public class CtAccessLevel {
 	 */
 	public void updateAccessLevel() throws SQLException, Exception {
 		try {
-			String update =
-				"UPDATE ct_access_level SET "
-					+ "ct_access_level_name = '"
-					+ ct_access_level_name
-					+ "', "
-					+ "ct_access_level = '"
-					+ ct_access_level
-					+ "' "
-					+ "WHERE ct_access_level_id = '"
-					+ ct_access_level_id
-					+ "'";
+			String update = "UPDATE ct_access_level SET "
+					+ "ct_access_level_name = '" + ct_access_level_name + "', "
+					+ "ct_access_level = '" + ct_access_level + "' "
+					+ "WHERE ct_access_level_id = '" + ct_access_level_id + "'";
 
 			pst = conn.prepareStatement(update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:updateAccessLevel:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:updateAccessLevel:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:updateAccessLevel:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:updateAccessLevel:Exception:"
 					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -106,29 +94,18 @@ public class CtAccessLevel {
 	 */
 	public void addAccessLevel() throws SQLException, Exception {
 		try {
-			String save =
-				"INSERT INTO ct_access_level ("
-					+ "ct_access_level_name, "
-					+ "ct_access_level) "
-					+ "VALUES("
-					+ "'"
-					+ ct_access_level_name
-					+ "', '"
-					+ "'"
-					+ ct_access_level
-					+ "')";
+			String save = "INSERT INTO ct_access_level ("
+					+ "ct_access_level_name, " + "ct_access_level) "
+					+ "VALUES(" + "'" + ct_access_level_name + "', '" + "'"
+					+ ct_access_level + "')";
 
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:addAccessLevel:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:addAccessLevel:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:addAccessLevel:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:addAccessLevel:Exception:"
 					+ e.toString());
 		}
 	}
@@ -139,34 +116,30 @@ public class CtAccessLevel {
 	 * @return XDisconnectedRowSet
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getAllAccessLevelNamesIds() throws SQLException, Exception {
+	public XDisconnectedRowSet getAllAccessLevelNamesIds() throws SQLException,
+			Exception {
 		try {
-			String GetCategory =
-				"select ct_access_level_id, ct_access_level_name from ct_access_level";
+			String GetCategory = "select ct_access_level_id, ct_access_level_name from ct_access_level";
 			st = conn.createStatement();
 			rs = st.executeQuery(GetCategory);
 			crs.populate(rs);
 			rs.close();
 			st.close();
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAllAccessLevelNamesIds:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAllAccessLevelNamesIds:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAllAccessLevelNamesIds:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAllAccessLevelNamesIds:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -178,27 +151,23 @@ public class CtAccessLevel {
 	 */
 	public void deleteAccessLevelById() throws SQLException, Exception {
 		try {
-			String deleteRecord =
-				"delete from ct_access_level where ct_access_level_id = " + ct_access_level_id;
+			String deleteRecord = "delete from ct_access_level where ct_access_level_id = "
+					+ ct_access_level_id;
 			pst = conn.prepareStatement(deleteRecord);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:deleteAccessLevelById:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:deleteAccessLevelById:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:deleteAccessLevelById:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:deleteAccessLevelById:Exception:"
 					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -212,30 +181,24 @@ public class CtAccessLevel {
 	public String getAccessLevelName() throws SQLException, Exception {
 		String theName = "";
 		try {
-			String query =
-				"select ct_access_level_name from ct_access_level where ct_access_level_id = '"
-					+ ct_access_level_id
-					+ "'";
+			String query = "select ct_access_level_name from ct_access_level where ct_access_level_id = '"
+					+ ct_access_level_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			if (rs.next()) {
 				theName = rs.getString("ct_access_level_name");
 			}
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAccessLevelName:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAccessLevelName:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAccessLevelName:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAccessLevelName:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
 		}
 		return theName;
 	}
@@ -250,10 +213,8 @@ public class CtAccessLevel {
 	public XDisconnectedRowSet getAccessLevel() throws SQLException, Exception {
 
 		try {
-			String query =
-				"select * from ct_access_level where ct_access_level_id = '"
-					+ ct_access_level_id
-					+ "'";
+			String query = "select * from ct_access_level where ct_access_level_id = '"
+					+ ct_access_level_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			crs.populate(rs);
@@ -261,25 +222,21 @@ public class CtAccessLevel {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAccessLevel:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAccessLevel:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.CtAccessLevel:getAccessLevel:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.CtAccessLevel:getAccessLevel:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -290,56 +247,70 @@ public class CtAccessLevel {
 	public Connection getConn() {
 		return conn;
 	}
+
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
+
 	/**
 	 * @return Returns the ct_access_level.
 	 */
 	public int getCt_access_level() {
 		return ct_access_level;
 	}
+
 	/**
-	 * @param ct_access_level The ct_access_level to set.
+	 * @param ct_access_level
+	 *            The ct_access_level to set.
 	 */
 	public void setCt_access_level(int ct_access_level) {
 		this.ct_access_level = ct_access_level;
 	}
+
 	/**
 	 * @return Returns the ct_access_level_id.
 	 */
 	public int getCt_access_level_id() {
 		return ct_access_level_id;
 	}
+
 	/**
-	 * @param ct_access_level_id The ct_access_level_id to set.
+	 * @param ct_access_level_id
+	 *            The ct_access_level_id to set.
 	 */
 	public void setCt_access_level_id(int ct_access_level_id) {
 		this.ct_access_level_id = ct_access_level_id;
 	}
+
 	/**
 	 * @return Returns the ct_access_level_name.
 	 */
 	public String getCt_access_level_name() {
 		return ct_access_level_name;
 	}
+
 	/**
-	 * @param ct_access_level_name The ct_access_level_name to set.
+	 * @param ct_access_level_name
+	 *            The ct_access_level_name to set.
 	 */
 	public void setCt_access_level_name(String ct_access_level_name) {
 		this.ct_access_level_name = ct_access_level_name;
 	}
+
 	/**
 	 * @return Returns the page_access_level.
 	 */
 	public int getPage_access_level() {
 		return page_access_level;
 	}
+
 	/**
-	 * @param page_access_level The page_access_level to set.
+	 * @param page_access_level
+	 *            The page_access_level to set.
 	 */
 	public void setPage_access_level(int page_access_level) {
 		this.page_access_level = page_access_level;
