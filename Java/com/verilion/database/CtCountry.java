@@ -1,20 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CtCountry.java,v $
-//Revision 1.3  2004/06/25 17:27:13  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.2  2004/06/24 17:58:12  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.1  2004/05/23 04:52:45  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

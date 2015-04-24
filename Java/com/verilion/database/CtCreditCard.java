@@ -1,35 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CtCreditCard.java,v $
-//Revision 1.6.2.1.4.1  2005/08/21 15:37:14  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.6.2.1  2004/12/17 18:11:09  tcs
-//Modified for changes to DatabaseInterface
-//
-//Revision 1.6  2004/11/02 17:45:45  tcs
-//Changed mutator for setPrimaryKey to take String parameter
-//
-//Revision 1.5  2004/10/26 17:57:18  tcs
-//Added comments
-//
-//Revision 1.4  2004/10/26 17:56:12  tcs
-//Changed to implement DatabaseInterface
-//
-//Revision 1.3  2004/06/25 17:29:30  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.2  2004/06/24 17:58:12  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.1  2004/05/23 04:52:45  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

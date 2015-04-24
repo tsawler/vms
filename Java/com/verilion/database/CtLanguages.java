@@ -1,38 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CtLanguages.java,v $
-//Revision 1.7.2.1.4.1  2005/08/21 15:37:15  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.7.2.1  2004/12/17 18:11:09  tcs
-//Modified for changes to DatabaseInterface
-//
-//Revision 1.7  2004/11/02 17:45:45  tcs
-//Changed mutator for setPrimaryKey to take String parameter
-//
-//Revision 1.6  2004/10/26 18:00:11  tcs
-//Changed to implement DatabaseInterface
-//
-//Revision 1.5  2004/10/26 15:35:25  tcs
-//Improved javadocs
-//
-//Revision 1.4  2004/06/26 03:16:40  tcs
-//Modified to use XDisconnectedRowSets
-//
-//Revision 1.3  2004/06/25 16:29:06  tcs
-//Now returns DisconnectedRowSets instead of rs
-//
-//Revision 1.2  2004/06/24 17:58:10  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.1  2004/05/23 04:52:45  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

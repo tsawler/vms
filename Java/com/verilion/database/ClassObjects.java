@@ -1,32 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-2004 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2004-11-02
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: ClassObjects.java,v $
-//Revision 1.2.2.3.4.1.6.1  2006/09/06 15:00:50  tcs
-//Added Java 5 specific tags for type safety and warning suppression
-//
-//Revision 1.2.2.3.4.1  2005/08/21 15:37:14  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.2.2.3  2005/02/24 19:47:27  tcs
-//debugging info removed
-//
-//Revision 1.2.2.2  2005/02/24 13:11:38  tcs
-//added method to get all classobjects as hm
-//
-//Revision 1.2.2.1  2004/12/14 17:02:30  tcs
-//Added method to test for valid action
-//
-//Revision 1.2  2004/11/03 13:14:10  tcs
-//Corrected column names in query
-//
-//Revision 1.1  2004/11/02 15:19:51  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

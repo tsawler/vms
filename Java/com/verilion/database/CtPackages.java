@@ -1,29 +1,3 @@
-// ------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CtPackages.java,v $
-//Revision 1.5.2.1  2005/02/18 15:24:33  tcs
-//Added sample link column
-//
-//Revision 1.5  2004/06/25 17:39:08  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.4  2004/06/24 17:58:10  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.3  2004/06/11 12:05:23  tcs
-//Added check for sqlfieldvalue on name/desc
-//
-//Revision 1.2  2004/06/11 11:53:47  tcs
-//Added change status method
-//
-//Revision 1.1 2004/05/23 04:52:45 tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -45,7 +19,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class CtPackages {
 
@@ -73,22 +47,12 @@ public class CtPackages {
 	 */
 	public void updatePackages() throws SQLException, Exception {
 		try {
-			String Update = "UPDATE ct_packages SET "
-					+ "ct_package_name = '"
-					+ ct_package_name
-					+ "', "
-					+ "ct_package_description = '"
-					+ ct_package_description
-					+ "', "
-					+ "ct_package_price = '"
-					+ ct_package_price
-					+ "', "
-					+ "ct_package_active_yn = '"
-					+ ct_package_active_yn
-					+ "' "
-					+ "WHERE ct_package_id = '"
-					+ ct_package_id
-					+ "'";
+			String Update = "UPDATE ct_packages SET " + "ct_package_name = '"
+					+ ct_package_name + "', " + "ct_package_description = '"
+					+ ct_package_description + "', " + "ct_package_price = '"
+					+ ct_package_price + "', " + "ct_package_active_yn = '"
+					+ ct_package_active_yn + "' " + "WHERE ct_package_id = '"
+					+ ct_package_id + "'";
 
 			pst = conn.prepareStatement(Update);
 			pst.executeUpdate();
@@ -100,14 +64,12 @@ public class CtPackages {
 					+ e.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-			Errors
-					.addError("Packages:updatePackages:Exception:"
-							+ e.toString());
+			Errors.addError("Packages:updatePackages:Exception:" + e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -119,24 +81,12 @@ public class CtPackages {
 	 */
 	public void addPackage() throws SQLException, Exception {
 		try {
-			String save = "INSERT INTO ct_packages ("
-					+ "ct_package_name, "
-					+ "ct_package_description, "
-					+ "ct_package_price, "
-					+ "ct_package_active_yn) "
-					+ "VALUES("
-					+ "'"
-					+ ct_package_name
-					+ "', "
-					+ "'"
-					+ ct_package_description
-					+ "', "
-					+ "'"
-					+ ct_package_price
-					+ "', "
-					+ "'"
-					+ ct_package_active_yn
-					+ "')";
+			String save = "INSERT INTO ct_packages (" + "ct_package_name, "
+					+ "ct_package_description, " + "ct_package_price, "
+					+ "ct_package_active_yn) " + "VALUES(" + "'"
+					+ ct_package_name + "', " + "'" + ct_package_description
+					+ "', " + "'" + ct_package_price + "', " + "'"
+					+ ct_package_active_yn + "')";
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
@@ -146,10 +96,10 @@ public class CtPackages {
 		} catch (Exception e) {
 			Errors.addError("Packages:addPackage:Exception:" + e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -180,14 +130,14 @@ public class CtPackages {
 			Errors.addError("Packages:getPackageNames:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -199,8 +149,8 @@ public class CtPackages {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getActivePackageNamesPrices() throws SQLException,
-			Exception {
+	public XDisconnectedRowSet getActivePackageNamesPrices()
+			throws SQLException, Exception {
 		try {
 			String query = "Select ct_package_id, ct_package_name, ct_package_price from ct_packages "
 					+ "where ct_package_active_yn = 'y' "
@@ -220,14 +170,14 @@ public class CtPackages {
 			Errors.addError("Packages:getPackageNames:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -239,7 +189,8 @@ public class CtPackages {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getAllPackageNames() throws SQLException, Exception {
+	public XDisconnectedRowSet getAllPackageNames() throws SQLException,
+			Exception {
 		try {
 			String query = "Select ct_package_id, ct_package_name, ct_package_active_yn from ct_packages "
 					+ "order by ct_package_name";
@@ -258,14 +209,14 @@ public class CtPackages {
 			Errors.addError("Packages:getPackageNames:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -281,9 +232,7 @@ public class CtPackages {
 		String theName = "";
 		try {
 			String query = "Select ct_package_name from ct_packages "
-					+ "where ct_package_id = '"
-					+ ct_package_id
-					+ "'";
+					+ "where ct_package_id = '" + ct_package_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			if (rs.next()) {
@@ -300,14 +249,14 @@ public class CtPackages {
 			Errors.addError("Packages:getPackageNameById:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theName;
 	}
@@ -319,11 +268,11 @@ public class CtPackages {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getPackageDetail() throws SQLException, Exception {
+	public XDisconnectedRowSet getPackageDetail() throws SQLException,
+			Exception {
 		try {
 			String query = "Select * from ct_packages where ct_package_id = '"
-					+ ct_package_id
-					+ "'";
+					+ ct_package_id + "'";
 
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
@@ -339,14 +288,14 @@ public class CtPackages {
 			Errors.addError("Packages:getPackageDetail:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -360,8 +309,7 @@ public class CtPackages {
 	public void deletePackage() throws SQLException, Exception {
 		try {
 			String query = "delete from ct_packages where ct_package_id = '"
-					+ ct_package_id
-					+ "'";
+					+ ct_package_id + "'";
 
 			pst = conn.prepareStatement(query);
 			pst.executeUpdate();
@@ -372,11 +320,11 @@ public class CtPackages {
 					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("Packages:deletePackage:Exception:" + e.toString());
-		}  finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 
 	}
@@ -390,10 +338,8 @@ public class CtPackages {
 	public void changeActiveStatus() throws SQLException, Exception {
 		try {
 			String query = "update ct_packages set ct_package_active_yn = '"
-					+ ct_package_active_yn
-					+ "' where ct_package_id = '"
-					+ ct_package_id
-					+ "'";
+					+ ct_package_active_yn + "' where ct_package_id = '"
+					+ ct_package_id + "'";
 
 			pst = conn.prepareStatement(query);
 			pst.executeUpdate();
@@ -403,12 +349,13 @@ public class CtPackages {
 			Errors.addError("Packages:changeActiveStatus:SQLException:"
 					+ e.toString());
 		} catch (Exception e) {
-			Errors.addError("Packages:changeActiveStatus:Exception:" + e.toString());
+			Errors.addError("Packages:changeActiveStatus:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 
 	}
@@ -455,7 +402,8 @@ public class CtPackages {
 	 *            The ct_package_description to set.
 	 */
 	public void setCt_package_description(String ct_package_description) {
-		this.ct_package_description = myDbUtils.fixSqlFieldValue(ct_package_description);
+		this.ct_package_description = myDbUtils
+				.fixSqlFieldValue(ct_package_description);
 	}
 
 	/**

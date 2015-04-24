@@ -1,32 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-2005 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2005-11-29
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Category.java,v $
-//Revision 1.1.2.6.2.1  2006/09/06 15:00:50  tcs
-//Added Java 5 specific tags for type safety and warning suppression
-//
-//Revision 1.1.2.6  2005/12/03 03:22:09  tcs
-//Simplified a couple of methods
-//
-//Revision 1.1.2.5  2005/12/01 18:37:57  tcs
-//Finished crumbtrail code
-//
-//Revision 1.1.2.4  2005/11/30 19:46:58  tcs
-//Fixed check for null in sql
-//
-//Revision 1.1.2.3  2005/11/29 16:15:10  tcs
-//Added GetSubcategory method
-//
-//Revision 1.1.2.2  2005/11/29 16:09:35  tcs
-//Fixed comments
-//
-//Revision 1.1.2.1  2005/11/29 16:09:18  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

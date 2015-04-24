@@ -1,29 +1,3 @@
-// ------------------------------------------------------------------------------
-//Copyright (c) 2004-2007 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-01-11
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Comment.java,v $
-//Revision 1.1.2.1.2.4.2.1  2007/03/30 17:22:15  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.1.2.4  2007/02/02 14:19:24  tcs
-//corrected javadocs
-//
-//Revision 1.1.2.1.2.3  2007/02/02 14:08:54  tcs
-//Formatting
-//
-//Revision 1.1.2.1.2.2  2007/01/22 19:16:58  tcs
-//Couple of new methods
-//
-//Revision 1.1.2.1.2.1  2007/01/16 16:31:13  tcs
-//Added debugging stacktrace
-//
-//Revision 1.1.2.1  2007/01/12 19:29:47  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
