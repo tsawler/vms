@@ -1,20 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-2004 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2004-11-03
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: AdminMenuDetail.java,v $
-//Revision 1.1.2.1.4.1  2005/08/21 15:37:15  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.1.2.1  2004/12/17 18:11:09  tcs
-//Modified for changes to DatabaseInterface
-//
-//Revision 1.1  2004/11/03 14:32:59  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
