@@ -1,26 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-3004 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2004-07-08
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Archive.java,v $
-//Revision 1.2.6.1.8.1.2.1  2009/07/22 16:29:35  tcs
-//*** empty log message ***
-//
-//Revision 1.2.6.1.8.1  2007/01/28 00:51:00  tcs
-//Added session to method call
-//
-//Revision 1.2.6.1  2005/08/21 15:37:15  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.2  2004/09/17 16:42:02  tcs
-//Completed display of information
-//
-//Revision 1.1  2004/07/08 18:13:01  tcs
-//Initial entry into cvs
-//
-//------------------------------------------------------------------------------
 package com.verilion.display.html;
 
 import java.io.IOException;
@@ -65,396 +42,372 @@ import com.verilion.object.html.modules.ModuleObject;
  */
 public class Archive extends HttpServlet {
 
-   private static final long serialVersionUID = -7709179965368305137L;
-   public String archive_page_name = "";
-   public String template_contents = "";
-   public String archive_page_contents = "";
-   public String archive_page_entry_contents = "";
-   public int page_access_level = 0;
-   public String archive_page_title = "";
-   public int archive_page_id = 0;
-   public int template_id = 0;
-   public String archive_page_active_yn = "";
+	private static final long serialVersionUID = -7709179965368305137L;
+	public String archive_page_name = "";
+	public String template_contents = "";
+	public String archive_page_contents = "";
+	public String archive_page_entry_contents = "";
+	public int page_access_level = 0;
+	public String archive_page_title = "";
+	public int archive_page_id = 0;
+	public int template_id = 0;
+	public String archive_page_active_yn = "";
 
-   public int thePort = 0;
-   public StringBuffer sb;
-   public HTMLTemplateDb MasterTemplate;
-   public boolean redirect = false;
-   public String ReplaceString = "";
-   public String url = "";
+	public int thePort = 0;
+	public StringBuffer sb;
+	public HTMLTemplateDb MasterTemplate;
+	public boolean redirect = false;
+	public String ReplaceString = "";
+	public String url = "";
 
-   public String theError = "";
-   public String theMessage = "";
-   public String isHorizontal = "";
-   public String isSef = "";
-   public String theModuleHtml = "";
-   Package pkg = Package.getPackage("com.verilion");
-   public Connection conn = null;
-   public XDisconnectedRowSet rs = new XDisconnectedRowSet();
+	public String theError = "";
+	public String theMessage = "";
+	public String isHorizontal = "";
+	public String isSef = "";
+	public String theModuleHtml = "";
+	Package pkg = Package.getPackage("com.verilion");
+	public Connection conn = null;
+	public XDisconnectedRowSet rs = new XDisconnectedRowSet();
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-    *      javax.servlet.http.HttpServletResponse)
-    */
-   public void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      this.doPost(request, response);
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doPost(request, response);
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-    *      javax.servlet.http.HttpServletResponse)
-    */
-   public void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      archive_page_name = (String) request.getParameter("page");
-      thePort = Integer.parseInt(SingletonObjects.getInstance()
-            .getInsecure_port());
-      isSef = SingletonObjects.getInstance().getUse_sef_yn();
-      PrintWriter out;
-      response.setContentType("text/html");
-      out = response.getWriter();
-      try {
-         DisplayResult(out, request, response);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      out.close();
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		archive_page_name = (String) request.getParameter("page");
+		thePort = Integer.parseInt(SingletonObjects.getInstance()
+				.getInsecure_port());
+		isSef = SingletonObjects.getInstance().getUse_sef_yn();
+		PrintWriter out;
+		response.setContentType("text/html");
+		out = response.getWriter();
+		try {
+			DisplayResult(out, request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		out.close();
+	}
 
-   public PrintWriter DisplayResult(
-         PrintWriter out,
-         HttpServletRequest request,
-         HttpServletResponse response) throws SQLException, Exception {
-      PrintWriter PWtemp;
-      PWtemp = out;
-      redirect = false;
-      String theMenu = "";
-      int myLanguageId = 1;
-      String menuTag = "";
+	public PrintWriter DisplayResult(PrintWriter out,
+			HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, Exception {
+		PrintWriter PWtemp;
+		PWtemp = out;
+		redirect = false;
+		String theMenu = "";
+		int myLanguageId = 1;
+		String menuTag = "";
 
-      try {
-         // get our connection to the database
-         conn = DbBean.getDbConnection();
+		try {
+			// get our connection to the database
+			conn = DbBean.getDbConnection();
 
-         // Get the session
-         HttpSession session = request.getSession(true);
-         if (session.isNew()) {
-            String theParameterList = "?";
-            Enumeration paramNames = request.getParameterNames();
-            while (paramNames.hasMoreElements()) {
-               String theParameterName = (String) paramNames.nextElement();
-               theParameterList += theParameterName;
-               theParameterList += "=";
-               theParameterList += request.getParameter(theParameterName);
-               theParameterList += "&";
-            }
-            response.sendRedirect(response.encodeRedirectURL("http://"
-                  + request.getServerName()
-                  + request.getRequestURI()
-                  + theParameterList));
-         }
+			// Get the session
+			HttpSession session = request.getSession(true);
+			if (session.isNew()) {
+				String theParameterList = "?";
+				Enumeration paramNames = request.getParameterNames();
+				while (paramNames.hasMoreElements()) {
+					String theParameterName = (String) paramNames.nextElement();
+					theParameterList += theParameterName;
+					theParameterList += "=";
+					theParameterList += request.getParameter(theParameterName);
+					theParameterList += "&";
+				}
+				response.sendRedirect(response.encodeRedirectURL("http://"
+						+ request.getServerName() + request.getRequestURI()
+						+ theParameterList));
+			}
 
-         // make sure we're pointing to the right port
-         if (request.getServerPort() != thePort) {
-            String theParameterList = "?";
-            Enumeration paramNames = request.getParameterNames();
+			// make sure we're pointing to the right port
+			if (request.getServerPort() != thePort) {
+				String theParameterList = "?";
+				Enumeration paramNames = request.getParameterNames();
 
-            while (paramNames.hasMoreElements()) {
-               String theParameterName = (String) paramNames.nextElement();
-               theParameterList += theParameterName;
-               theParameterList += "=";
-               theParameterList += request.getParameter(theParameterName);
-               theParameterList += "&";
-            }
-            response.sendRedirect(response.encodeRedirectURL("http://"
-                  + request.getServerName()
-                  + request.getRequestURI()
-                  + ";jsessionid="
-                  + request.getRequestedSessionId()
-                  + theParameterList));
-         }
+				while (paramNames.hasMoreElements()) {
+					String theParameterName = (String) paramNames.nextElement();
+					theParameterList += theParameterName;
+					theParameterList += "=";
+					theParameterList += request.getParameter(theParameterName);
+					theParameterList += "&";
+				}
+				response.sendRedirect(response.encodeRedirectURL("http://"
+						+ request.getServerName() + request.getRequestURI()
+						+ ";jsessionid=" + request.getRequestedSessionId()
+						+ theParameterList));
+			}
 
-         // make sure we're pointing to the right server name
-         if (!(request.getServerName().equals((String) SingletonObjects
-               .getInstance().getHost_name()))) {
-            String theParameterList = "?";
-            Enumeration paramNames = request.getParameterNames();
+			// make sure we're pointing to the right server name
+			if (!(request.getServerName().equals((String) SingletonObjects
+					.getInstance().getHost_name()))) {
+				String theParameterList = "?";
+				Enumeration paramNames = request.getParameterNames();
 
-            while (paramNames.hasMoreElements()) {
-               String theParameterName = (String) paramNames.nextElement();
-               theParameterList += theParameterName;
-               theParameterList += "=";
-               theParameterList += request.getParameter(theParameterName);
-               theParameterList += "&";
-            }
-            response.sendRedirect(response.encodeRedirectURL("http://"
-                  + (String) SingletonObjects.getInstance().getHost_name()
-                  + request.getRequestURI()
-                  + ";jsessionid="
-                  + request.getRequestedSessionId()
-                  + theParameterList));
-         }
+				while (paramNames.hasMoreElements()) {
+					String theParameterName = (String) paramNames.nextElement();
+					theParameterList += theParameterName;
+					theParameterList += "=";
+					theParameterList += request.getParameter(theParameterName);
+					theParameterList += "&";
+				}
+				response.sendRedirect(response.encodeRedirectURL("http://"
+						+ (String) SingletonObjects.getInstance()
+								.getHost_name() + request.getRequestURI()
+						+ ";jsessionid=" + request.getRequestedSessionId()
+						+ theParameterList));
+			}
 
-         // check our language choice status
-         if (session.getAttribute("languageId") != null) {
-            myLanguageId = Integer.parseInt((String) session
-                  .getAttribute("languageId"));
-         }
+			// check our language choice status
+			if (session.getAttribute("languageId") != null) {
+				myLanguageId = Integer.parseInt((String) session
+						.getAttribute("languageId"));
+			}
 
-         // Get page details
-         ArchivePageRoutines myArchivePage = new ArchivePageRoutines();
-         myArchivePage.setConn(conn);
-         myArchivePage.setArchive_page_name(archive_page_name);
-         myArchivePage.setCt_language_id(myLanguageId);
-         myArchivePage.GetArchivePageInfo();
-         archive_page_id = myArchivePage.getArchive_page_id();
-         template_id = myArchivePage.getTemplate_id();
-         template_contents = myArchivePage.getTemplate_contents();
-         page_access_level = myArchivePage.getCt_access_level_id();
-         archive_page_title = myArchivePage.getArchive_page_title();
-         archive_page_active_yn = myArchivePage.getArchive_page_active_yn();
-         archive_page_contents = myArchivePage.getArchive_page_contents();
+			// Get page details
+			ArchivePageRoutines myArchivePage = new ArchivePageRoutines();
+			myArchivePage.setConn(conn);
+			myArchivePage.setArchive_page_name(archive_page_name);
+			myArchivePage.setCt_language_id(myLanguageId);
+			myArchivePage.GetArchivePageInfo();
+			archive_page_id = myArchivePage.getArchive_page_id();
+			template_id = myArchivePage.getTemplate_id();
+			template_contents = myArchivePage.getTemplate_contents();
+			page_access_level = myArchivePage.getCt_access_level_id();
+			archive_page_title = myArchivePage.getArchive_page_title();
+			archive_page_active_yn = myArchivePage.getArchive_page_active_yn();
+			archive_page_contents = myArchivePage.getArchive_page_contents();
 
-         // get the archive entry details
-         ArchivePageEntry myArchivePageEntry = new ArchivePageEntry();
-         myArchivePageEntry.setConn(conn);
-         myArchivePageEntry.setArchive_page_name(archive_page_name);
-         archive_page_contents += "<br />"
-               + myArchivePageEntry
-                     .getFullActiveArchivePageEntriesForArchivePageId();
+			// get the archive entry details
+			ArchivePageEntry myArchivePageEntry = new ArchivePageEntry();
+			myArchivePageEntry.setConn(conn);
+			myArchivePageEntry.setArchive_page_name(archive_page_name);
+			archive_page_contents += "<br />"
+					+ myArchivePageEntry
+							.getFullActiveArchivePageEntriesForArchivePageId();
 
-         // Kick them out if they aren't supposed to be here
-         if (page_access_level > 1) {
-            if (session.getAttribute("user") == null) {
-               // our user is not logged in, so they shouldn't be here
-               theError = "You must log in before accessing the requested page!";
-               redirect = true;
-            } else {
-               if (Integer.parseInt((String) session
-                     .getAttribute("customer_access_level")) < page_access_level) {
-                  // user does not have sufficient rights to be here
-                  theError = "You do not have access to the requested page!";
-                  redirect = true;
-               }
-            }
-         }
+			// Kick them out if they aren't supposed to be here
+			if (page_access_level > 1) {
+				if (session.getAttribute("user") == null) {
+					// our user is not logged in, so they shouldn't be here
+					theError = "You must log in before accessing the requested page!";
+					redirect = true;
+				} else {
+					if (Integer.parseInt((String) session
+							.getAttribute("customer_access_level")) < page_access_level) {
+						// user does not have sufficient rights to be here
+						theError = "You do not have access to the requested page!";
+						redirect = true;
+					}
+				}
+			}
 
-         // if the page is not active (unpublished) redirect to error page.
-         // only check if we have page_name
-         if ((archive_page_active_yn.equals("n"))
-               && (archive_page_name != null)) {
-            theError = "The page you have requested is not currently active!";
-            redirect = true;
-         }
+			// if the page is not active (unpublished) redirect to error page.
+			// only check if we have page_name
+			if ((archive_page_active_yn.equals("n"))
+					&& (archive_page_name != null)) {
+				theError = "The page you have requested is not currently active!";
+				redirect = true;
+			}
 
-         // Get page template
-         MasterTemplate = new HTMLTemplateDb(template_contents);
-         ReplaceString = "http://" + request.getServerName() + "/";
-         MasterTemplate.replaceDefault(ReplaceString);
-         MasterTemplate.setBase("http://" + request.getServerName());
-         MasterTemplate.setServerPort(String.valueOf(request.getServerPort()));
+			// Get page template
+			MasterTemplate = new HTMLTemplateDb(template_contents);
+			ReplaceString = "http://" + request.getServerName() + "/";
+			MasterTemplate.replaceDefault(ReplaceString);
+			MasterTemplate.setBase("http://" + request.getServerName());
+			MasterTemplate
+					.setServerPort(String.valueOf(request.getServerPort()));
 
-         // put the menus on the page
-         Menu myMenu = new Menu();
-         myMenu.setConn(conn);
-         rs = myMenu.getAllActiveMenuNamesTags();
-         GetMenu.setConn(conn);
+			// put the menus on the page
+			Menu myMenu = new Menu();
+			myMenu.setConn(conn);
+			rs = myMenu.getAllActiveMenuNamesTags();
+			GetMenu.setConn(conn);
 
-         while (rs.next()) {
-            theMenu = GetMenu.getHTMLMenu(
-                  rs.getString("menu_name"),
-                  myLanguageId,
-                  isSef,
-                  request,
-                  response,
-                  session);
-            menuTag = rs.getString("menu_tag");
-            MasterTemplate.searchReplace(menuTag, theMenu);
-         }
+			while (rs.next()) {
+				theMenu = GetMenu.getHTMLMenu(rs.getString("menu_name"),
+						myLanguageId, isSef, request, response, session);
+				menuTag = rs.getString("menu_tag");
+				MasterTemplate.searchReplace(menuTag, theMenu);
+			}
 
-         // Put generated by message on page
-         GregorianCalendar x = new GregorianCalendar();
-         Date today = new Date();
-         int year = x.get(Calendar.YEAR);
-         MasterTemplate.searchReplace("<!-- VERSION -->", "<!-- \n"
-               + "Generated on "
-               + today.toString()
-               + " by "
-               + pkg.getSpecificationTitle()
-               + "\n"
-               + "Specification-Vendor: "
-               + pkg.getSpecificationVendor()
-               + "\n"
-               + "Specification-Version: "
-               + pkg.getSpecificationVersion()
-               + "\n"
-               + "Specification-Title: "
-               + pkg.getSpecificationTitle()
-               + "\n"
-               + "Implementation-Vendor: "
-               + pkg.getImplementationVendor()
-               + "\n"
-               + "Implementation-Version: "
-               + pkg.getImplementationVersion()
-               + "\n"
-               + "Copyright (c) 2003 - "
-               + year
-               + " "
-               + pkg.getImplementationVendor()
-               + " All rights reserved.\n"
-               + "-->");
+			// Put generated by message on page
+			GregorianCalendar x = new GregorianCalendar();
+			Date today = new Date();
+			int year = x.get(Calendar.YEAR);
+			MasterTemplate.searchReplace(
+					"<!-- VERSION -->",
+					"<!-- \n" + "Generated on " + today.toString() + " by "
+							+ pkg.getSpecificationTitle() + "\n"
+							+ "Specification-Vendor: "
+							+ pkg.getSpecificationVendor() + "\n"
+							+ "Specification-Version: "
+							+ pkg.getSpecificationVersion() + "\n"
+							+ "Specification-Title: "
+							+ pkg.getSpecificationTitle() + "\n"
+							+ "Implementation-Vendor: "
+							+ pkg.getImplementationVendor() + "\n"
+							+ "Implementation-Version: "
+							+ pkg.getImplementationVersion() + "\n"
+							+ "Copyright (c) 2003 - " + year + " "
+							+ pkg.getImplementationVendor()
+							+ " All rights reserved.\n" + "-->");
 
-         // Put the date on the page
-         MasterTemplate.searchReplace("$DATE$", today.toString());
+			// Put the date on the page
+			MasterTemplate.searchReplace("$DATE$", today.toString());
 
-         // check to see how many languages we have to deal with
-         CtLanguages myLanguages = new CtLanguages();
-         myLanguages.setConn(conn);
-         int numberOfLanguages = myLanguages.getNumberOfActiveLanguages();
+			// check to see how many languages we have to deal with
+			CtLanguages myLanguages = new CtLanguages();
+			myLanguages.setConn(conn);
+			int numberOfLanguages = myLanguages.getNumberOfActiveLanguages();
 
-         // if there is only one active language, don't bother to display
-         // the menu of available languages.
-         if (numberOfLanguages > 1) {
-            // put the language menu on the page
-            LanguageMenu.setConn(conn);
-            MasterTemplate.searchReplace("$LANGUAGEMENU$", LanguageMenu
-                  .getLanguageDropDownListHTML(session));
-         } else {
-            MasterTemplate.searchReplace("$LANGUAGEMENU$", "");
-         }
+			// if there is only one active language, don't bother to display
+			// the menu of available languages.
+			if (numberOfLanguages > 1) {
+				// put the language menu on the page
+				LanguageMenu.setConn(conn);
+				MasterTemplate.searchReplace("$LANGUAGEMENU$",
+						LanguageMenu.getLanguageDropDownListHTML(session));
+			} else {
+				MasterTemplate.searchReplace("$LANGUAGEMENU$", "");
+			}
 
-         // Write out any error messages
-         if (session.getAttribute("Error") != null) {
-            MasterTemplate.searchReplace("<!--ERROR-->", (String) session
-                  .getAttribute("Error"));
-            session.removeAttribute("Error");
-         }
+			// Write out any error messages
+			if (session.getAttribute("Error") != null) {
+				MasterTemplate.searchReplace("<!--ERROR-->",
+						(String) session.getAttribute("Error"));
+				session.removeAttribute("Error");
+			}
 
-         // put the modules on the page
-         ModulePosition myPositions = new ModulePosition();
-         myPositions.setConn(conn);
+			// put the modules on the page
+			ModulePosition myPositions = new ModulePosition();
+			myPositions.setConn(conn);
 
-         rs = myPositions.getAllRecords();
+			rs = myPositions.getAllRecords();
 
-         while (rs.next()) {
-            theModuleHtml = ModuleObject.makeModuleHtml(conn, rs
-                  .getInt("module_position_id"), session, request);
-            if (theModuleHtml.length() > 0) {
-               MasterTemplate.searchReplace(
-                     rs.getString("module_position_tag"),
-                     theModuleHtml);
-            } else {
-               MasterTemplate.searchReplace(
-                     rs.getString("module_position_tag"),
-                     "");
-            }
-         }
+			while (rs.next()) {
+				theModuleHtml = ModuleObject.makeModuleHtml(conn,
+						rs.getInt("module_position_id"), session, request);
+				if (theModuleHtml.length() > 0) {
+					MasterTemplate.searchReplace(
+							rs.getString("module_position_tag"), theModuleHtml);
+				} else {
+					MasterTemplate.searchReplace(
+							rs.getString("module_position_tag"), "");
+				}
+			}
 
-         // Do any template specific stuff
-         BuildTemplate(request, response, session);
+			// Do any template specific stuff
+			BuildTemplate(request, response, session);
 
-         // display the page contents
-         MasterTemplate.searchReplace("$BODY$", archive_page_contents);
+			// display the page contents
+			MasterTemplate.searchReplace("$BODY$", archive_page_contents);
 
-         // Put the title on the page
-         MasterTemplate.searchReplace("$TITLE$", archive_page_title);
+			// Put the title on the page
+			MasterTemplate.searchReplace("$TITLE$", archive_page_title);
 
-         // put our tag on internal links
-         MasterTemplate.searchReplace("$SESSION$", ";jsessionid="
-               + request.getRequestedSessionId());
+			// put our tag on internal links
+			MasterTemplate.searchReplace("$SESSION$",
+					";jsessionid=" + request.getRequestedSessionId());
 
-         // Do any custom page stuff
-         BuildPage(request, response, session);
+			// Do any custom page stuff
+			BuildPage(request, response, session);
 
-         // Write where we are to a sessional variable so we can get back
-         // here with an error message if needed.
-         session.setAttribute("lastPage", request.getRequestURI()
-               + "?page="
-               + archive_page_name);
+			// Write where we are to a sessional variable so we can get back
+			// here with an error message if needed.
+			session.setAttribute("lastPage", request.getRequestURI() + "?page="
+					+ archive_page_name);
 
-         // Get the fully formatted page from HTMLTemplateDb object
-         sb = MasterTemplate.getSb();
+			// Get the fully formatted page from HTMLTemplateDb object
+			sb = MasterTemplate.getSb();
 
-         // Write it out to the browser
-         if (!redirect) {
-            out.print(sb.toString());
-         } else {
-            System.out.println("Error is " + theError);
-            session.setAttribute("Error", theError);
-            url = response
-                  .encodeRedirectURL("/servlet/com.verilion.display.html.Page?page=Home");
-            response.sendRedirect(url);
-         }
-         rs.close();
-         rs = null;
+			// Write it out to the browser
+			if (!redirect) {
+				out.print(sb.toString());
+			} else {
+				System.out.println("Error is " + theError);
+				session.setAttribute("Error", theError);
+				url = response
+						.encodeRedirectURL("/servlet/com.verilion.display.html.Page?page=Home");
+				response.sendRedirect(url);
+			}
+			rs.close();
+			rs = null;
 
-         // close our connection to the database
-         DbBean.closeDbConnection(conn);
-         conn = null;
-      } catch (IOException e) {
-         e.printStackTrace();
-         Errors.addError("Page:IOException:" + e.toString());
-         e.printStackTrace();
-      } catch (SQLException e) {
-         e.printStackTrace();
-         Errors.addError("Page:SQLException:" + e.toString());
-      } catch (Exception e) {
-         e.printStackTrace();
-         Errors.addError("Page:Exception:" + e.toString());
-      } finally {
-         if (rs != null) {
-            rs.close();
-            rs = null;
-         }
-         if (conn != null) {
-            DbBean.closeDbConnection(conn);
-            conn = null;
-         }
-      }
-      return PWtemp;
-   }
+			// close our connection to the database
+			DbBean.closeDbConnection(conn);
+			conn = null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			Errors.addError("Page:IOException:" + e.toString());
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Errors.addError("Page:SQLException:" + e.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Errors.addError("Page:Exception:" + e.toString());
+		} finally {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (conn != null) {
+				DbBean.closeDbConnection(conn);
+				conn = null;
+			}
+		}
+		return PWtemp;
+	}
 
-   /**
-    * Method where page specific operations are conducted. In base class, simply
-    * get page body contents and write it to the HTMLTemplateDb object. Extend
-    * this class for page specific operations.
-    * 
-    * @throws Exception
-    */
-   public void BuildPage(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session) throws Exception {
+	/**
+	 * Method where page specific operations are conducted. In base class,
+	 * simply get page body contents and write it to the HTMLTemplateDb object.
+	 * Extend this class for page specific operations.
+	 * 
+	 * @throws Exception
+	 */
+	public void BuildPage(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
 
-      try {
-         // extend this class and override this method to do custom
-         // processing on the page.
-      } catch (Exception e) {
-         Errors.addError("Archive:BuildPage:Exception:" + e.toString());
-      }
-   }
+		try {
+			// extend this class and override this method to do custom
+			// processing on the page.
+		} catch (Exception e) {
+			Errors.addError("Archive:BuildPage:Exception:" + e.toString());
+		}
+	}
 
-   /**
-    * Do any custom processing on PageTemplate.
-    * 
-    * @throws Exception
-    */
-   public void BuildTemplate(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session) throws Exception {
-      try {
-         // extend this class and override this method to do custom
-         // processing on the template.
-      } catch (Exception e) {
-         Errors.addError("Arcive:BuildTemplate:Exception:" + e.toString());
-      }
-   }
+	/**
+	 * Do any custom processing on PageTemplate.
+	 * 
+	 * @throws Exception
+	 */
+	public void BuildTemplate(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
+		try {
+			// extend this class and override this method to do custom
+			// processing on the template.
+		} catch (Exception e) {
+			Errors.addError("Arcive:BuildTemplate:Exception:" + e.toString());
+		}
+	}
 }

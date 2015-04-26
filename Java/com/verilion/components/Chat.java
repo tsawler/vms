@@ -1,32 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-2007 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-02-01
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Chat.java,v $
-//Revision 1.1.2.4.2.3  2009/07/22 16:29:35  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.4.2.2  2008/09/01 21:11:43  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.4.2.1  2007/06/11 15:36:25  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.4  2007/02/04 01:02:26  tcs
-//Added method to init sessions
-//
-//Revision 1.1.2.3  2007/02/03 01:50:57  tcs
-//Changed order of chat messages - newest come last.
-//
-//Revision 1.1.2.2  2007/02/02 13:53:39  tcs
-//Updated for use with DWR version 2
-//
-//Revision 1.1.2.1  2007/02/01 12:32:24  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.components;
 
 import java.util.Collection;

@@ -1,26 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: BuyerSelfAdmin.java,v $
-//Revision 1.4.6.1  2005/08/21 15:37:15  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.4  2004/06/26 17:03:26  tcs
-//Changes due to refactoring
-//
-//Revision 1.3  2004/06/26 03:16:02  tcs
-//Modified to use XDisconnectedRowSets
-//
-//Revision 1.2  2004/06/24 17:58:03  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.1  2004/05/23 04:52:49  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.display.html.admin;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,15 +18,15 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class BuyerSelfAdmin extends SecurePage {
 
 	/**
     * 
     */
-   private static final long serialVersionUID = -5005408889667400281L;
-   public XDisconnectedRowSet crs = new XDisconnectedRowSet();
+	private static final long serialVersionUID = -5005408889667400281L;
+	public XDisconnectedRowSet crs = new XDisconnectedRowSet();
 	public int customer_id = 0;
 	public String customer_email = "";
 	public String customer_password = "";
@@ -57,28 +34,24 @@ public class BuyerSelfAdmin extends SecurePage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.verilion.display.html.PageDb#BuildPage(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse,
-	 *      javax.servlet.http.HttpSession)
+	 * @see com.verilion.display.html.PageDb#BuildPage(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * javax.servlet.http.HttpSession)
 	 */
-	public void BuildPage(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		HttpSession session)
-		throws Exception {
+	public void BuildPage(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
 
 		try {
 
 			// get our customer id from session
-			customer_id =
-				Integer.parseInt((String) session.getAttribute("customer_id"));
+			customer_id = Integer.parseInt((String) session
+					.getAttribute("customer_id"));
 
 			// get our customer record
 			Customer myCustomer = new Customer();
 			myCustomer.setConn(conn);
 			myCustomer.setCustomer_id(customer_id);
 			crs = myCustomer.GetOneBuyerFromView();
-
 
 			// extract info from customer table to local variables
 			if (crs.next()) {
@@ -93,17 +66,15 @@ public class BuyerSelfAdmin extends SecurePage {
 
 			AddCustomInfo(request, response, session);
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			Errors.addError(
-				"com.verilion.display.admin.EditCustomer:BuildPage:Exception:"
+			Errors.addError("com.verilion.display.admin.EditCustomer:BuildPage:Exception:"
 					+ e.toString());
 		} finally {
-		    if (crs != null) {
-		        crs.close();
-		        crs = null;
-		    }
+			if (crs != null) {
+				crs.close();
+				crs = null;
+			}
 		}
 	}
 
@@ -116,11 +87,8 @@ public class BuyerSelfAdmin extends SecurePage {
 	 * @param session
 	 * @throws Exception
 	 */
-	public void AddCustomInfo(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		HttpSession session)
-		throws Exception {
+	public void AddCustomInfo(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
 
 	}
 }
