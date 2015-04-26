@@ -1,38 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CustomerEmailDetail.java,v $
-//Revision 1.8.16.1  2007/03/23 11:02:27  tcs
-//Changes to reflect new DB structure
-//
-//Revision 1.8  2004/10/26 15:35:26  tcs
-//Improved javadocs
-//
-//Revision 1.7  2004/06/25 18:23:40  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.6  2004/06/24 17:58:08  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.5  2004/06/14 00:14:42  tcs
-//Corrected deleteAllEmailsForCustomerId sql
-//
-//Revision 1.4  2004/06/01 00:23:16  tcs
-//Corrected return method for deleting email by id
-//
-//Revision 1.3  2004/06/01 00:22:43  tcs
-//Added delete all emails method
-//
-//Revision 1.2  2004/06/01 00:15:19  tcs
-//Added delete method
-//
-//Revision 1.1  2004/05/23 04:52:45  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -54,7 +19,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class CustomerEmailDetail {
 
@@ -80,68 +45,53 @@ public class CustomerEmailDetail {
 	public void updateCustomerEmailDetail() throws SQLException, Exception {
 		try {
 			String update = "UPDATE customer_email_detail SET "
-					+ "customer_email = '"
-					+ customer_email
-					+ "', "
-					+ "customer_id = '"
-					+ customer_id
-					+ "', "
+					+ "customer_email = '" + customer_email + "', "
+					+ "customer_id = '" + customer_id + "', "
 					+ "customer_email_default_yn = '"
-					+ customer_email_default_yn
-					+ "' "
-					+ "WHERE customer_email_id = '"
-					+ customer_email_id
-					+ "'";
+					+ customer_email_default_yn + "' "
+					+ "WHERE customer_email_id = '" + customer_email_id + "'";
 
 			pst = conn.prepareStatement(update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:updateCustomerEmailDetail:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetail:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:updateCustomerEmailDetail:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetail:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
-    
-    public void updateAllEmailsForCustomerId() throws SQLException, Exception {
-        try {
-            String update = "UPDATE customer_email_detail SET "
-                    + "customer_email = '"
-                    + customer_email
-                    + "' "
-                    + "WHERE customer_id = '"
-                    + customer_id
-                    + "'";
 
-            pst = conn.prepareStatement(update);
-            pst.executeUpdate();
-            pst.close();
-            pst = null;
-        } catch (SQLException e) {
-            Errors
-                    .addError("CustomerEmailDetail:updateCustomerEmailDetail:SQLException:"
-                            + e.toString());
-        } catch (Exception e) {
-            Errors
-                    .addError("CustomerEmailDetail:updateCustomerEmailDetail:Exception:"
-                            + e.toString());
-        } finally {
-            if (pst != null) {
-                pst.close();
-                pst = null;
-            }
-        }
-    }
+	public void updateAllEmailsForCustomerId() throws SQLException, Exception {
+		try {
+			String update = "UPDATE customer_email_detail SET "
+					+ "customer_email = '" + customer_email + "' "
+					+ "WHERE customer_id = '" + customer_id + "'";
+
+			pst = conn.prepareStatement(update);
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetail:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetail:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
 	/**
 	 * Update primary email address method.
@@ -152,12 +102,8 @@ public class CustomerEmailDetail {
 			Exception {
 		try {
 			String update = "UPDATE customer_email_detail SET "
-					+ "customer_email = '"
-					+ customer_email
-					+ "' "
-					+ "WHERE customer_id = '"
-					+ customer_id
-					+ "' "
+					+ "customer_email = '" + customer_email + "' "
+					+ "WHERE customer_id = '" + customer_id + "' "
 					+ "AND customer_email_default_yn = 'y'";
 
 			pst = conn.prepareStatement(update);
@@ -165,18 +111,16 @@ public class CustomerEmailDetail {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:updateCustomerEmailDetailPrimaryEmail:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetailPrimaryEmail:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:updateCustomerEmailDetailPrimaryEmail:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:updateCustomerEmailDetailPrimaryEmail:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -188,37 +132,26 @@ public class CustomerEmailDetail {
 	public void addCustomerEmailDetail() throws SQLException, Exception {
 		try {
 			String save = "INSERT INTO customer_email_detail ("
-					+ "customer_id, "
-					+ "customer_email, "
-					+ "customer_email_default_yn) "
-					+ "VALUES("
-					+ "'"
-					+ customer_id
-					+ "', "
-					+ "'"
-					+ customer_email
-					+ "', "
-					+ "'"
-					+ customer_email_default_yn
-					+ "')";
+					+ "customer_id, " + "customer_email, "
+					+ "customer_email_default_yn) " + "VALUES(" + "'"
+					+ customer_id + "', " + "'" + customer_email + "', " + "'"
+					+ customer_email_default_yn + "')";
 
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:addCustomerEmailDetail:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:addCustomerEmailDetail:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:addCustomerEmailDetail:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:addCustomerEmailDetail:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -228,12 +161,11 @@ public class CustomerEmailDetail {
 	 * @return XDisconnectedRowSet
 	 * @throws Exception
 	 */
-	public XDisconnectedRowSet getAllEmailsForCustomerId() throws SQLException, Exception {
+	public XDisconnectedRowSet getAllEmailsForCustomerId() throws SQLException,
+			Exception {
 		try {
 			String getemails = "select * from customer_email_detail "
-					+ "where customer_id = '"
-					+ customer_id
-					+ "'";
+					+ "where customer_id = '" + customer_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(getemails);
 			crs.populate(rs);
@@ -242,22 +174,20 @@ public class CustomerEmailDetail {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:getAllEmailsForCustomerId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getAllEmailsForCustomerId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:getAllEmailsForCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getAllEmailsForCustomerId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -276,21 +206,19 @@ public class CustomerEmailDetail {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:deleteEmailByEmailId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:deleteEmailByEmailId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:deleteEmailByEmailId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:deleteEmailByEmailId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
-	
+
 	/**
 	 * Deletes all email for customer id
 	 * 
@@ -306,18 +234,16 @@ public class CustomerEmailDetail {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:deleteAllEmailsForCustomerId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:deleteAllEmailsForCustomerId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:deleteAllEmailsForCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:deleteAllEmailsForCustomerId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -348,22 +274,20 @@ public class CustomerEmailDetail {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theEmail;
 	}
@@ -379,9 +303,7 @@ public class CustomerEmailDetail {
 		int theId = 0;
 		try {
 			String query = "select customer_id from customer_email_detail where "
-					+ "customer_email = '"
-					+ customer_email
-					+ "'";
+					+ "customer_email = '" + customer_email + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 
@@ -393,22 +315,20 @@ public class CustomerEmailDetail {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerEmailDetail:getPrimaryEmailAddressForCustomerId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theId;
 	}

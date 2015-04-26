@@ -1,36 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2004 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2004-10-21
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: AdminPageRoutines.java,v $
-//Revision 1.4.2.3.4.1  2005/08/21 15:37:14  tcs
-//Removed unused membres, code cleanup
-//
-//Revision 1.4.2.3  2004/12/17 18:11:09  tcs
-//Modified for changes to DatabaseInterface
-//
-//Revision 1.4.2.2  2004/12/17 14:30:02  tcs
-//Modified to implement DatabaseInterface
-//
-//Revision 1.4.2.1  2004/12/14 13:36:21  tcs
-//Added method to check for valid page name, and chanded routines
-//to use PreparedStatement
-//
-//Revision 1.4  2004/11/09 19:09:28  tcs
-//Changed to preparedstatement
-//
-//Revision 1.3  2004/11/06 11:39:49  tcs
-//mods for secure page
-//
-//Revision 1.2  2004/11/05 13:08:00  tcs
-//Changes due to simplified database structure for pages & admin pages
-//
-//Revision 1.1  2004/10/21 18:02:03  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

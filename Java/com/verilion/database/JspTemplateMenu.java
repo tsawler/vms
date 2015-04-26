@@ -1,14 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2004-2007 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-02-16
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: JspTemplateMenu.java,v $
-//Revision 1.1.2.1  2007/02/25 01:53:30  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -25,38 +14,38 @@ import org.sourceforge.jxutil.sql.XDisconnectedRowSet;
  */
 public class JspTemplateMenu {
 
-   private Connection conn = null;
-   private ResultSet rs = null;
-   private PreparedStatement pst = null;
-   
-   public XDisconnectedRowSet getMenusForTemplateName(String inTemplateName) throws Exception {
+	private Connection conn = null;
+	private ResultSet rs = null;
+	private PreparedStatement pst = null;
 
-      XDisconnectedRowSet drs = new XDisconnectedRowSet();
+	public XDisconnectedRowSet getMenusForTemplateName(String inTemplateName)
+			throws Exception {
 
-      
-      StringBuffer queryBuf = new StringBuffer(
-            "select jm.menu_id, m.ct_menu_type_id from jsp_template_menu jm ");
-      queryBuf.append("left join menu m on (jm.menu_id = m.menu_id) ");
-      queryBuf.append("where jsp_template_id = (select jsp_template_id from jsp_templates where jsp_template_name = ?)");
-      pst = conn.prepareStatement(queryBuf.toString());
-      pst.setString(1, inTemplateName);
+		XDisconnectedRowSet drs = new XDisconnectedRowSet();
 
-      rs = pst.executeQuery();
-      drs.populate(rs);
-      rs.close();
-      rs = null;
-      pst.close();
-      pst = null;
+		StringBuffer queryBuf = new StringBuffer(
+				"select jm.menu_id, m.ct_menu_type_id from jsp_template_menu jm ");
+		queryBuf.append("left join menu m on (jm.menu_id = m.menu_id) ");
+		queryBuf.append("where jsp_template_id = (select jsp_template_id from jsp_templates where jsp_template_name = ?)");
+		pst = conn.prepareStatement(queryBuf.toString());
+		pst.setString(1, inTemplateName);
 
-      return drs;
-   }
+		rs = pst.executeQuery();
+		drs.populate(rs);
+		rs.close();
+		rs = null;
+		pst.close();
+		pst = null;
 
-   public Connection getConn() {
-      return conn;
-   }
+		return drs;
+	}
 
-   public void setConn(Connection conn) {
-      this.conn = conn;
-   }
+	public Connection getConn() {
+		return conn;
+	}
+
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
 }

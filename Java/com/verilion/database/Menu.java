@@ -1,50 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Menu.java,v $
-//Revision 1.5.6.2.6.1.2.4.2.1  2009/07/22 16:29:32  tcs
-//*** empty log message ***
-//
-//Revision 1.5.6.2.6.1.2.4  2007/02/25 01:53:52  tcs
-//*** empty log message ***
-//
-//Revision 1.5.6.2.6.1.2.3  2007/02/02 19:18:10  tcs
-//Changed to support components linked in menu
-//
-//Revision 1.5.6.2.6.1.2.2  2007/01/29 16:15:59  tcs
-//Added support for collapsible vertical menus, spacers & headings
-//
-//Revision 1.5.6.2.6.1.2.1  2007/01/28 00:51:25  tcs
-//Added support for per menu item access level restrictions
-//
-//Revision 1.5.6.2.6.1  2006/04/07 18:19:26  tcs
-//*** empty log message ***
-//
-//Revision 1.5.6.2  2005/08/16 00:23:30  tcs
-//Modified to implement databaseinterface
-//
-//Revision 1.5.6.1  2005/08/16 00:10:00  tcs
-//Corrected sql in add method
-//
-//Revision 1.5  2004/06/25 18:35:10  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.4  2004/06/25 16:31:37  tcs
-//Changed some methods to return XDisconnectedRowSets
-//
-//Revision 1.3  2004/06/24 17:58:08  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.2  2004/05/31 12:58:11  tcs
-//Added additional XHTML stuff
-//
-//Revision 1.1  2004/05/23 04:52:45  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -108,9 +61,8 @@ public class Menu implements DatabaseInterface {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:updateMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:updateMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("com.verilion.database.Menu:updateMenu:Exception:"
 					+ e.toString());
@@ -191,13 +143,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuIdByMenuName:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuIdByMenuName:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuIdByMenuName:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuIdByMenuName:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -229,13 +179,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllMenuNamesIds:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllMenuNamesIds:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllMenuNamesIds:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllMenuNamesIds:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -267,13 +215,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllActiveMenuNamesIds:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllActiveMenuNamesIds:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllActiveMenuNamesIds:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllActiveMenuNamesIds:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -306,13 +252,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllActiveMenuNamesTags:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllActiveMenuNamesTags:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getAllActiveMenuNamesTags:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getAllActiveMenuNamesTags:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -340,13 +284,11 @@ public class Menu implements DatabaseInterface {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:deleteMenuById:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:deleteMenuById:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:deleteMenuById:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:deleteMenuById:Exception:"
+					+ e.toString());
 		} finally {
 			if (pst != null) {
 				pst.close();
@@ -377,9 +319,8 @@ public class Menu implements DatabaseInterface {
 			rs = null;
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuName:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuName:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("com.verilion.database.Menu:getMenuName:Exception:"
 					+ e.toString());
@@ -480,13 +421,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuForDisplay:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuForDisplay:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuForDisplay:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuForDisplay:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -523,9 +462,8 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getDivider:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getDivider:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("com.verilion.database.Menu:getDivider:Exception:"
 					+ e.toString());
@@ -567,13 +505,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getMenuAlignment:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getMenuAlignment:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuAlignment:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuAlignment:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -604,13 +540,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getMenuAlignment:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getMenuAlignment:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuAlignment:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuAlignment:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -652,13 +586,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getMenuHorizontalOrVertical:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getMenuHorizontalOrVertical:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuHorizontalOrVertical:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuHorizontalOrVertical:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -693,13 +625,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getMenuHorizontalOrVertical:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getMenuHorizontalOrVertical:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getMenuHorizontalOrVertical:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getMenuHorizontalOrVertical:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -729,13 +659,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getTypeOfMenu:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getTypeOfMenu:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getTypeOfMenu:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getTypeOfMenu:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -748,7 +676,7 @@ public class Menu implements DatabaseInterface {
 		}
 		return theIdType;
 	}
-	
+
 	public int getTypeOfMenu(int mid) throws SQLException, Exception {
 		ResultSet rs = null;
 		int theIdType = 0;
@@ -765,13 +693,11 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.getTypeOfMenu:getMenu:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.getTypeOfMenu:getMenu:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Menu:getTypeOfMenu:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getTypeOfMenu:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -808,9 +734,8 @@ public class Menu implements DatabaseInterface {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Menu:getStyleId:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Menu:getStyleId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("com.verilion.database.Menu:getStyleId:Exception:"
 					+ e.toString());

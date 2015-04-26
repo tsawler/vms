@@ -1,14 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: SystemPages.java,v $
-//Revision 1.1.2.1  2004/12/08 17:30:57  tcs
-//Refactored SystemPages to be in com.verilion.database
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -23,8 +12,9 @@ import com.verilion.object.Errors;
  * <P>
  * Nov 25, 2003
  * <P>
+ * 
  * @author tsawler
- *  
+ * 
  */
 public class SystemPages {
 	String tempSting = "";
@@ -41,16 +31,13 @@ public class SystemPages {
 	 * @throws Exception
 	 */
 	public static String GetSystemPageByName(String inPageName)
-		throws SQLException, Exception {
+			throws SQLException, Exception {
 		String tempString = "";
 		try {
-			
-			String sqlQuery =
-				"select system_page_contents from "
-					+ "system_pages  "
-					+ "where system_page_name = '"
-					+ inPageName
-					+ "'";
+
+			String sqlQuery = "select system_page_contents from "
+					+ "system_pages  " + "where system_page_name = '"
+					+ inPageName + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(sqlQuery);
 			if (rs.next()) {
@@ -60,32 +47,29 @@ public class SystemPages {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.SystemPages:GetSystemPageByName:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.SystemPages:GetSystemPageByName:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.SystemPages:GetSystemPageByName:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.SystemPages:GetSystemPageByName:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return tempString;
 	}
 
 	/**
-	 * Gets a system page by name and access level id, for pages which are different
-	 * based upon a user's access level (i.e. message displayed instead of log in boxes)
+	 * Gets a system page by name and access level id, for pages which are
+	 * different based upon a user's access level (i.e. message displayed
+	 * instead of log in boxes)
 	 * 
 	 * @param inPageName
 	 * @param accessLevelId
@@ -93,21 +77,14 @@ public class SystemPages {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static String GetSystemPageByNameAndAccessLevelId(
-		String inPageName,
-		int accessLevelId)
-		throws SQLException, Exception {
+	public static String GetSystemPageByNameAndAccessLevelId(String inPageName,
+			int accessLevelId) throws SQLException, Exception {
 		String tempString = "";
 		try {
-			String sqlQuery =
-				"select system_page_contents from "
-					+ "system_pages  "
-					+ "where system_page_name = '"
-					+ inPageName
-					+ "' "
-					+ "and ct_access_level_id = '"
-					+ accessLevelId
-					+ "'";
+			String sqlQuery = "select system_page_contents from "
+					+ "system_pages  " + "where system_page_name = '"
+					+ inPageName + "' " + "and ct_access_level_id = '"
+					+ accessLevelId + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(sqlQuery);
 			if (rs.next()) {
@@ -117,28 +94,25 @@ public class SystemPages {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"com.verilion.database.SystemPages:GetSystemPageByNameAndAccessLevelId:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("com.verilion.database.SystemPages:GetSystemPageByNameAndAccessLevelId:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"com.verilion.database.SystemPages:GetSystemPageByNameAndAccessLevelId:Exception:"
+		} catch (Exception e) {
+			Errors.addError("com.verilion.database.SystemPages:GetSystemPageByNameAndAccessLevelId:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return tempString;
 	}
+
 	/**
 	 * @return Returns the conn.
 	 */
@@ -147,7 +121,8 @@ public class SystemPages {
 	}
 
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public static void setConn(Connection conn) {
 		SystemPages.conn = conn;

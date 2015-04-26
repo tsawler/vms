@@ -1,32 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2004-2007 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-02-22
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Banners.java,v $
-//Revision 1.1.2.5.2.2  2008/09/01 21:11:42  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.5.2.1  2007/06/11 15:35:18  tcs
-//Added ability to delete banners
-//
-//Revision 1.1.2.5  2007/03/15 17:46:39  tcs
-//Updated for multiple banners in one spot
-//
-//Revision 1.1.2.4  2007/02/07 17:46:22  tcs
-//Modified to use Stringbuffers
-//
-//Revision 1.1.2.3  2007/01/23 19:27:39  tcs
-//Minor correction
-//
-//Revision 1.1.2.2  2007/01/23 14:40:24  tcs
-//Added a few methods
-//
-//Revision 1.1.2.1  2007/01/23 02:21:55  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;

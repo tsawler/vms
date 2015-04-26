@@ -1,44 +1,3 @@
-// ------------------------------------------------------------------------------
-//Copyright (c) 2004 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-02-27
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: GenericTable.java,v $
-//Revision 1.1.2.2.2.9  2008/09/01 21:11:42  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.8  2008/03/07 12:01:57  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.7  2007/10/30 17:44:54  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.6  2007/08/21 11:13:04  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.5  2007/08/12 02:09:10  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.4  2007/06/11 15:35:38  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.3  2007/04/09 12:21:20  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.2  2007/03/30 17:22:33  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.2.2.1  2007/03/23 11:02:27  tcs
-//Changes to reflect new DB structure
-//
-//Revision 1.1.2.2  2007/03/14 00:19:42  tcs
-//*** empty log message ***
-//
-//Revision 1.1.2.1  2007/02/27 18:48:50  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -63,518 +22,482 @@ import com.verilion.object.Errors;
  */
 public class GenericTable implements DatabaseInterface {
 
-   private ResultSet rs = null;
-   private Connection conn;
-   private Statement st = null;
-   private PreparedStatement pst = null;
-   private String sSelectWhat = "*";
-   private String sCustomFrom = "";
-   private String sCustomWhere = " where true ";
-   DBUtils myDbUtil = new DBUtils();
-   private String sTable = "";
-   private String sPrimaryKey = "";
-   private String sCustomOrder = "";
-   int iPrimaryKey = 0;
-   private String sSequence = "";
-   private String sCustomLimit = "";
+	private ResultSet rs = null;
+	private Connection conn;
+	private Statement st = null;
+	private PreparedStatement pst = null;
+	private String sSelectWhat = "*";
+	private String sCustomFrom = "";
+	private String sCustomWhere = " where true ";
+	DBUtils myDbUtil = new DBUtils();
+	private String sTable = "";
+	private String sPrimaryKey = "";
+	private String sCustomOrder = "";
+	int iPrimaryKey = 0;
+	private String sSequence = "";
+	private String sCustomLimit = "";
 
-   String updateWhat = "";
-   String insertWhat = "";
-   Vector<String> updateFieldNamesVector = new Vector<String>();
-   Vector<String> updateFieldValuesVector = new Vector<String>();
-   Vector<String> updateFieldTypesVector = new Vector<String>();
+	String updateWhat = "";
+	String insertWhat = "";
+	Vector<String> updateFieldNamesVector = new Vector<String>();
+	Vector<String> updateFieldValuesVector = new Vector<String>();
+	Vector<String> updateFieldTypesVector = new Vector<String>();
 
-   public GenericTable(String theTable) {
-      this.sTable = theTable;
-      this.clearUpdateVectors();
-   }
+	public GenericTable(String theTable) {
+		this.sTable = theTable;
+		this.clearUpdateVectors();
+	}
 
-   public GenericTable() {
-      this.clearUpdateVectors();
-   }
+	public GenericTable() {
+		this.clearUpdateVectors();
+	}
 
-   public RowSetDynaClass getAllRecordsDynaBean() throws SQLException,
-         Exception {
+	public RowSetDynaClass getAllRecordsDynaBean() throws SQLException,
+			Exception {
 
-      RowSetDynaClass resultset = null;
+		RowSetDynaClass resultset = null;
 
-      try {
-         String query = "select "
-               + sSelectWhat
-               + " from "
-               + sTable
-               + sCustomFrom
-               + sCustomWhere
-               + sCustomOrder
-               + " "
-               + sCustomLimit;
-               
-         //System.out.println("query:\n" + query);
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         resultset = new RowSetDynaClass(rs, false);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("GenericTable:getAllRecordsDynaBean:SQLException:"
-               + e.toString());
-      } catch (Exception e) {
-         Errors.addError("GenericTable:getAllRecordsDynaBean:Exception:"
-               + e.toString());
-      }
-      return resultset;
-   }
+		try {
+			String query = "select " + sSelectWhat + " from " + sTable
+					+ sCustomFrom + sCustomWhere + sCustomOrder + " "
+					+ sCustomLimit;
 
-   public RowSetDynaClass getAllActiveRecordsDynaBean() throws SQLException,
-         Exception {
+			// System.out.println("query:\n" + query);
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			resultset = new RowSetDynaClass(rs, false);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("GenericTable:getAllRecordsDynaBean:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("GenericTable:getAllRecordsDynaBean:Exception:"
+					+ e.toString());
+		}
+		return resultset;
+	}
 
-      RowSetDynaClass resultset = null;
+	public RowSetDynaClass getAllActiveRecordsDynaBean() throws SQLException,
+			Exception {
 
-      try {
-         String query = "select "
-               + sSelectWhat
-               + " from "
-               + sTable
-               + sCustomFrom
-               + sCustomWhere
-               + " and active_yn = 'y' "
-               + sCustomOrder
-               + " "
-               + sCustomLimit;
+		RowSetDynaClass resultset = null;
 
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         resultset = new RowSetDynaClass(rs, false);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors
-               .addError("GenericTable:getAllActiveRecordsDynaBean:SQLException:"
-                     + e.toString());
-      } catch (Exception e) {
-         Errors.addError("GenericTable:getAllActiveRecordsDynaBean:Exception:"
-               + e.toString());
-      }
-      return resultset;
-   }
+		try {
+			String query = "select " + sSelectWhat + " from " + sTable
+					+ sCustomFrom + sCustomWhere + " and active_yn = 'y' "
+					+ sCustomOrder + " " + sCustomLimit;
 
-   public XDisconnectedRowSet getAllActiveRecordsDisconnected()
-         throws SQLException, Exception {
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			resultset = new RowSetDynaClass(rs, false);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("GenericTable:getAllActiveRecordsDynaBean:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("GenericTable:getAllActiveRecordsDynaBean:Exception:"
+					+ e.toString());
+		}
+		return resultset;
+	}
 
-      XDisconnectedRowSet resultset = new XDisconnectedRowSet();
+	public XDisconnectedRowSet getAllActiveRecordsDisconnected()
+			throws SQLException, Exception {
 
-      try {
-         String query = "select "
-               + sSelectWhat
-               + " from "
-               + sTable
-               + " "
-               + sCustomFrom
-               + " "
-               + sCustomWhere
-               + " and active_yn = 'y' "
-               + sCustomOrder
-               + " "
-               + sCustomLimit;
+		XDisconnectedRowSet resultset = new XDisconnectedRowSet();
 
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         resultset.populate(rs);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors
-               .addError("GenericTable:getAllActiveRecordsDisconnected:SQLException:"
-                     + e.toString());
-      } catch (Exception e) {
-         Errors
-               .addError("GenericTable:getAllActiveRecordsDisconnected:Exception:"
-                     + e.toString());
-      }
-      return resultset;
-   }
+		try {
+			String query = "select " + sSelectWhat + " from " + sTable + " "
+					+ sCustomFrom + " " + sCustomWhere
+					+ " and active_yn = 'y' " + sCustomOrder + " "
+					+ sCustomLimit;
 
-   public XDisconnectedRowSet getAllRecordsDisconnected() throws SQLException,
-         Exception {
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			resultset.populate(rs);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("GenericTable:getAllActiveRecordsDisconnected:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("GenericTable:getAllActiveRecordsDisconnected:Exception:"
+					+ e.toString());
+		}
+		return resultset;
+	}
 
-      XDisconnectedRowSet resultset = new XDisconnectedRowSet();
+	public XDisconnectedRowSet getAllRecordsDisconnected() throws SQLException,
+			Exception {
 
-      try {
-         String query = "select "
-               + sSelectWhat
-               + " from "
-               + sTable
-               + " "
-               + sCustomFrom
-               + " "
-               + sCustomWhere
-               + " "
-               + sCustomOrder
-               + " "
-               + sCustomLimit;
-         //System.out.println(query);
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         resultset.populate(rs);
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors.addError("GenericTable:getAllRecordsDisconnected:SQLException:"
-               + e.toString());
-         e.printStackTrace();
-         System.out.println(e.toString());
-      } catch (Exception e) {
-         Errors.addError("GenericTable:getAllRecordsDisconnected:Exception:"
-               + e.toString());
-      }
-      return resultset;
-   }
+		XDisconnectedRowSet resultset = new XDisconnectedRowSet();
 
-   public int returnCurrentSequenceValue() throws SQLException, Exception {
+		try {
+			String query = "select " + sSelectWhat + " from " + sTable + " "
+					+ sCustomFrom + " " + sCustomWhere + " " + sCustomOrder
+					+ " " + sCustomLimit;
+			// System.out.println(query);
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			resultset.populate(rs);
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("GenericTable:getAllRecordsDisconnected:SQLException:"
+					+ e.toString());
+			e.printStackTrace();
+			System.out.println(e.toString());
+		} catch (Exception e) {
+			Errors.addError("GenericTable:getAllRecordsDisconnected:Exception:"
+					+ e.toString());
+		}
+		return resultset;
+	}
 
-      int newId = 0;
-      try {
-         String query = "select currval('" + sSequence + "')";
+	public int returnCurrentSequenceValue() throws SQLException, Exception {
 
-         st = conn.createStatement();
-         rs = st.executeQuery(query);
-         if (rs.next()) {
-            newId = rs.getInt(1);
-         }
-         rs.close();
-         rs = null;
-         st.close();
-         st = null;
-      } catch (SQLException e) {
-         Errors
-               .addError("GenericTable:returnCurrentSequenceValue:SQLException:"
-                     + e.toString());
-      } catch (Exception e) {
-         Errors.addError("GenericTable:returnCurrentSequenceValue:Exception:"
-               + e.toString());
-      }
-      return newId;
-   }
+		int newId = 0;
+		try {
+			String query = "select currval('" + sSequence + "')";
 
-   /**
-    * @return Returns the conn.
-    */
-   public Connection getConn() {
-      return conn;
-   }
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			if (rs.next()) {
+				newId = rs.getInt(1);
+			}
+			rs.close();
+			rs = null;
+			st.close();
+			st = null;
+		} catch (SQLException e) {
+			Errors.addError("GenericTable:returnCurrentSequenceValue:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("GenericTable:returnCurrentSequenceValue:Exception:"
+					+ e.toString());
+		}
+		return newId;
+	}
 
-   /**
-    * @param conn
-    *           The conn to set.
-    */
-   public void setConn(Connection conn) {
-      this.conn = conn;
-   }
+	/**
+	 * @return Returns the conn.
+	 */
+	public Connection getConn() {
+		return conn;
+	}
 
-   public void changeActiveStatus(String psStatus) throws SQLException,
-         Exception {
-      st = conn.createStatement();
-      String query = "update "
-            + sTable
-            + " set active_yn = '"
-            + psStatus
-            + "' where "
-            + sPrimaryKey
-            + " = "
-            + iPrimaryKey;
-      st.executeUpdate(query);
-      st.close();
-      st = null;
-   }
+	/**
+	 * @param conn
+	 *            The conn to set.
+	 */
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
-   public void createCustomWhere(String psCustomWhere) {
-      this.sCustomWhere += psCustomWhere;
-   }
+	public void changeActiveStatus(String psStatus) throws SQLException,
+			Exception {
+		st = conn.createStatement();
+		String query = "update " + sTable + " set active_yn = '" + psStatus
+				+ "' where " + sPrimaryKey + " = " + iPrimaryKey;
+		st.executeUpdate(query);
+		st.close();
+		st = null;
+	}
 
-   public void deleteRecord() throws SQLException, Exception {
-      try {st = conn.createStatement();
-      String query = "delete from "
-            + sTable
-            + " where "
-            + sPrimaryKey
-            + " = "
-            + iPrimaryKey;
-      st.executeUpdate(query);
-      st.close();
-      st = null;
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
-   
-   public void deleteRecords() throws SQLException, Exception {
-      try {st = conn.createStatement();
-      String query = "delete from "
-            + sTable
-            + " "
-            + sCustomWhere;
-      st.executeUpdate(query);
-      st.close();
-      st = null;
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+	public void createCustomWhere(String psCustomWhere) {
+		this.sCustomWhere += psCustomWhere;
+	}
 
-   public void updateRecord() throws SQLException, Exception {
+	public void deleteRecord() throws SQLException, Exception {
+		try {
+			st = conn.createStatement();
+			String query = "delete from " + sTable + " where " + sPrimaryKey
+					+ " = " + iPrimaryKey;
+			st.executeUpdate(query);
+			st.close();
+			st = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-      try {
-         String query = "update " + this.updateWhat + " set ";
+	public void deleteRecords() throws SQLException, Exception {
+		try {
+			st = conn.createStatement();
+			String query = "delete from " + sTable + " " + sCustomWhere;
+			st.executeUpdate(query);
+			st.close();
+			st = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-         for (int i = 0; i < updateFieldNamesVector.size(); i++) {
-            query += updateFieldNamesVector.elementAt(i) + " = ?, ";
-         }
-         query = query.substring(0, (query.length() - 2));
-         query += this.sCustomWhere;
+	public void updateRecord() throws SQLException, Exception {
 
-         pst = conn.prepareStatement(query);
-         //System.out.println(query);
-         int j = 1;
-         for (int i = 0; i < updateFieldNamesVector.size(); i++) {
-            String theType = updateFieldTypesVector.elementAt(i).toString();
-            if (theType.equalsIgnoreCase("string")) {
-               try {
-                  pst.setString(j, updateFieldValuesVector.elementAt(i)
-                        .toString());
-               } catch (Exception e) {
-                  pst.setString(j, "");
-               }
-            } else if (theType.equalsIgnoreCase("int")) {
-               try {
-                  pst.setInt(j, Integer.parseInt(updateFieldValuesVector
-                        .elementAt(i).toString()));
-               } catch (Exception e) {
-                  pst.setInt(j, 0);
-               }
-            } else if (theType.equalsIgnoreCase("float")) {
-               float f = 0.00f;
-               try {
-                  f = Float.valueOf(
-                        updateFieldValuesVector.elementAt(i).toString().trim())
-                        .floatValue();
-               } catch (NumberFormatException e) {
-                  f = 0.00f;
-               }
-               pst.setFloat(j, f);
-            } else if (theType.equalsIgnoreCase("date")) {
-               String inDate = updateFieldValuesVector.elementAt(i).toString();
-               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-               Date dt = sdf.parse(inDate);
-               pst.setDate(j, new java.sql.Date(dt.getTime()));
-            } else if (theType.equalsIgnoreCase("timestamp")) {
-               SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-               String inTimeStamp = updateFieldValuesVector.elementAt(i).toString();
-               java.sql.Timestamp dateEntered = new java.sql.Timestamp(FORMAT.parse(inTimeStamp).getTime());
-               pst.setTimestamp(j, dateEntered);
-            }
-            j++;
-         }
+		try {
+			String query = "update " + this.updateWhat + " set ";
 
-         pst.executeUpdate();
-         pst.close();
-         pst = null;
-      } catch (SQLException e) {
-         e.printStackTrace();
-         Errors.addError("GenericTable:updateRecord:SQLException:"
-               + e.toString());
-      } catch (Exception e) {
-         e.printStackTrace();
-         Errors.addError("GenericTable:updateRecord:Exception:" + e.toString());
-      }
-   }
+			for (int i = 0; i < updateFieldNamesVector.size(); i++) {
+				query += updateFieldNamesVector.elementAt(i) + " = ?, ";
+			}
+			query = query.substring(0, (query.length() - 2));
+			query += this.sCustomWhere;
 
-   public void insertRecord() throws SQLException, Exception {
+			pst = conn.prepareStatement(query);
+			// System.out.println(query);
+			int j = 1;
+			for (int i = 0; i < updateFieldNamesVector.size(); i++) {
+				String theType = updateFieldTypesVector.elementAt(i).toString();
+				if (theType.equalsIgnoreCase("string")) {
+					try {
+						pst.setString(j, updateFieldValuesVector.elementAt(i)
+								.toString());
+					} catch (Exception e) {
+						pst.setString(j, "");
+					}
+				} else if (theType.equalsIgnoreCase("int")) {
+					try {
+						pst.setInt(j, Integer.parseInt(updateFieldValuesVector
+								.elementAt(i).toString()));
+					} catch (Exception e) {
+						pst.setInt(j, 0);
+					}
+				} else if (theType.equalsIgnoreCase("float")) {
+					float f = 0.00f;
+					try {
+						f = Float.valueOf(
+								updateFieldValuesVector.elementAt(i).toString()
+										.trim()).floatValue();
+					} catch (NumberFormatException e) {
+						f = 0.00f;
+					}
+					pst.setFloat(j, f);
+				} else if (theType.equalsIgnoreCase("date")) {
+					String inDate = updateFieldValuesVector.elementAt(i)
+							.toString();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date dt = sdf.parse(inDate);
+					pst.setDate(j, new java.sql.Date(dt.getTime()));
+				} else if (theType.equalsIgnoreCase("timestamp")) {
+					SimpleDateFormat FORMAT = new SimpleDateFormat(
+							"yyyy-MM-dd hh:mm:ss");
+					String inTimeStamp = updateFieldValuesVector.elementAt(i)
+							.toString();
+					java.sql.Timestamp dateEntered = new java.sql.Timestamp(
+							FORMAT.parse(inTimeStamp).getTime());
+					pst.setTimestamp(j, dateEntered);
+				}
+				j++;
+			}
 
-      try {
-         String query = "insert into " + this.sTable + " ( ";
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Errors.addError("GenericTable:updateRecord:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Errors.addError("GenericTable:updateRecord:Exception:"
+					+ e.toString());
+		}
+	}
 
-         for (int i = 0; i < updateFieldNamesVector.size(); i++) {
-            query += updateFieldNamesVector.elementAt(i) + ", ";
-         }
+	public void insertRecord() throws SQLException, Exception {
 
-         query = query.substring(0, (query.length() - 2));
-         query += ") values (";
+		try {
+			String query = "insert into " + this.sTable + " ( ";
 
-         for (int i = 0; i < updateFieldNamesVector.size(); i++) {
-            query += "?,";
-         }
-         query = query.substring(0, (query.length() - 1));
-         query += ")";
-         //System.out.println("query for insert: " + query);
-         pst = conn.prepareStatement(query);
-         int j = 1;
-         for (int i = 0; i < updateFieldNamesVector.size(); i++) {
-            String theType = updateFieldTypesVector.elementAt(i).toString();
-            //System.out.println("trying type of " + updateFieldTypesVector.elementAt(i));
-            //System.out.println("with name of " + updateFieldNamesVector.elementAt(i));
-            //System.out.println("and value of " + updateFieldValuesVector.elementAt(i));
-            if (theType.equalsIgnoreCase("string")) {
-               pst
-                     .setString(j, updateFieldValuesVector.elementAt(i)
-                           .toString());
-            } else if (theType.equalsIgnoreCase("int")) {
-               pst.setInt(j, Integer.parseInt(updateFieldValuesVector
-                     .elementAt(i).toString()));
-            } else if (theType.equalsIgnoreCase("float")) {
-               float f = 0.00f;
-               try {
-                  f = Float.valueOf(
-                        updateFieldValuesVector.elementAt(i).toString().trim())
-                        .floatValue();
-               } catch (NumberFormatException e) {
-                  f = 0.00f;
-               }
-               pst.setFloat(j, f);
-            } else if (theType.equalsIgnoreCase("date")) {
-               String inDate = updateFieldValuesVector.elementAt(i).toString();
-               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-               Date dt = sdf.parse(inDate);
-               pst.setDate(j, new java.sql.Date(dt.getTime()));
-            } else if (theType.equalsIgnoreCase("timestamp")) {
-               SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-               String inTimeStamp = updateFieldValuesVector.elementAt(i).toString();
-               java.sql.Timestamp dateEntered = new java.sql.Timestamp(FORMAT.parse(inTimeStamp).getTime());
-               pst.setTimestamp(j, dateEntered);
-            }
-            j++;
-         }
-         pst.executeUpdate();
-         pst.close();
-         pst = null;
-      } catch (SQLException e) {
-         e.printStackTrace();
-         Errors.addError("GenericTable:insertRecord:SQLException:"
-               + e.toString());
-      } catch (Exception e) {
-         e.printStackTrace();
-         Errors.addError("GenericTable:insertRecord:Exception:" + e.toString());
-      }
-   }
+			for (int i = 0; i < updateFieldNamesVector.size(); i++) {
+				query += updateFieldNamesVector.elementAt(i) + ", ";
+			}
 
-   public void clearUpdateVectors() {
-      this.updateFieldNamesVector.clear();
-      this.updateFieldTypesVector.clear();
-      this.updateFieldValuesVector.clear();
-   }
+			query = query.substring(0, (query.length() - 2));
+			query += ") values (";
 
-   public void setPrimaryKey(String theKey) {
-      this.setIPrimaryKey(Integer.parseInt(theKey));
-   }
+			for (int i = 0; i < updateFieldNamesVector.size(); i++) {
+				query += "?,";
+			}
+			query = query.substring(0, (query.length() - 1));
+			query += ")";
+			// System.out.println("query for insert: " + query);
+			pst = conn.prepareStatement(query);
+			int j = 1;
+			for (int i = 0; i < updateFieldNamesVector.size(); i++) {
+				String theType = updateFieldTypesVector.elementAt(i).toString();
+				// System.out.println("trying type of " +
+				// updateFieldTypesVector.elementAt(i));
+				// System.out.println("with name of " +
+				// updateFieldNamesVector.elementAt(i));
+				// System.out.println("and value of " +
+				// updateFieldValuesVector.elementAt(i));
+				if (theType.equalsIgnoreCase("string")) {
+					pst.setString(j, updateFieldValuesVector.elementAt(i)
+							.toString());
+				} else if (theType.equalsIgnoreCase("int")) {
+					pst.setInt(
+							j,
+							Integer.parseInt(updateFieldValuesVector.elementAt(
+									i).toString()));
+				} else if (theType.equalsIgnoreCase("float")) {
+					float f = 0.00f;
+					try {
+						f = Float.valueOf(
+								updateFieldValuesVector.elementAt(i).toString()
+										.trim()).floatValue();
+					} catch (NumberFormatException e) {
+						f = 0.00f;
+					}
+					pst.setFloat(j, f);
+				} else if (theType.equalsIgnoreCase("date")) {
+					String inDate = updateFieldValuesVector.elementAt(i)
+							.toString();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date dt = sdf.parse(inDate);
+					pst.setDate(j, new java.sql.Date(dt.getTime()));
+				} else if (theType.equalsIgnoreCase("timestamp")) {
+					SimpleDateFormat FORMAT = new SimpleDateFormat(
+							"yyyy-MM-dd hh:mm:ss");
+					String inTimeStamp = updateFieldValuesVector.elementAt(i)
+							.toString();
+					java.sql.Timestamp dateEntered = new java.sql.Timestamp(
+							FORMAT.parse(inTimeStamp).getTime());
+					pst.setTimestamp(j, dateEntered);
+				}
+				j++;
+			}
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Errors.addError("GenericTable:insertRecord:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Errors.addError("GenericTable:insertRecord:Exception:"
+					+ e.toString());
+		}
+	}
 
-   public String getSCustomWhere() {
-      return sCustomWhere;
-   }
+	public void clearUpdateVectors() {
+		this.updateFieldNamesVector.clear();
+		this.updateFieldTypesVector.clear();
+		this.updateFieldValuesVector.clear();
+	}
 
-   public void setSCustomWhere(String customWhere) {
-      sCustomWhere = " where true " + customWhere;
-   }
+	public void setPrimaryKey(String theKey) {
+		this.setIPrimaryKey(Integer.parseInt(theKey));
+	}
 
-   public int getIPrimaryKey() {
-      return iPrimaryKey;
-   }
+	public String getSCustomWhere() {
+		return sCustomWhere;
+	}
 
-   public void setIPrimaryKey(int primaryKey) {
-      iPrimaryKey = primaryKey;
-   }
+	public void setSCustomWhere(String customWhere) {
+		sCustomWhere = " where true " + customWhere;
+	}
 
-   public String getSPrimaryKey() {
-      return sPrimaryKey;
-   }
+	public int getIPrimaryKey() {
+		return iPrimaryKey;
+	}
 
-   public void setSPrimaryKey(String primaryKey) {
-      sPrimaryKey = primaryKey;
-   }
+	public void setIPrimaryKey(int primaryKey) {
+		iPrimaryKey = primaryKey;
+	}
 
-   public String getSTable() {
-      return sTable;
-   }
+	public String getSPrimaryKey() {
+		return sPrimaryKey;
+	}
 
-   public void setSTable(String table) {
-      sTable = table;
-   }
+	public void setSPrimaryKey(String primaryKey) {
+		sPrimaryKey = primaryKey;
+	}
 
-   public String getSCustomFrom() {
-      return sCustomFrom;
-   }
+	public String getSTable() {
+		return sTable;
+	}
 
-   public void setSCustomFrom(String customFrom) {
-      sCustomFrom = customFrom;
-   }
+	public void setSTable(String table) {
+		sTable = table;
+	}
 
-   public String getSCustomOrder() {
-      return sCustomOrder;
-   }
+	public String getSCustomFrom() {
+		return sCustomFrom;
+	}
 
-   public void setSCustomOrder(String customOrder) {
-      sCustomOrder = customOrder;
-   }
+	public void setSCustomFrom(String customFrom) {
+		sCustomFrom = customFrom;
+	}
 
-   public String getSSelectWhat() {
-      return sSelectWhat;
-   }
+	public String getSCustomOrder() {
+		return sCustomOrder;
+	}
 
-   public void setSSelectWhat(String selectWhat) {
-      sSelectWhat = selectWhat;
-   }
+	public void setSCustomOrder(String customOrder) {
+		sCustomOrder = customOrder;
+	}
 
-   public void addUpdateFieldNameValuePair(
-         String sField,
-         String sValue,
-         String sType) {
-      this.updateFieldNamesVector.add(sField);
-      this.updateFieldValuesVector.add(sValue);
-      this.updateFieldTypesVector.add(sType);
-   }
-   
-   public void addSet(
-	         String sField,
-	         String sValue,
-	         String sType) {
-	      this.addUpdateFieldNameValuePair(sField, sValue, sType);
-   }
+	public String getSSelectWhat() {
+		return sSelectWhat;
+	}
 
-   public String getUpdateWhat() {
-      return updateWhat;
-   }
+	public void setSSelectWhat(String selectWhat) {
+		sSelectWhat = selectWhat;
+	}
 
-   public void setUpdateWhat(String updateWhat) {
-      this.updateWhat = updateWhat;
-   }
+	public void addUpdateFieldNameValuePair(String sField, String sValue,
+			String sType) {
+		this.updateFieldNamesVector.add(sField);
+		this.updateFieldValuesVector.add(sValue);
+		this.updateFieldTypesVector.add(sType);
+	}
 
-   public String getInsertWhat() {
-      return insertWhat;
-   }
+	public void addSet(String sField, String sValue, String sType) {
+		this.addUpdateFieldNameValuePair(sField, sValue, sType);
+	}
 
-   public void setInsertWhat(String insertWhat) {
-      this.insertWhat = insertWhat;
-   }
+	public String getUpdateWhat() {
+		return updateWhat;
+	}
 
-   public String getSSequence() {
-      return sSequence;
-   }
+	public void setUpdateWhat(String updateWhat) {
+		this.updateWhat = updateWhat;
+	}
 
-   public void setSSequence(String sequence) {
-      sSequence = sequence;
-   }
+	public String getInsertWhat() {
+		return insertWhat;
+	}
 
-   public String getSCustomLimit() {
-      return sCustomLimit;
-   }
+	public void setInsertWhat(String insertWhat) {
+		this.insertWhat = insertWhat;
+	}
 
-   public void setSCustomLimit(String customLimit) {
-      sCustomLimit = customLimit;
-   }
+	public String getSSequence() {
+		return sSequence;
+	}
+
+	public void setSSequence(String sequence) {
+		sSequence = sequence;
+	}
+
+	public String getSCustomLimit() {
+		return sCustomLimit;
+	}
+
+	public void setSCustomLimit(String customLimit) {
+		sCustomLimit = customLimit;
+	}
 }

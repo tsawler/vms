@@ -1,23 +1,3 @@
-// ------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: CustomerAddressDetail.java,v $
-//Revision 1.4  2004/06/24 17:58:07  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.3  2004/06/10 17:32:52  tcs
-//Moved fixsqlfield value down here
-//
-//Revision 1.2  2004/06/01 00:15:26  tcs
-//Added delete method
-//
-//Revision 1.1 2004/05/23 04:52:45 tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -38,7 +18,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class CustomerAddressDetail {
 
@@ -55,7 +35,7 @@ public class CustomerAddressDetail {
 	private Connection conn;
 	private Statement st = null;
 	private PreparedStatement pst = null;
-	
+
 	DBUtils myDbUtils = new DBUtils();
 
 	public CustomerAddressDetail() {
@@ -102,18 +82,16 @@ public class CustomerAddressDetail {
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:updateCustomerAddressByCtAddressId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:updateCustomerAddressByCtAddressId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerAddressDetail:updateCustomerAddressByCtAddressId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:updateCustomerAddressByCtAddressId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -152,26 +130,23 @@ public class CustomerAddressDetail {
 					+ customer_id
 					+ "' "
 					+ "AND ct_address_type_id = '"
-					+ ct_address_type_id
-					+ "'";
+					+ ct_address_type_id + "'";
 
 			pst = conn.prepareStatement(Update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:updateCustomerAddressByCustomerIdAndCtAddressTypeId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:updateCustomerAddressByCustomerIdAndCtAddressTypeId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerAddressDetail:updateCustomerAddressByCustomerIdAndCtAddressTypeId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:updateCustomerAddressByCustomerIdAndCtAddressTypeId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -184,15 +159,10 @@ public class CustomerAddressDetail {
 	public void addCustomerAddressDetail() throws SQLException, Exception {
 		try {
 			String save = "insert into customer_address_detail ("
-					+ "ct_address_type_id, "
-					+ "customer_address, "
-					+ "customer_town_city, "
-					+ "ct_province_state_id, "
-					+ "ct_country_id, "
-					+ "customer_zip_postal, "
-					+ "primary_address_yn, "
-					+ "customer_id) "
-					+ "values ("
+					+ "ct_address_type_id, " + "customer_address, "
+					+ "customer_town_city, " + "ct_province_state_id, "
+					+ "ct_country_id, " + "customer_zip_postal, "
+					+ "primary_address_yn, " + "customer_id) " + "values ("
 					+ "'"
 					+ ct_address_type_id
 					+ "', "
@@ -212,29 +182,23 @@ public class CustomerAddressDetail {
 					+ customer_zip_postal
 					+ "', "
 					+ "'"
-					+ primary_address_yn
-					+ "', "
-					+ "'"
-					+ customer_id
-					+ "')";
+					+ primary_address_yn + "', " + "'" + customer_id + "')";
 
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:addCustomerAddressDetail:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:addCustomerAddressDetail:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerAddressDetail:addCustomerAddressDetail:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:addCustomerAddressDetail:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -250,17 +214,10 @@ public class CustomerAddressDetail {
 			Exception {
 		String theCity = "";
 		try {
-			String query = "select "
-					+ "cad.customer_town_city "
-					+ "from "
-					+ "customer as c, "
-					+ "customer_address_detail as cad "
-					+ "where "
-					+ "c.customer_id = '"
-					+ inCustomerId
-					+ "' "
-					+ "and "
-					+ "c.customer_id = cad.customer_id "
+			String query = "select " + "cad.customer_town_city " + "from "
+					+ "customer as c, " + "customer_address_detail as cad "
+					+ "where " + "c.customer_id = '" + inCustomerId + "' "
+					+ "and " + "c.customer_id = cad.customer_id "
 					+ "and cad.primary_address_yn = 'y'";
 
 			st = conn.createStatement();
@@ -274,21 +231,20 @@ public class CustomerAddressDetail {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:getCustomerCity:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:getCustomerCity:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
 			Errors.addError("CustomerAddressDetail:getCustomerCity:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theCity;
 	}
@@ -332,22 +288,20 @@ public class CustomerAddressDetail {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:getCustomerProvince:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:getCustomerProvince:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerAddressDetail:getCustomerProvince:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:getCustomerProvince:Exception:"
+					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return theProvince;
 	}
@@ -361,26 +315,23 @@ public class CustomerAddressDetail {
 	public void deleteAddressByCustomerId() throws SQLException, Exception {
 		try {
 			String Update = "delete from customer_address_detail where customer_id = '"
-					+ customer_id
-					+ "'";
+					+ customer_id + "'";
 
 			pst = conn.prepareStatement(Update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("CustomerAddressDetail:deleteAddressByCustomerId:SQLException:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:deleteAddressByCustomerId:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("CustomerAddressDetail:deleteAddressByCustomerId:Exception:"
-							+ e.toString());
+			Errors.addError("CustomerAddressDetail:deleteAddressByCustomerId:Exception:"
+					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -501,7 +452,8 @@ public class CustomerAddressDetail {
 	 *            The customer_town_city to set.
 	 */
 	public void setCustomer_town_city(String customer_town_city) {
-		this.customer_town_city = myDbUtils.fixSqlFieldValue(customer_town_city);
+		this.customer_town_city = myDbUtils
+				.fixSqlFieldValue(customer_town_city);
 	}
 
 	/**

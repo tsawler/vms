@@ -1,14 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2004-2007 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2007-02-08
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: LinksCategories.java,v $
-//Revision 1.1.2.1  2007/03/14 00:19:42  tcs
-//*** empty log message ***
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -25,127 +14,129 @@ import com.verilion.object.Errors;
  */
 public class LinksCategories implements DatabaseInterface {
 
-   private Connection conn = null;
-   DBUtils myDbUtil = new DBUtils();
-   private PreparedStatement pst = null;
-   private String sCustomWhere = "";
-   private int links_cat_id = 0;
-   private String title = "";
-   private String active_yn = "n";
+	private Connection conn = null;
+	DBUtils myDbUtil = new DBUtils();
+	private PreparedStatement pst = null;
+	private String sCustomWhere = "";
+	private int links_cat_id = 0;
+	private String title = "";
+	private String active_yn = "n";
 
+	public void changeLinkStatus() throws SQLException, Exception {
 
-   
-   public void changeLinkStatus() throws SQLException, Exception {
+		try {
+			StringBuffer saveBuf = new StringBuffer("");
 
-      try {
-         StringBuffer saveBuf = new StringBuffer("");
+			saveBuf = new StringBuffer("update links_categories ");
+			saveBuf.append("set active_yn = ? where links_cat_id = ?");
 
-            saveBuf = new StringBuffer("update links_categories ");
-            saveBuf
-                  .append("set active_yn = ? where links_cat_id = ?");
+			pst = conn.prepareStatement(saveBuf.toString());
+			pst.setString(1, active_yn);
+			pst.setInt(2, links_cat_id);
 
-            pst = conn.prepareStatement(saveBuf.toString());
-            pst.setString(1, active_yn);
-            pst.setInt(2, links_cat_id);
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
 
-            pst.executeUpdate();
-            pst.close();
-            pst = null;
+		} catch (SQLException e) {
+			Errors.addError("LinksCategories:changeLinkStatus:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("LinksCategories:changeLinkStatus:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
-      } catch (SQLException e) {
-         Errors.addError("LinksCategories:changeLinkStatus:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("LinksCategories:changeLinkStatus:Exception:" + e.toString());
-      } finally {
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
-   }
-   
-   public void deleteLink() throws SQLException, Exception {
+	public void deleteLink() throws SQLException, Exception {
 
-      try {
-         StringBuffer saveBuf = new StringBuffer("");
+		try {
+			StringBuffer saveBuf = new StringBuffer("");
 
-            saveBuf = new StringBuffer("delete from links_categories where links_cat_id = ?");
+			saveBuf = new StringBuffer(
+					"delete from links_categories where links_cat_id = ?");
 
-            pst = conn.prepareStatement(saveBuf.toString());
-            pst.setInt(1, links_cat_id);
+			pst = conn.prepareStatement(saveBuf.toString());
+			pst.setInt(1, links_cat_id);
 
-            pst.executeUpdate();
-            pst.close();
-            pst = null;
+			pst.executeUpdate();
+			pst.close();
+			pst = null;
 
-      } catch (SQLException e) {
-         Errors.addError("LinksCategories:deleteLink:SQLException:" + e.toString());
-      } catch (Exception e) {
-         Errors.addError("LinksCategories:deleteLink:Exception:" + e.toString());
-      } finally {
-         if (pst != null) {
-            pst.close();
-            pst = null;
-         }
-      }
-   }
+		} catch (SQLException e) {
+			Errors.addError("LinksCategories:deleteLink:SQLException:"
+					+ e.toString());
+		} catch (Exception e) {
+			Errors.addError("LinksCategories:deleteLink:Exception:"
+					+ e.toString());
+		} finally {
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
+		}
+	}
 
-   public void setConn(Connection conn) {
-      this.conn = conn;
-   }
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
 
-   public Connection getConn() {
-      return conn;
-   }
+	public Connection getConn() {
+		return conn;
+	}
 
-   public String getSCustomWhere() {
-      return sCustomWhere;
-   }
+	public String getSCustomWhere() {
+		return sCustomWhere;
+	}
 
-   public void setSCustomWhere(String customWhere) {
-      sCustomWhere = customWhere;
-   }
-   
-   public void createCustomWhere(String customWhere) {
-      this.setSCustomWhere(customWhere);
-   }
+	public void setSCustomWhere(String customWhere) {
+		sCustomWhere = customWhere;
+	}
 
+	public void createCustomWhere(String customWhere) {
+		this.setSCustomWhere(customWhere);
+	}
 
-   public int getFaq_categories_id() {
-      return links_cat_id;
-   }
+	public int getFaq_categories_id() {
+		return links_cat_id;
+	}
 
-   public void setLinks_cat_id(int faq_categories_id) {
-      this.links_cat_id = faq_categories_id;
-   }
+	public void setLinks_cat_id(int faq_categories_id) {
+		this.links_cat_id = faq_categories_id;
+	}
 
-   public String getTitle() {
-      return title;
-   }
+	public String getTitle() {
+		return title;
+	}
 
-   public void setTitle(String sName) {
-      this.title = sName;
-   }
+	public void setTitle(String sName) {
+		this.title = sName;
+	}
 
-   public String getActive_yn() {
-      return active_yn;
-   }
+	public String getActive_yn() {
+		return active_yn;
+	}
 
-   public void setActive_yn(String active_yn) {
-      this.active_yn = active_yn;
-   }
+	public void setActive_yn(String active_yn) {
+		this.active_yn = active_yn;
+	}
 
-   public void changeActiveStatus(String psStatus) throws SQLException, Exception {
-      this.setActive_yn(psStatus);
-      this.changeLinkStatus();
-   }
+	public void changeActiveStatus(String psStatus) throws SQLException,
+			Exception {
+		this.setActive_yn(psStatus);
+		this.changeLinkStatus();
+	}
 
-   public void deleteRecord() throws SQLException, Exception {
-      this.deleteLink();
-   }
+	public void deleteRecord() throws SQLException, Exception {
+		this.deleteLink();
+	}
 
-   public void setPrimaryKey(String theKey) {
-      this.setLinks_cat_id(Integer.parseInt(theKey));
-   }
+	public void setPrimaryKey(String theKey) {
+		this.setLinks_cat_id(Integer.parseInt(theKey));
+	}
 
 }

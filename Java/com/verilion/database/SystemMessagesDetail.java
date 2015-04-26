@@ -1,23 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2003-09-17
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: SystemMessagesDetail.java,v $
-//Revision 1.4  2004/10/26 15:35:25  tcs
-//Improved javadocs
-//
-//Revision 1.3  2004/06/25 18:56:29  tcs
-//Implemented use of disconnected rowsets
-//
-//Revision 1.2  2004/06/24 17:58:07  tcs
-//Mods for listeners and connection pooling improvements
-//
-//Revision 1.1  2004/05/23 04:52:46  tcs
-//Initial entry into CVS
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -39,7 +19,7 @@ import com.verilion.object.Errors;
  * <P>
  * 
  * @author tsawler
- *  
+ * 
  */
 public class SystemMessagesDetail {
 
@@ -64,46 +44,33 @@ public class SystemMessagesDetail {
 	 * 
 	 * @throws Exception
 	 */
-	public void updateSystemMessagesDetail()
-		throws SQLException, Exception {
+	public void updateSystemMessagesDetail() throws SQLException, Exception {
 		try {
-			String update =
-				"UPDATE system_messages_detail SET "
-					+ "system_message_id = '"
-					+ system_message_id
-					+ "', "
+			String update = "UPDATE system_messages_detail SET "
+					+ "system_message_id = '" + system_message_id + "', "
 					+ "system_messages_detail_display_name = '"
-					+ system_messages_detail_display_name
-					+ "', "
+					+ system_messages_detail_display_name + "', "
 					+ "system_messages_detail_message = '"
-					+ system_messages_detail_message
-					+ ", "
-					+ "ct_language_id = '"
-					+ ct_language_id
-					+ "' "
+					+ system_messages_detail_message + ", "
+					+ "ct_language_id = '" + ct_language_id + "' "
 					+ "WHERE system_messages_detail_id = '"
-					+ system_messages_detail_id
-					+ "'";
+					+ system_messages_detail_id + "'";
 
 			pst = conn.prepareStatement(update);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"SystemMessagesDetail:updateSystemMessagesDetail:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("SystemMessagesDetail:updateSystemMessagesDetail:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"SystemMessagesDetail.updateSystemMessagesDetail:updateAccessLevel:Exception:"
+		} catch (Exception e) {
+			Errors.addError("SystemMessagesDetail.updateSystemMessagesDetail:updateAccessLevel:Exception:"
 					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -112,47 +79,32 @@ public class SystemMessagesDetail {
 	 * 
 	 * @throws Exception
 	 */
-	public void addSystemMessagesDetail()
-		throws SQLException, Exception {
+	public void addSystemMessagesDetail() throws SQLException, Exception {
 		try {
-			String save =
-				"INSERT INTO system_messages_detail ("
+			String save = "INSERT INTO system_messages_detail ("
 					+ "system_message_id, "
 					+ "system_messages_detail_display_name, "
-					+ "system_messages_detail_message, "
-					+ "ct_language_id) "
-					+ "VALUES("
-					+ "'"
-					+ system_message_id
-					+ "', "
-					+ system_messages_detail_display_name
-					+ "', "
-					+ "'"
-					+ system_messages_detail_message
-					+ "', "
-					+ "'"
-					+ ct_language_id
-					+ "')";
+					+ "system_messages_detail_message, " + "ct_language_id) "
+					+ "VALUES(" + "'" + system_message_id + "', "
+					+ system_messages_detail_display_name + "', " + "'"
+					+ system_messages_detail_message + "', " + "'"
+					+ ct_language_id + "')";
 
 			pst = conn.prepareStatement(save);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"SystemMessagesDetail:addSystemMessagesDetail:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("SystemMessagesDetail:addSystemMessagesDetail:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"SystemMessagesDetail:addSystemMessagesDetail:Exception:"
+		} catch (Exception e) {
+			Errors.addError("SystemMessagesDetail:addSystemMessagesDetail:Exception:"
 					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
 
@@ -161,34 +113,27 @@ public class SystemMessagesDetail {
 	 * 
 	 * @throws Exception
 	 */
-	public void deleteSystemMessagesDetailById()
-		throws SQLException, Exception {
+	public void deleteSystemMessagesDetailById() throws SQLException, Exception {
 		try {
-			String deleteRecord =
-				"delete from system_messages_detail where system_message_detail_id = "
+			String deleteRecord = "delete from system_messages_detail where system_message_detail_id = "
 					+ system_messages_detail_id;
 			pst = conn.prepareStatement(deleteRecord);
 			pst.executeUpdate();
 			pst.close();
 			pst = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"SystemMessagesDetail:deleteSystemMessagesDetailById:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("SystemMessagesDetail:deleteSystemMessagesDetailById:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"SystemMessagesDetail:deleteSystemMessagesDetailById:Exception:"
+		} catch (Exception e) {
+			Errors.addError("SystemMessagesDetail:deleteSystemMessagesDetailById:Exception:"
 					+ e.toString());
 		} finally {
-		    if (pst != null) {
-		        pst.close();
-		        pst = null;
-		    }
+			if (pst != null) {
+				pst.close();
+				pst = null;
+			}
 		}
 	}
-
 
 	/**
 	 * Returns record for supplied id.
@@ -198,13 +143,11 @@ public class SystemMessagesDetail {
 	 * @throws Exception
 	 */
 	public XDisconnectedRowSet getSystemMessagesDetailById()
-		throws SQLException, Exception {
+			throws SQLException, Exception {
 
 		try {
-			String query =
-				"select * from system_messages_detail where system_messages_detail_id = '"
-					+ system_messages_detail_id
-					+ "'";
+			String query = "select * from system_messages_detail where system_messages_detail_id = '"
+					+ system_messages_detail_id + "'";
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			crs.populate(rs);
@@ -212,25 +155,21 @@ public class SystemMessagesDetail {
 			rs = null;
 			st.close();
 			st = null;
-		}
-		catch (SQLException e) {
-			Errors.addError(
-				"SystemMessagesDetail:getSystemMessagesDetailById:SQLException:"
+		} catch (SQLException e) {
+			Errors.addError("SystemMessagesDetail:getSystemMessagesDetailById:SQLException:"
 					+ e.toString());
-		}
-		catch (Exception e) {
-			Errors.addError(
-				"SystemMessagesDetail:getSystemMessagesDetailById:Exception:"
+		} catch (Exception e) {
+			Errors.addError("SystemMessagesDetail:getSystemMessagesDetailById:Exception:"
 					+ e.toString());
 		} finally {
-		    if (rs != null) {
-		        rs.close();
-		        rs = null;
-		    }
-		    if (st != null) {
-		        st.close();
-		        st = null;
-		    }
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (st != null) {
+				st.close();
+				st = null;
+			}
 		}
 		return crs;
 	}
@@ -241,69 +180,86 @@ public class SystemMessagesDetail {
 	public Connection getConn() {
 		return conn;
 	}
+
 	/**
-	 * @param conn The conn to set.
+	 * @param conn
+	 *            The conn to set.
 	 */
 	public void setConn(Connection conn) {
 		this.conn = conn;
 	}
+
 	/**
 	 * @return Returns the ct_language_id.
 	 */
 	public int getCt_language_id() {
 		return ct_language_id;
 	}
+
 	/**
-	 * @param ct_language_id The ct_language_id to set.
+	 * @param ct_language_id
+	 *            The ct_language_id to set.
 	 */
 	public void setCt_language_id(int ct_language_id) {
 		this.ct_language_id = ct_language_id;
 	}
+
 	/**
 	 * @return Returns the system_message_id.
 	 */
 	public int getSystem_message_id() {
 		return system_message_id;
 	}
+
 	/**
-	 * @param system_message_id The system_message_id to set.
+	 * @param system_message_id
+	 *            The system_message_id to set.
 	 */
 	public void setSystem_message_id(int system_message_id) {
 		this.system_message_id = system_message_id;
 	}
+
 	/**
 	 * @return Returns the system_messages_detail_display_name.
 	 */
 	public String getSystem_messages_detail_display_name() {
 		return system_messages_detail_display_name;
 	}
+
 	/**
-	 * @param system_messages_detail_display_name The system_messages_detail_display_name to set.
+	 * @param system_messages_detail_display_name
+	 *            The system_messages_detail_display_name to set.
 	 */
 	public void setSystem_messages_detail_display_name(
 			String system_messages_detail_display_name) {
 		this.system_messages_detail_display_name = system_messages_detail_display_name;
 	}
+
 	/**
 	 * @return Returns the system_messages_detail_id.
 	 */
 	public int getSystem_messages_detail_id() {
 		return system_messages_detail_id;
 	}
+
 	/**
-	 * @param system_messages_detail_id The system_messages_detail_id to set.
+	 * @param system_messages_detail_id
+	 *            The system_messages_detail_id to set.
 	 */
 	public void setSystem_messages_detail_id(int system_messages_detail_id) {
 		this.system_messages_detail_id = system_messages_detail_id;
 	}
+
 	/**
 	 * @return Returns the system_messages_detail_message.
 	 */
 	public String getSystem_messages_detail_message() {
 		return system_messages_detail_message;
 	}
+
 	/**
-	 * @param system_messages_detail_message The system_messages_detail_message to set.
+	 * @param system_messages_detail_message
+	 *            The system_messages_detail_message to set.
 	 */
 	public void setSystem_messages_detail_message(
 			String system_messages_detail_message) {

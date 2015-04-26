@@ -1,14 +1,3 @@
-//------------------------------------------------------------------------------
-//Copyright (c) 2003-2006 Verilion Inc.
-//------------------------------------------------------------------------------
-//Created on 2006-10-05
-//Revisions
-//------------------------------------------------------------------------------
-//$Log: Promotions.java,v $
-//Revision 1.1.2.1  2006/10/05 15:53:02  tcs
-//Initial entry
-//
-//------------------------------------------------------------------------------
 package com.verilion.database;
 
 import java.sql.Connection;
@@ -61,13 +50,11 @@ public class Promotions {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Promotions:getAllPromotions:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Promotions:getAllPromotions:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.Promotions.CtMonth:getAllPromotions:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.Promotions.CtMonth:getAllPromotions:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -103,13 +90,11 @@ public class Promotions {
 			st.close();
 			st = null;
 		} catch (SQLException e) {
-			Errors
-					.addError("com.verilion.database.Promotions:getPromotionNameById:SQLException:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Promotions:getPromotionNameById:SQLException:"
+					+ e.toString());
 		} catch (Exception e) {
-			Errors
-					.addError("com.verilion.database.Promotions:getPromotionNameById:Exception:"
-							+ e.toString());
+			Errors.addError("com.verilion.database.Promotions:getPromotionNameById:Exception:"
+					+ e.toString());
 		} finally {
 			if (rs != null) {
 				rs.close();
@@ -139,8 +124,7 @@ public class Promotions {
 			st.close();
 			st = null;
 		} catch (Exception e) {
-			Errors
-			.addError("com.verilion.database.Promotions:getDiscountRate:Exception:"
+			Errors.addError("com.verilion.database.Promotions:getDiscountRate:Exception:"
 					+ e.toString());
 		} finally {
 			if (rs != null) {
