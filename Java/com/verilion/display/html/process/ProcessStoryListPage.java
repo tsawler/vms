@@ -315,8 +315,6 @@ public class ProcessStoryListPage extends ProcessPage {
 							+ "\" /><input type=\"hidden\" name=\"edit\" value=\"true\" />"
 							+ "Title: <input type=\"text\" size=\"30\" class=\"inputbox required\" name=\"subject\" value=\"\" />"
 							+ "<br />Comment:<br /><textarea class=\"required\" name=\"comment\" style=\"width: 80%; height: 250px;\"></textarea>"
-							+ "<br />Spam filter:<br /><img src=\"/Captcha.jpg\"><br />"
-							+ "Enter the letters you see above: <input class=\"required\" type=\"text\" name=\"j_captcha_response\" />"
 							+ "<br /><input type=\"submit\" value=\"Add Comment\" /></form></td></tr></table>";
 
 					if (request.getAttribute("reject") != null) {
@@ -361,36 +359,12 @@ public class ProcessStoryListPage extends ProcessPage {
 		String subject = "";
 		String comment = "";
 
-		if (request.getParameter("j_captcha_response") != null) {
+		if (1 == 1) {
 			try {
 				String correctAnswer = "";
-				Boolean isResponseCorrect = Boolean.FALSE;
+				Boolean isResponseCorrect = Boolean.TRUE;
 
-				// retrieve the response
-				String captcha_response = request
-						.getParameter("j_captcha_response");
-
-				// Call the Service method
-				try {
-					correctAnswer = (String) session
-							.getAttribute(com.verilion.object.captcha.servlet.Constants.SIMPLE_CAPCHA_SESSION_KEY);
-					if (correctAnswer.equalsIgnoreCase(captcha_response)) {
-						isResponseCorrect = true;
-					} else {
-						isResponseCorrect = false;
-						myErrorText = "Incorrect validation characters. Try again... ";
-					}
-
-				} catch (Exception e) {
-					System.out
-							.println("correct answer was "
-									+ correctAnswer
-									+ " and they entered "
-									+ (String) session
-											.getAttribute(com.verilion.object.captcha.servlet.Constants.SIMPLE_CAPCHA_SESSION_KEY));
-					isResponseCorrect = false;
-					myErrorText = "Incorrect spam code entered. Try again... ";
-				}
+				
 
 				try {
 					if (request.getParameter("subject").length() < 1) {

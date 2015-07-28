@@ -65,269 +65,179 @@ import com.verilion.utility.TextUtils;
  */
 public class ProcessPostStory extends ProcessPage {
 
-   @Override
-   public HTMLTemplateDb BuildPage(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session,
-         Connection conn,
-         HTMLTemplateDb MasterTemplate,
-         HashMap hm) throws Exception {
+	@Override
+	public HTMLTemplateDb BuildPage(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			Connection conn, HTMLTemplateDb MasterTemplate, HashMap hm) throws Exception {
 
-      String theMenu = "";
+		String theMenu = "";
 
-      try {
-         int customer_access_level = 0;
-         try {
-            customer_access_level = Integer.parseInt((String) session
-                  .getAttribute("customer_access_level"));
-         } catch (Exception e) {
-            customer_access_level = 0;
-         }
+		try {
+			int customer_access_level = 0;
+			try {
+				customer_access_level = Integer.parseInt((String) session.getAttribute("customer_access_level"));
+			} catch (Exception e) {
+				customer_access_level = 0;
+			}
 
-         if (customer_access_level < 2) {
-            MasterTemplate
-                  .replaceFullValue("You must be a registered member and logged in to post a message.<br />"
-                        + "Not a member yet? <a href=\"/public/jpage/1/p/JoinSite/a/joinpmc/content.do\">Join</a> now!");
-         } else {
-            ResultSet crs = null;
-            Statement cst = null;
-            cst = conn.createStatement();
+			if (customer_access_level < 2) {
+				MasterTemplate.replaceFullValue("You must be a registered member and logged in to post a message.<br />"
+						+ "Not a member yet? <a href=\"/public/jpage/1/p/JoinSite/a/joinpmc/content.do\">Join</a> now!");
+			} else {
+				ResultSet crs = null;
+				Statement cst = null;
+				cst = conn.createStatement();
 
-            crs = cst
-                  .executeQuery("select * from pmc_story_category order by category_text");
+				crs = cst.executeQuery("select * from pmc_story_category order by category_text");
 
-            theMenu = HTMLFormDropDownList.makeDropDownListSnippet(
-                  "story_cat_id",
-                  0,
-                  crs,
-                  "story_category_id",
-                  "category_text",
-                  0,
-                  "Select a topic");
+				theMenu = HTMLFormDropDownList.makeDropDownListSnippet("story_cat_id", 0, crs, "story_category_id",
+						"category_text", 0, "Select a topic");
 
-            crs.close();
-            crs = null;
-            cst.close();
-            cst = null;
-            // put the formatted drop down list box in HTML object
-            MasterTemplate.searchReplace("$DDLB$", theMenu);
-         }
+				crs.close();
+				crs = null;
+				cst.close();
+				cst = null;
+				// put the formatted drop down list box in HTML object
+				MasterTemplate.searchReplace("$DDLB$", theMenu);
+			}
 
-         if (request.getParameter("story_cat_id") != null) {
-            // this is a rejected form
-            MasterTemplate.searchReplace(
-                  "name=\"subject\"",
-                  "name=\"subject\" value=\""
-                        + request.getParameter("subject")
-                        + "\"");
-            MasterTemplate.searchReplace("</textarea>", request
-                  .getParameter("comment")
-                  + "</textarea>");
-         }
+			if (request.getParameter("story_cat_id") != null) {
+				// this is a rejected form
+				MasterTemplate.searchReplace("name=\"subject\"",
+						"name=\"subject\" value=\"" + request.getParameter("subject") + "\"");
+				MasterTemplate.searchReplace("</textarea>", request.getParameter("comment") + "</textarea>");
+			}
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         Errors
-               .addError("com.verilion.display.html.ProcessPage:BuildPage:Exception:"
-                     + e.toString());
-      }
-      return MasterTemplate;
-   }
+		} catch (Exception e) {
+			e.printStackTrace();
+			Errors.addError("com.verilion.display.html.ProcessPage:BuildPage:Exception:" + e.toString());
+		}
+		return MasterTemplate;
+	}
 
-   @SuppressWarnings("unchecked")
-   @Override
-   public HTMLTemplateDb ProcessForm(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session,
-         Connection conn,
-         HTMLTemplateDb MasterTemplate,
-         HashMap hm) throws Exception {
+	@SuppressWarnings("unchecked")
+	@Override
+	public HTMLTemplateDb ProcessForm(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			Connection conn, HTMLTemplateDb MasterTemplate, HashMap hm) throws Exception {
 
-      boolean isValid = true;
+		boolean isValid = true;
 
-      isValid = this.ValidateData(
-            request,
-            response,
-            session,
-            conn,
-            MasterTemplate,
-            hm);
+		isValid = this.ValidateData(request, response, session, conn, MasterTemplate, hm);
 
-      String theStory = "";
-      String theSubject = "";
-      String meta_title = "";
-      String meta_tags = "";
-      int theCategory = 0;
+		String theStory = "";
+		String theSubject = "";
+		String meta_title = "";
+		String meta_tags = "";
+		int theCategory = 0;
 
-      if (isValid) {
+		if (isValid) {
 
-         try {
-            int customer_access_level = 0;
-            try {
-               customer_access_level = Integer.parseInt((String) session
-                     .getAttribute("customer_access_level"));
-            } catch (Exception e) {
-               customer_access_level = 0;
-            }
-            if (customer_access_level > 1) {
+			try {
+				int customer_access_level = 0;
+				try {
+					customer_access_level = Integer.parseInt((String) session.getAttribute("customer_access_level"));
+				} catch (Exception e) {
+					customer_access_level = 0;
+				}
+				if (customer_access_level > 1) {
 
-               Story myStory = new Story();
-               myStory.setConn(conn);
-               Customer myCustomer = new Customer();
-               myCustomer.setConn(conn);
+					Story myStory = new Story();
+					myStory.setConn(conn);
+					Customer myCustomer = new Customer();
+					myCustomer.setConn(conn);
 
-               try {
-                  String tmpString = "";
-                  tmpString = request.getParameter("subject");
-                  theSubject = tmpString.replaceAll("\\<.*?>","");
-               } catch (Exception e) {
-                  theSubject = "untitled";
-               }
+					try {
+						String tmpString = "";
+						tmpString = request.getParameter("subject");
+						theSubject = tmpString.replaceAll("\\<.*?>", "");
+					} catch (Exception e) {
+						theSubject = "untitled";
+					}
 
-               try {
-                  String tmpString = "";
-                  tmpString = request.getParameter("comment");
-                  theStory = tmpString.replaceAll("\\<.*?>","");
-               } catch (Exception e) {
-                  theStory = "";
-               }
-               
-               if (theStory.length() > 150) {
-            	   meta_tags = theStory.substring(0, 150) + "...";
-               } else {
-            	   meta_tags = theStory;
-               }
-               
-               if (theSubject.length() > 50) {
-            	   meta_title = theSubject.substring(0,50) + "...";
-               } else {
-            	   meta_title = theSubject;
-            	   
-               }
-               meta_title += " - Pacemaker Club";
-               
-               theCategory = Integer.parseInt((String) request
-                     .getParameter("story_cat_id"));
+					try {
+						String tmpString = "";
+						tmpString = request.getParameter("comment");
+						theStory = tmpString.replaceAll("\\<.*?>", "");
+					} catch (Exception e) {
+						theStory = "";
+					}
 
-               myStory.setStory_title(theSubject);
-               myStory.setStory_active_yn("y");
-               myStory.setStory_text(TextUtils.NewLinesToBr(theStory));
-               int id = Integer.parseInt((String) session
-                     .getAttribute("customer_id"));
-               String uname = myCustomer.returnUsernameForCustomerId(id);
-               myStory.setStory_author_id(id);
-               myStory.setStory_author(uname);
-               myStory.setStory_topic_id(theCategory);
-               myStory.setMeta_tags(meta_tags.replaceAll("'", "''"));
-               myStory.setBrowser_title(meta_title.replaceAll("'", "''"));
-               myStory.addStory();
+					if (theStory.length() > 150) {
+						meta_tags = theStory.substring(0, 150) + "...";
+					} else {
+						meta_tags = theStory;
+					}
 
-               session.setAttribute("Error", "Your message has been posted.");
-               hm.put("PRESERVEMSG", "TRUE");
-               response
-                     .sendRedirect("/public/jpage/1/p/Home/a/storypage/content.do");
+					if (theSubject.length() > 50) {
+						meta_title = theSubject.substring(0, 50) + "...";
+					} else {
+						meta_title = theSubject;
 
-            }
+					}
+					meta_title += " - Pacemaker Club";
 
-         } catch (Exception e) {
+					theCategory = Integer.parseInt((String) request.getParameter("story_cat_id"));
 
-         }
-      } else {
-         this.BuildPage(request, response, session, conn, MasterTemplate, hm);
-      }
-      return super.ProcessForm(
-            request,
-            response,
-            session,
-            conn,
-            MasterTemplate,
-            hm);
-   }
+					myStory.setStory_title(theSubject);
+					myStory.setStory_active_yn("y");
+					myStory.setStory_text(TextUtils.NewLinesToBr(theStory));
+					int id = Integer.parseInt((String) session.getAttribute("customer_id"));
+					String uname = myCustomer.returnUsernameForCustomerId(id);
+					myStory.setStory_author_id(id);
+					myStory.setStory_author(uname);
+					myStory.setStory_topic_id(theCategory);
+					myStory.setMeta_tags(meta_tags.replaceAll("'", "''"));
+					myStory.setBrowser_title(meta_title.replaceAll("'", "''"));
+					myStory.addStory();
 
-   @Override
-   public HTMLTemplateDb ProcessRejectedForm(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session,
-         Connection conn,
-         HTMLTemplateDb MasterTemplate,
-         HashMap hm) throws Exception {
-      // TODO Auto-generated method stub
-      return super.ProcessRejectedForm(
-            request,
-            response,
-            session,
-            conn,
-            MasterTemplate,
-            hm);
-   }
+					session.setAttribute("Error", "Your message has been posted.");
+					hm.put("PRESERVEMSG", "TRUE");
+					response.sendRedirect("/public/jpage/1/p/Home/a/storypage/content.do");
 
-   @SuppressWarnings("unchecked")
-   public boolean ValidateData(
-         HttpServletRequest request,
-         HttpServletResponse response,
-         HttpSession session,
-         Connection conn,
-         HTMLTemplateDb MasterTemplate,
-         HashMap hm) throws Exception {
+				}
 
-      String subject = "";
-      String story = "";
-      String captcha_response = "";
-      boolean isValid = true;
-      String errormessage = "";
+			} catch (Exception e) {
 
-      try {
-         try {
-            captcha_response = (String) request.getParameter("j_captcha_response");
-            String correctAnswer = (String) session
-                  .getAttribute(com.verilion.object.captcha.servlet.Constants.SIMPLE_CAPCHA_SESSION_KEY);
-            System.out.println("correct in post story: " + correctAnswer);
-            System.out.println("Answer: " + captcha_response);
-            if (!(correctAnswer.equalsIgnoreCase(captcha_response))) {
-               isValid = false;
-               errormessage += "Incorrect spam code entered. Try again... ";
-            }
-         } catch (Exception e) {
-            System.out.println("Error checking captcha for post story: " + e.toString());
-            isValid = false;
-            errormessage += "Incorrect spam code entered. Try again... ";
-         }
+			}
+		} else {
+			this.BuildPage(request, response, session, conn, MasterTemplate, hm);
+		}
+		return super.ProcessForm(request, response, session, conn, MasterTemplate, hm);
+	}
 
-         try {
-            story = request.getParameter("comment");
-            if (story.length() < 1) {
-               errormessage += "You must enter a message! ";
-               isValid = false;
-            }
-         } catch (Exception e) {
-            isValid = false;
-            errormessage += "You must enter a story! ";
-         }
+	@Override
+	public HTMLTemplateDb ProcessRejectedForm(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, Connection conn, HTMLTemplateDb MasterTemplate, HashMap hm) throws Exception {
+		// TODO Auto-generated method stub
+		return super.ProcessRejectedForm(request, response, session, conn, MasterTemplate, hm);
+	}
 
-         try {
-            subject = request.getParameter("subject");
-            if (subject.length() < 1) {
-               isValid = false;
-               errormessage += "You must enter a title for your message!";
-            }
-         } catch (Exception e) {
-            isValid = false;
-            errormessage += "You must enter a title for your message!";
-         }
+	@SuppressWarnings("unchecked")
+	public boolean ValidateData(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			Connection conn, HTMLTemplateDb MasterTemplate, HashMap hm) throws Exception {
 
-         if (errormessage.length() > 0) {
-            //hm.put("PRESERVEMSG", "true");
-        	 //System.out.println("error is " + errormessage);
-            //hm.put("PRESERVEMSG", "TRUE");
-            session.setAttribute("Error", errormessage);
-         }
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return isValid;
-   }
+		String subject = "";
+		String story = "";
+		boolean isValid = true;
+		String errormessage = "";
+
+		story = request.getParameter("comment");
+		subject = request.getParameter("subject");
+		
+		if (story.length() < 1) {
+			errormessage += "You must enter a message! ";
+			isValid = false;
+		}
+
+		if (subject.length() < 1) {
+			isValid = false;
+			errormessage += "You must enter a title for your message!";
+		}
+
+		if (errormessage.length() > 0) {
+			session.setAttribute("Error", errormessage);
+		}
+
+		return isValid;
+	}
 
 }
